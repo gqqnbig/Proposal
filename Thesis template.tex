@@ -1,0 +1,108 @@
+%% !TEX TS-program = xelatex
+%% !TEX encoding = UTF-8 Unicode
+\documentclass[12pt,a4paper]{book}
+%\usepackage{fontspec} \setmainfont{Times New Roman}
+%\usepackage{xeCJK} \setCJKmainfont{DFKai-SB}[AutoFakeBold]
+
+\usepackage{fourier}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage[left=40mm, right=25mm, top=25mm, bottom=25mm]{geometry}
+\usepackage{graphicx}
+\usepackage[hidelinks]{hyperref} % colorlinks, hidelinks
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{indentfirst}
+\usepackage{titletoc}
+\usepackage{titlesec}
+\usepackage{appendix}
+%\usepackage{lipsum}
+%\usepackage{showframe}
+
+\renewcommand{\huge}{\fontsize{22}{22}\selectfont}
+\renewcommand{\LARGE}{\fontsize{18}{18}\selectfont}
+\renewcommand{\Large}{\fontsize{16}{16}\selectfont}
+\renewcommand{\large}{\fontsize{14}{14}\selectfont}
+\renewcommand{\small}{\fontsize{10}{10}\selectfont}
+\setlength{\parindent}{1.2cm}
+
+\titlespacing{\chapter}{0pt}{-2.5em}{1.5em}
+\titleformat{\section}{\Large}{\thesection}{1ex}{}
+\titleformat{\subsection}{\large\it}{\thesubsection}{1ex}{}
+
+\author{<<StudentName>>}
+\newcommand{\StudentNumber}{<<StudentNumber>>}
+\newcommand{\AcademicUnit}{School of Applied Scineces}
+\newcommand{\Programme}{PhD in Computer Applied Technology}
+\newcommand{\Supervisor}{<<Supervisor>>}
+\newcommand{\Cosupervisor}{<<Cosupervisor>>}
+
+\newcommand{\Date}{<<Month Day, Year>>} %December 31, 2021 
+\title{<<Title>>}
+
+\makeatletter
+
+\renewcommand{\contentsname} {Table of Contents}
+\setcounter{tocdepth}{4}
+\setcounter{secnumdepth}{4}
+\bibliographystyle{ieeetr} %acm, ieeetr, apalike
+
+\begin{document}
+
+\frontmatter
+\titlecontents{chapter}[0pt]{\addvspace{1.0pc}}{\bf\chaptername~\thecontentslabel.\quad}{\bf}{\hfill\contentspage}
+\titleformat{\chapter}[display]{\doublespacing\filcenter\LARGE\scshape}{\chaptername~\thechapter.}{0ex}{\bf\MakeUppercase}
+
+\begin{titlepage}
+	\pagestyle{empty}
+	\doublespacing\input{Cover.tex} \cleardoublepage
+	\doublespacing\input{Title.tex} \cleardoublepage
+	\doublespacing\input{Declaration.tex} \cleardoublepage
+\end{titlepage}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\small\textsc{\nouppercase\leftmark}}
+\fancyfoot[C]{\small\thepage}
+\begin{titlepage}
+	\let\cleardoublepage\clearpage
+	\pagenumbering{roman}
+	\doublespacing\input{Abstract.tex}
+	%\onehalfspacing\input{AbstractC.tex}
+	\onehalfspacing\tableofcontents \addcontentsline{toc}{chapter}{\contentsname}
+	\onehalfspacing\listoffigures \addcontentsline{toc}{chapter}{\listfigurename}
+	\onehalfspacing\listoftables \addcontentsline{toc}{chapter}{\listtablename}
+\end{titlepage}
+
+\mainmatter
+
+	\pagenumbering{arabic}
+	\doublespacing\input{Chapter1/Chapter1.tex}
+	\doublespacing\input{Chapter2/Chapter2.tex}
+	\doublespacing\input{Chapter3/Chapter3.tex}
+	\doublespacing\input{Chapter4/Chapter4.tex}
+	\doublespacing\input{Chapter5/Chapter5.tex}
+	\doublespacing\input{Chapter6/Chapter6.tex}
+
+{
+	\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+	\titlecontents{chapter}[0pt]{\addvspace{1.0pc}}{\bf}{\bf}{\hfill\contentspage}
+	\titleformat{\chapter}{\doublespacing\filcenter\LARGE\scshape}{}{0ex}{\bf\MakeUppercase}
+
+	\doublespacing\input{Acknowledgements.tex}
+	\onehalfspacing\bibliography{bibliography/bibliography.bib} \addcontentsline{toc}{chapter}{Bibliography}
+	\onehalfspacing\input{Ethics.tex}
+}
+
+\appendix
+
+\begin{appendices}
+	\titlecontents{chapter}[0pt]{\addvspace{1.0pc}}{\textbf{\appendixname~\thecontentslabel.}\quad}{}{\hfill\contentspage}
+	\onehalfspacing\input{AppendixA.tex}
+	\onehalfspacing\input{AppendixB.tex}
+	\onehalfspacing\input{AppendixC.tex}
+\end{appendices}
+
+\end{document}
