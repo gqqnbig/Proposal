@@ -1,5 +1,83 @@
 \chapter{Introduction}
-Introduction
+
+
+
+\section{General overview of the field of study}
+Software development is the process of conceiving, specifying, designing, programming, documenting, testing, and bug fixing involved in creating and maintaining applications, frameworks, or other software components. 
+Software development involves writing and maintaining the source code, but in a broader sense, it includes all processes from the conception of the desired software through to the final manifestation of the software, typically in a planned and structured process. 
+Software development also includes research, new development, prototyping, modification, reuse, re-engineering, maintenance, or any other activities that result in software products.
+
+Software development typically involves the following phases, requirements elicitation, analysis, design, coding, testing, and operation. We notice the major difficulties in software development happen in the requirements elicitation phase and the coding or implementation phase.
+
+Requirements errors are one of the causes leading failings in software projects [1]. Careful requirements modeling along with systematic validation helps to reduce the uncertainty about target systems [2], [3]. The goal of requirements validation is to construct the consistent requirements for the needs of target users [4]. However, this process is complicated, and it can be hard to produce a correct and complete requirements specification. The complexity is due to the following interrelated attributes [5]–[7]:
+1) the complexity of application domains and business processes;2) the uncertainty of clients and domain experts about their needs;3) the lack of the understanding of system developers about application domains;4) the difficulties of the understanding between system developers and clients. 
+
+Rapid prototyping is an effective approach to requirements validation and evolution via an executable model of a software system to demonstrate concepts, discover requirements errors and find possible fixing solutions, and discover missing requirements [8]. 
+
+In practice, it is very desirable to have a tool that generates prototypes directly from requirements automatically. 
+
+
+
+During the course of developing a piece of software, developers typically use a version control system. 
+A version control system tracks and manages changes to software code thus helps the team manage changes to source code over time.
+A group of interrelated changes to the code, sometimes called diff, is organized as a commit, along with a commit message explaining the rational behind the changes or other useful information.
+
+However, commit messages can be incomplete or inaccurate~\cite{buse2010automatically}.
+For example, when writing commit messages,
+a developer may say only identifiers were changed
+if he or she didn't check the diff very carefully,
+while the developer actually changed some white spaces or fixed a few minor bugs.
+In order to enforce software quality and the quality of commit messages,
+code review is introduced as a process in software engineering,
+where another developer reviews the committed code and
+the commit messages made by the former developer~\cite{shimagaki2016study}. 
+
+We believe that commits can be classified based on their diff.
+Proper classification of commits can remedy incomplete or inaccurate commit messages written manually, and
+guide code reviewers to pick those proper commits to review.
+
+There are existing works in the field of program analysis,
+but research is struggling to answer questions like ``Why does this method crash?'', ``Is this code thread-safe?''~\cite{alexandru2017replicating}.
+To enrich the experience towards solving the broader problem of code classification,
+we carry out this experiment to tackle one specific type of code modification recognition 
+--- renaming of identifiers.
+In this work, we propose a probabilistic machine-learning classification model,
+per taxonomy of~\cite{allamanis2018survey},
+to automatically identify the commits to a version-control system that only consist of identifier renaming. 
+This technique is novel in that the neural network is able to read merely the diff and give a confidence value of whether it belongs to the category.
+On the contrary, the traditional way of detecting such changes is done by analyzing the full source code before and after the commit,
+which is less efficient and often complicated with partial source code.
+For typical software projects nowadays each with a lot of imported libraries,
+the ability to carry out analysis based on local partial source code is certainly an advantage.
+
+Our model can be used as a component in the Continuous Integration (CI) with a Pull-Request (PR) workflow, for instance, on GitHub Actions.
+When a developer submits a pull request, CI runs to build and test the code and can add labels to the PR.
+Our model plays a role in CI that we take the unified diff of the PR as input,
+and classify whether the diff is identifier renaming, ``yes'' or ``no''.
+Then, CI can label the PR or assign it to the corresponding code reviewers.
+For our model to work, if one commit changes multiple files,
+the changes to these files should be concatenated to a single diff file,
+as the~{\gitdiff} program does.
+
+Our work focuses on the classification of diff in a typical programming language
+--- Java diff files,
+because Java is a popular language and the syntax is relatively simple.
+We specifically target Java 7, since Java 8 and beyond have introduced many new syntactical improvements,
+which could cause complication in the parsing and needlessly shift our focus away. 
+
+There is no off-the-shelf dataset of commits and labels of whether the commit is identifier renaming.
+\etal{Jiang}~\cite{jiang2017} collected an unlabeled dataset of \num{1006} repositories and over 2 million commits from GitHub.
+Although \etal{Jiang} claimed their dataset contained only Java source code,
+we found it actually containing many non-Java contents.
+We filtered out non-Java code and 62K commits remain.
+To further expand the dataset, we employed the crawling GitHub tool provided by~\cite{alexandru2017replicating} to collect additional commits from top Java repos on GitHub in January 2021.
+The final dataset obtained has \num{73080} examples.
+
+We contribute in this work a probabilistic neural network classification model with diff files as input, telling whether the input is renaming or not.
+The model was specifically trained against the Java programming language, and
+we believe minor tweaks can allow it to work on other programming languages.
+Besides the neural network model, we also present a dataset that labels 73K Java diff files with whether they are renaming commits,
+together with a syntax analyzer for Java diff files based on {\sc antlr}.
 
 \begin{equation}\label{eq:sample1}
 	a^2 + b^2 = c^2
@@ -19,7 +97,6 @@ b = 1
 
 \autoref{eq:sample1} and \ref{eq:sample2} as sample equation.
 
-\section{General overview of the field of study}
 
 General overview of the field of study
 

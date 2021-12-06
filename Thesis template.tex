@@ -21,6 +21,7 @@
 \usepackage{appendix}
 %\usepackage{lipsum}
 %\usepackage{showframe}
+\usepackage[group-separator={,},group-minimum-digits={3}]{siunitx}
 
 \renewcommand{\huge}{\fontsize{22}{22}\selectfont}
 \renewcommand{\LARGE}{\fontsize{18}{18}\selectfont}
@@ -79,6 +80,13 @@
 
 \mainmatter
 
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\gnudiff}{\mbox{\sf GNU/diff}}
+\newcommand{\gitdiff}{\mbox{\sf git/diff}}
+\newcommand{\csharp}{\mbox{C{\tt\#}}}
+\newcommand{\etal}[1]{#1~{\it et al.}}
+
+
 	\pagenumbering{arabic}
 	\doublespacing\input{Chapter1/Chapter1.tex}
 	\doublespacing\input{Chapter2/Chapter2.tex}
@@ -93,7 +101,7 @@
 	\titleformat{\chapter}{\doublespacing\filcenter\LARGE\scshape}{}{0ex}{\bf\MakeUppercase}
 
 	\doublespacing\input{Acknowledgements.tex}
-	\onehalfspacing\bibliography{bibliography/bibliography.bib} \addcontentsline{toc}{chapter}{Bibliography}
+	\onehalfspacing\bibliography{bibliography/bibliography.bib,bibliography/renaming.bib} \addcontentsline{toc}{chapter}{Bibliography}
 	\onehalfspacing\input{Ethics.tex}
 }
 
