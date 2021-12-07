@@ -12,10 +12,23 @@ However, the current UML modeling tools, such as Rational Rose, SmartDraw, Magic
 During the implementation phase, there are tools helping analyze source code~\cite{morgachev2019detection,huo2016learning,gu2016deep},
 generate commit message from diff~\cite{linares2015changescribe,buse2010automatically,huang2020learning},
 generate release notes from commits since the last release~\cite{moreno2016arena}, and so on.
-RefDiff~\cite{silva2020refdiff} and RMiner~\cite{tsantalis2018accurate} read the complete content of the changed files before and after a commit and construct a diff of an internal format, from which they detect refactoring types.
+%RefDiff~\cite{silva2020refdiff} and RMiner~\cite{tsantalis2018accurate} read the complete content of the changed files before and after a commit and construct a diff of an internal format, from which they detect refactoring types.
 
 
 \section{Critical summary and analysis of key references}
+
+\etal{Yang}~\cite{yang2019automated} proposed a set of transformation rules that decomposes a contract into executable parts and non-executable parts, and automatically generate an executable prototype in Java.
+The resulting tool is called RM2PT implemented as Eclipse plugin. The input of RM2PT is a requirement document written in Yang's domain specific language, and the output of RM2PT is a JavaFX desktop application.
+
+I conceive I can use a similar idea to RM2PT that generates a blockchain application out of a requirement document or ports a general Java application to a blockchain application.
+
+
+When we are coding, we often need to do refactoring.
+RefDiff~\cite{silva2020refdiff} and RMiner~\cite{tsantalis2018accurate} can detect refactoring types and help us write commit message. Nonetheless, they have to read complete content of the changed files before and after a commit in order to run a detection.
+
+Since each commit can be concisely represented by a diff, I believe using diff as input for analysis is promising because the size of diff is much smaller than the whole solution and the analysis tool can run faster.
+
+
 
 
 A method can be characterized by its input, techniques, and output.
