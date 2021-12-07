@@ -23,6 +23,40 @@
 %\usepackage{showframe}
 \usepackage[group-separator={,},group-minimum-digits={3}]{siunitx}
 
+\usepackage[svgnames]{xcolor}
+\usepackage{listings}
+\lstset{
+	%  %行号
+	%  %numbers=left,
+	%  %背景框
+	%  %framexleftmargin=10mm,
+	%  %frame=none,
+	%  %背景色
+	%  %backgroundcolor=\color[rgb]{1,1,0.76},
+	%  %样式
+	keywordstyle=\color{blue}\bfseries,
+	%  identifierstyle=\bf,
+	%  numberstyle=\color[RGB]{0,192,192}, %行号的样式
+	commentstyle=\it\color[RGB]{0,96,96},
+	stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+	%  %显示空格
+	%  %showstringspaces=false,
+	basicstyle=\ttfamily\scriptsize,
+	columns=flexible, %修正大写字母间距过小
+	breaklines=true, %对过长的代码自动换行
+	%  escapechar=!,
+	%  morekeywords={BEGIN}
+}
+\definecolor{diffstart}{named}{Grey}
+\definecolor{diffincl}{rgb}{0, 0.35, 0}
+\definecolor{diffrem}{rgb}{0.72, 0, 0}
+\lstdefinelanguage{diff}{
+	%basicstyle=\ttfamily\small,
+	morecomment=[f][\color{diffstart}]{@@},
+	morecomment=[f][\color{diffincl}]{+\ },
+	morecomment=[f][\color{diffrem}]{-\ },
+}
+
 \renewcommand{\huge}{\fontsize{22}{22}\selectfont}
 \renewcommand{\LARGE}{\fontsize{18}{18}\selectfont}
 \renewcommand{\Large}{\fontsize{16}{16}\selectfont}

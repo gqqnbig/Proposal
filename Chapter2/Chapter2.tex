@@ -1,27 +1,19 @@
 \chapter{Literature Review}
 
-Literature Review
 
-\begin{table} [h]
-\centering
-\caption{Sample of table.}
-\begin{tabular}{|c|c|c|c|}
-\hline
-\textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\
-\hline
-1 & 2 & 3 & 4 \\
-\hline
-5 & 6 & 7 & 8 \\
-\hline
-\end{tabular}
-\label{tab:sample}
-\end{table}
-
-\autoref{tab:sample} as sample table.
 
 \section{State-of-the-art review}
 
-State-of-the-art review
+To address the requirement elicitation issue, a tool that generates prototypes directly from requirements automatically is highly desired.
+Since the unified modeling language (UML) is a de facto standard for requirements modeling and system design,
+state-of-the-art research have been focusing on execution of UML models, i.e., turn UML into executable code~\cite{ciccozzi2019execution}.
+However, the current UML modeling tools, such as Rational Rose, SmartDraw, MagicDraw, and Papyrus UML, can only generate skeleton code, where classes only contain attributes and signatures of operations, not their implementations~\cite{regep2000using}.
+
+During the implementation phase, there are tools helping analyze source code~\cite{morgachev2019detection,huo2016learning,gu2016deep},
+generate commit message from diff~\cite{linares2015changescribe,buse2010automatically,huang2020learning},
+generate release notes from commits since the last release~\cite{moreno2016arena}, and so on.
+RefDiff~\cite{silva2020refdiff} and RMiner~\cite{tsantalis2018accurate} read the complete content of the changed files before and after a commit and construct a diff of an internal format, from which they detect refactoring types.
+
 
 \section{Critical summary and analysis of key references}
 
