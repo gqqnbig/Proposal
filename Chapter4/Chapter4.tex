@@ -5,3 +5,154 @@ Methodology
 \section{Description of methods to solve the problem}
 
 Description of methods to solve the problem
+
+
+
+
+
+
+
+
+A method can be characterized by its input, techniques, and output.
+The input of our work is diff files, the techniques are neural networks, and the output is classification.
+Thus, in this section we first describe the format of diff files, and then introduce the related work in the aspects of input, techniques, and output.
+
+
+
+
+Code summarization is a sub-field of natural language processing (NLP),
+here the input is the program source code and the output is the summary.
+A large body of work has been carried out in this field with assorted techniques.
+Despite the fact that code summarization does not match our work in all the three aspects,
+some observations inspired us.
+
+Some techniques are shared from NLP to code summarization after \etal{Allamanis}~\cite{allamanis2018survey} proposed the naturalness hypothesis which expounded the similarities between programming languages and natural languages.
+
+
+When the input is source code rather than diff,
+the field becomes program analysis, where more and more work has employed neural network techniques.
+\etal{Alexandru}~\cite{alexandru2017replicating} used NMT to annotate source code tokens with typing,
+and they also implemented an {\sc antlr}-based parser.
+\textsc{JSNice}~\cite{raychev2015predicting} is a neural network model that predicts names of JavaScript identifiers and type annotations of variables.
+\etal{Mou}~\cite{mou2016convolutional} used a convolutional neural network to classify programs by functionalities, such as string manipulations and matrix operations.
+Other uses of neural networks in program analysis include
+detection of variable misuse~\cite{morgachev2019detection},
+bug localization~\cite{huo2016learning},
+API suggestion~\cite{gu2016deep}, and
+code completion~\cite{raychev2014code}.
+
+Taking diff as input, program analysis is specialized to diff analysis.
+\etal{Moreno}~\cite{moreno2016arena} generated release notes by reading changes to program source code and documentations, as well as taking into consideration issues from software repositories.
+ChangeScribe~\cite{linares2015changescribe},
+ChangeDoc~\cite{huang2020learning}, and
+DeltaDoc~\cite{buse2010automatically} read diff and followed a set of rules to generate commit messages.
+None of them used machine learning, and howbeit they all processed diff,
+their goal was not to classify the diff.
+They do not accept the {\gitdiff} format which shows barely changed lines of changed files.
+
+Later, machine learning techniques emerged in diff analysis.
+\etal{Loyola}~\cite{loyola2017neural} developed a neural network model to generate text description from diff files.
+Their work relies on a lexer that divides source code into tokens,
+thus it is not end-to-end machine learning.
+\etal{Macho}~\cite{macho2016predicting} employed a random forest classifier and categorized commits into forward engineering, re-engineering, corrective engineering and management.
+By contrast, our work labels commits into their refactoring types.
+
+
+
+
+
+
+
+
+There are existing works in the field of program analysis,
+but research is struggling to answer questions like ``Why does this method crash?'', ``Is this code thread-safe?''~\cite{alexandru2017replicating}.
+To enrich the experience towards solving the broader problem of code classification,
+we carry out this experiment to tackle one specific type of code modification recognition
+--- renaming of identifiers.
+In this work, we propose a probabilistic machine-learning classification model,
+per taxonomy of~\cite{allamanis2018survey},
+to automatically identify the commits to a version-control system that only consist of identifier renaming.
+This technique is novel in that the neural network is able to read merely the diff and give a confidence value of whether it belongs to the category.
+On the contrary, the traditional way of detecting such changes is done by analyzing the full source code before and after the commit,
+which is less efficient and often complicated with partial source code.
+For typical software projects nowadays each with a lot of imported libraries,
+the ability to carry out analysis based on local partial source code is certainly an advantage.
+
+Our model can be used as a component in the Continuous Integration (CI) with a Pull-Request (PR) workflow, for instance, on GitHub Actions.
+When a developer submits a pull request, CI runs to build and test the code and can add labels to the PR.
+Our model plays a role in CI that we take the unified diff of the PR as input,
+and classify whether the diff is identifier renaming, ``yes'' or ``no''.
+Then, CI can label the PR or assign it to the corresponding code reviewers.
+For our model to work, if one commit changes multiple files,
+the changes to these files should be concatenated to a single diff file,
+as the~{\gitdiff} program does.
+
+Our work focuses on the classification of diff in a typical programming language
+--- Java diff files,
+because Java is a popular language and the syntax is relatively simple.
+We specifically target Java 7, since Java 8 and beyond have introduced many new syntactical improvements,
+which could cause complication in the parsing and needlessly shift our focus away.
+
+There is no off-the-shelf dataset of commits and labels of whether the commit is identifier renaming.
+\etal{Jiang}~\cite{jiang2017} collected an unlabeled dataset of \num{1006} repositories and over 2 million commits from GitHub.
+Although \etal{Jiang} claimed their dataset contained only Java source code,
+we found it actually containing many non-Java contents.
+We filtered out non-Java code and 62K commits remain.
+To further expand the dataset, we employed the crawling GitHub tool provided by~\cite{alexandru2017replicating} to collect additional commits from top Java repos on GitHub in January 2021.
+The final dataset obtained has \num{73080} examples.
+
+We contribute in this work a probabilistic neural network classification model with diff files as input, telling whether the input is renaming or not.
+The model was specifically trained against the Java programming language, and
+we believe minor tweaks can allow it to work on other programming languages.
+Besides the neural network model, we also present a dataset that labels 73K Java diff files with whether they are renaming commits,
+together with a syntax analyzer for Java diff files based on {\sc antlr}.
+
+
+
+
+
+
+\begin{equation}\label{eq:sample1}
+	a^2 + b^2 = c^2
+\end{equation}
+
+\begin{equation}\label{eq:sample2}
+	\begin{dcases}
+		a + b = 2\\
+		a - b = 0
+	\end{dcases}
+	\implies
+	\begin{dcases}
+		a = 1\\
+		b = 1
+	\end{dcases}
+\end{equation}
+
+\autoref{eq:sample1} and \ref{eq:sample2} as sample equation.
+
+
+\begin{table} [h]
+	\centering
+	\caption{Sample of table.}
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		\textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} \\
+		\hline
+		1 & 2 & 3 & 4 \\
+		\hline
+		5 & 6 & 7 & 8 \\
+		\hline
+	\end{tabular}
+	\label{tab:sample}
+\end{table}
+
+\autoref{tab:sample} as sample table.
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{MPI.pdf}
+	\caption{MPI logo}
+	\label{fig:sample}
+\end{figure}
+
+\autoref{fig:sample} as sample figure.
