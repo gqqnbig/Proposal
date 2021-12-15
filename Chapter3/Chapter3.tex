@@ -78,5 +78,5 @@ thus it is not end-to-end machine learning.
 
 RefDiff~\cite{silva2020refdiff} and RMiner~\cite{tsantalis2018accurate} can detect refactoring types, including extract method, rename class, pull methods, etc. Nonetheless, they have to read complete content of the changed files before and after a commit in order to run a detection.
 
-What I want to do is to use purely diff with the help of neural network. My approach does not need rigid syntactical parser, and does not read full source or complete content of a file. The output of my network is a percentage, indicating how confident my network is that the input belongs to the given type.
+What I want to do is to use purely diff with the help of neural network. My approach does not need a rigid syntax parser, and does not read full source or complete content of a file. The output of my network is a percentage, indicating how confident my network is that the input belongs to a given type.
 
