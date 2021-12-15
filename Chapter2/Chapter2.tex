@@ -14,7 +14,20 @@ generate commit message from diff~\cite{linares2015changescribe,buse2010automati
 generate release notes from commits since the last release~\cite{moreno2016arena}, and so on.
 %RefDiff~\cite{silva2020refdiff} and RMiner~\cite{tsantalis2018accurate} read the complete content of the changed files before and after a commit and construct a diff of an internal format, from which they detect refactoring types.
 
-%todo: datasets
+
+\section{Datasets}
+In requirement engineering, several use cases (datasets) are proposed.
+The Common Component Modeling Example (CoCoME)~\cite{herold2008cocome} describes a trading system in a supermarket setting.
+The system has cash desks that scan products and allow customers to pay by credit card or cash. It also performs administrative tasks like order products, open or close stores, etc.
+CoCoME is basically a local, single-user system with no parallelism handling.
+
+
+In order to analyze source code with neural networks, datasets are required to train the networks. The source code repositories on GitHub are often utilized.
+\etal{Jiang}~\cite{jiang2017} collected a dataset of \num{1006} repositories and over 2 million commits from GitHub. This dataset is unlabeled and the code is mostly in Java language with other languages mixed in.
+
+The dataset created by~\cite{tsantalis2018accurate} focuses on refactoring types. It comprises \num{3188} refactorings found in 538 commits from 185 open-source projects. The dataset is now hosted on \url{https://github.com/aserg-ufmg/RefDiff}. In this dataset, one commit may contain multiple refactoring types and functional changes are permitted. For example, as long as one method is renamed among a great deal of functional changes, the commit is labeled as method renaming.
+
+
 
 
 \section{Critical summary and analysis of key references}
