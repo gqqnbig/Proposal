@@ -4,14 +4,18 @@
 
 \section{State-of-the-art review}
 
-%todo: add the blockchain survey.
-
 To address the requirement elicitation issue, a tool that generates prototypes directly from requirements automatically is highly desired.
 Since the unified modeling language (UML) is a de facto standard for requirements modeling and system design,
 state-of-the-art research have been focusing on execution of UML models, i.e., turn UML into executable code~\cite{ciccozzi2019execution}.
 In the past, UML modeling tools, such as Rational Rose, SmartDraw, MagicDraw, and Papyrus UML, can only generate skeleton code, where classes only contain attributes and signatures of operations, not their implementations~\cite{regep2000using}.
 
 In recent years, the code generation task leverages neural networks. Grammformers~\cite{guo2021learning} takes the context text and generates next code statements. The generated statements may contain holes where Grammformers is uncertain about and leaves for developers to fill in.
+
+
+Verifying smart contract correctness has been a research focus over the past several years.
+\cite{tolmach2021survey}~summarized the technologies on verifying the correctness of smart contract.
+First, we need to formalize the requirements, i.e., we have to build formal specifications for smart contracts.
+Then we read the implementation of the smart contract, formalize it to a formal mathematical model, and check it against the specification.
 
 
 During the implementation phase, there are tools helping analyze source code~\cite{morgachev2019detection,huo2016learning,gu2016deep},
