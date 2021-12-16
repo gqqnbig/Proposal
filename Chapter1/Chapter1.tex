@@ -10,6 +10,8 @@ Software development is the process of conceiving, specifying, designing, progra
 %waterfall
 Software development typically involves the following phases, requirements elicitation, analysis, design, coding, testing, and operation. We notice major difficulties in software development happen in the requirements elicitation phase and the coding or implementation phase.
 
+%todo: mention github
+
 \section{Motivation}
 
 Requirements errors are one of the causes leading failings in software projects~\cite{sutcliffe1999tracing}.
@@ -18,12 +20,22 @@ Requirements errors are one of the causes leading failings in software projects~
 Rapid prototyping is an effective approach to requirements validation and evolution via an executable model of a software system to demonstrate concepts, discover requirements errors and find possible fixing solutions, and discover missing requirements~\cite{kordon2002introduction}.
 Therefore, it is very desirable to have a tool that generates prototypes directly from requirements automatically.
 
-
 %todo: neural networks
 
-%todo: blockchain
+In recent years, the blockchain technology has attracted great attention along with the popularization of Bitcoin and Ethereum,
+which are public and permission-less blockchains.
+This means, everyone with an Ethereum client can view the transaction data, make transactions, or send queries.
+On the other hand, HyperLedger is a rising star in the blockchain market. It is an umbrella project of open source blockchains and related tools, started in December 2015 by the Linux Foundation with consistent contributions from IBM, Intel, and so on.
+In HyperLedger, Fabric is the most mature platform, which is permissioned (a central authority determines who can join the blockchain) and can run smart contracts developed in Java, JavaScript, or NodeJS language. In Fabric, smart contract is called chaincode. Although Ethereum and HyperLedger Fabric both can run smart contracts, HyperLedger Fabric is preferred by businesses due to the permissioning.
 
-In the development phase, developers typically use a version control system,
+A smart contract is a program running on a blockchain platform.
+The execution of smart contracts is automatic and businesses often use it as a signed contract or an agreement to regulate the parties~\cite{savelyev2017contract}.
+Smart contracts also reduces the need in trusted intermediators, arbitrations and enforcement costs.
+
+Due to the benefits of smart contracts, many businesses want to write smart contracts according to the signed paper contract. Thus, there is a need to automatically generate smart contracts from requirement documents.
+
+
+After a prototype is generated, developers need to further implement it, typically with the help of a version control system,
 which organizes a group of interrelated changes to the code, sometimes called diff, as a commit, along with a commit message explaining the rational behind the changes or other useful information.
 %A version control system tracks and manages changes to software code thus helps the team manage changes to source code over time.
 However, commit messages can be incomplete or inaccurate~\cite{buse2010automatically} and undermine developers' ability to understand and find proper commits.
