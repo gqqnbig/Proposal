@@ -1,12 +1,20 @@
 \chapter{Conclusions}
 
-Conclusions
+In this proposal, I outlined my research plan in the field of software engineering.
+Divided by phases of software development, I see multiple opportunities in improving requirement engineering and implementation phases.
+I focus on researching tools analyzing requirements and program source code with the help of artificial intelligence or neural networks.
 
+In requirement engineering, having a prototype to verify the requirements reduces failings in software projects and cut costs in follow-up modifications if a requirement error was found in the implementation phase. Make a requirement prototype is still laborious, thus automatically generating a prototype from requirement documents is beneficial.
+In light of the wide adoption of blockchain technologies and smart contract by businesses, my idea in this area is to generate smart contracts from business contracts.
+RM2PT and other state-of-the-art show the possibilities of doing such a conversion though not 100\% of code can be correctly generated.
 
+To prove the conversions are sound, theories of programming languages may be studied. I will investigate theoretical differences between smart contract and traditional local programs,
+look into ways in mapping object operations happening in memory to blockchain operations, define some partial order by refinement calculus to prove each conversion does not break pre- and post-conditions, etc.
 
-
-
-
+After a working prototype is generated, the software development enters the implementation phase. Developers have to implement missing functions that are not auto-generatable, work on meeting non-functional requirements, and constantly refactor the codebase.
+I have already published a paper on classifying identifier renaming from commits to a version control system.
+This technology takes part in the code review step and help control code quality and prevent bugs.
+Future works include classifying more revision types, e.g., method moving and bug fixing, etc.
 
 
 
