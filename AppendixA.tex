@@ -3,7 +3,7 @@
 The research result on identifier renaming has been published in paper ``A Neural Architecture for Detecting Identifier Renaming from Diff'' seen in \autoref{sec:produced-publications}.
 This chapter hence presents the preliminary results for the RM2HyperLedger project.
 
-At the current stage, I am evaluating my tool on \cocome. RM2PT first generates JavaFX source code from the requirement document of \cocome, then my program RM2HyperLedger takes over and converts the JavaFX source code to HyperLedger chaincode in Java.
+At the current stage, I am evaluating my tool on \cocome. RM2PT first generates JavaFX source code from the requirement document, then my program RM2HyperLedger takes over and converts the JavaFX source code to HyperLedger chaincode in Java.
 
 \begin{figure}[ht]
 \centering
@@ -12,9 +12,9 @@ At the current stage, I am evaluating my tool on \cocome. RM2PT first generates 
 \label{fig:cocome-hyperledger-log}
 \end{figure}
 
-\autoref{fig:cocome-hyperledger-log} shows RM2HyperLedger is able to automatically convert some source code into HyperLedger format, and I have to do more conversions because not all conversion rules have been implemented in RM2HyperLedger. Currently I am collecting my manual conversion rules into RM2HyperLedger, so eventually no manual editing is needed.
+\autoref{fig:cocome-hyperledger-log} shows RM2HyperLedger is able to automatically convert some source code into HyperLedger format, but I have to do more conversions because not all conversion rules have been implemented in RM2HyperLedger. Currently I am collecting my manual conversion rules into RM2HyperLedger, so eventually no manual editing is needed.
 
-Besides the functional implementation, I also worked on requirements validation and test code generation. \autoref{testManageItem} is an example unit test that follows the manage item UML activity diagram. This code ensures all function calls except the last one do not fail, and after each function call, \code{docker stop} stimulates a network node down. Due to the pre- and post-conditions of \code{deleteItem}, this function cannot be called twice, thus reflected in the test code.
+Besides the functional implementation, I also worked on requirements validation and test code generation. \autoref{testManageItem} is an example unit test that follows the manage item UML activity diagram. This code ensures all function calls except the last one do not fail, and after each function call, \code{docker stop} stimulates a network node down (because in the actual network any node can leave anytime). Due to the pre- and post-conditions of \code{deleteItem}, this function cannot be called twice, thus reflected in the test code.
 
 
 \begin{figure}[ht]

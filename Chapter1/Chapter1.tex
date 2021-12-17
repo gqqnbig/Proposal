@@ -3,14 +3,12 @@
 
 
 \section{General overview of the field of study}
-Software development is the process of conceiving, specifying, designing, programming, documenting, testing, and bug fixing involved in creating and maintaining applications, frameworks, or other software components.
+Software development is the process of creating, specifying, programming, testing, and supporting software involved in creating and maintaining applications, frameworks, or other software components.
 %Software development involves writing and maintaining the source code, but in a broader sense, it includes all processes from the conception of the desired software through to the final manifestation of the software, typically in a planned and structured process.
 %Software development also includes research, new development, prototyping, modification, reuse, re-engineering, maintenance, or any other activities that result in software products.
-
-%waterfall
 Software development typically involves the following phases, requirements engineering, implementation, testing, release, and maintenance~\cite{petersen2009waterfall}. We notice major difficulties in software development happen in requirements engineering and implementation.
 
-Modern software development uses version control systems and since 2014 the use of Git outpaced SVN~\cite{says_eclipse_2014}. People often host their git repositories on GitHub. GitHub is a provider of Internet hosting for software development and version control using Git. It provides issue tracking, wiki, continuous integration, and many other free features.
+Modern software development uses version control systems and since 2014 the use of Git outpaced SVN~\cite{says_eclipse_2014}. People often host their Git repositories on GitHub, which is a provider of Internet hosting for software development and version control using Git. GitHub provides issue tracking, wiki, continuous integration, and many other free features.
 
 \section{Motivation}
 
@@ -18,7 +16,7 @@ Requirements errors are one of the causes leading failings in software projects~
 %Careful requirements modeling along with systematic validation helps to reduce the uncertainty about target systems [2], [3]. The goal of requirements validation is to construct the consistent requirements for the needs of target users [4]. However, this process is complicated, and it can be hard to produce a correct and complete requirements specification. The complexity is due to the following interrelated attributes [5]–[7]:
 %1) the complexity of application domains and business processes;2) the uncertainty of clients and domain experts about their needs;3) the lack of the understanding of system developers about application domains;4) the difficulties of the understanding between system developers and clients.
 Rapid prototyping is an effective approach to requirements validation and evolution via an executable model of a software system to demonstrate concepts, discover requirements errors and find possible fixing solutions, and discover missing requirements~\cite{kordon2002introduction}.
-Therefore, it is very desirable to have a tool that generates prototypes directly from requirements automatically.
+Therefore, it is very desirable to have a tool that generates prototypes directly from requirements.
 
 %todo: neural networks
 
@@ -29,16 +27,16 @@ On the other hand, HyperLedger is a rising star in the blockchain market. It is 
 In HyperLedger, Fabric is the most mature platform, which is permissioned (a central authority determines who can join the blockchain) and can run smart contracts developed in Java, JavaScript, or NodeJS language. In Fabric, smart contract is called chaincode. Although Ethereum and HyperLedger Fabric both can run smart contracts, HyperLedger Fabric is preferred by businesses due to the permissioning.
 
 A smart contract is a program running on a blockchain platform.
-The execution of smart contracts is automatic and businesses often use it as a signed contract or an agreement to regulate the parties~\cite{savelyev2017contract}.
+The execution of smart contracts is automatic and businesses often use it as a signed contract or an agreement to regulate the stakeholders~\cite{savelyev2017contract}.
 Smart contracts also reduces the need in trusted intermediators, arbitrations and enforcement costs.
 
-Due to the benefits of smart contracts, many businesses want to write smart contracts according to the signed paper contract. Thus, there is a need to automatically generate smart contracts from requirement documents.
+Due to the benefits of smart contracts, many businesses want to realize smart contracts according to the signed paper contract. Thus, there is a need to automatically generate smart contracts from requirement documents.
 
 
 After a prototype is generated, developers need to further implement it, typically with the help of a version control system,
-which organizes a group of interrelated changes to the code, sometimes called diff, as a commit, along with a commit message explaining the rational behind the changes or other useful information.
+which organizes a group of interrelated changes to the code, sometimes called diff, as a commit, together with a commit message explaining the rational behind the changes or other useful information.
 %A version control system tracks and manages changes to software code thus helps the team manage changes to source code over time.
-However, commit messages can be incomplete or inaccurate~\cite{buse2010automatically} and undermine developers' ability to understand and find proper commits.
+However, commit messages can be incomplete or inaccurate~\cite{buse2010automatically} and undermine developers' ability to understand the commit.
 %For example, when writing commit messages,
 %a developer may say only identifiers were changed
 %if he or she didn't check the diff very carefully,
@@ -51,6 +49,7 @@ However, commit messages can be incomplete or inaccurate~\cite{buse2010automatic
 We believe that commits can be classified based on their diff.
 Proper classification of commits can remedy incomplete or inaccurate commit messages written manually, and
 guide code reviewers to pick commits to review.
+This smooths the process of software development and helps control code quality and prevent bugs.
 
 
 

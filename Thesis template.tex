@@ -51,10 +51,14 @@
 \definecolor{diffincl}{rgb}{0, 0.35, 0}
 \definecolor{diffrem}{rgb}{0.72, 0, 0}
 \lstdefinelanguage{diff}{
-	%basicstyle=\ttfamily\small,
+	basicstyle=\ttfamily\small,
 	morecomment=[f][\color{diffstart}]{@@},
 	morecomment=[f][\color{diffincl}]{+\ },
 	morecomment=[f][\color{diffrem}]{-\ },
+	morecomment=[f][\color{diffincl}]{+++\ },
+	morecomment=[f][\color{diffrem}]{---\ },
+	morecomment=[f][\color{diffincl}]{new\ },
+	morecomment=[f][\color{diffrem}]{old\ },
 }
 
 \renewcommand{\huge}{\fontsize{22}{22}\selectfont}

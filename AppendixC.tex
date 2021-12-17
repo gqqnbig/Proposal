@@ -1,7 +1,7 @@
 \chapter{Technology Details}
 
 The technology details on the identifier renaming project has been published in paper ``A Neural Architecture for Detecting Identifier Renaming from Diff'' seen in \autoref{sec:produced-publications}.
-This chapter hence presents technology details for the RM2HyperLedger project. I first brief the technology of RM2PT, then transition to RM2HyperLedger.
+This chapter hence presents technology details for the RM2HyperLedger project. I first explain the technology of RM2PT, then transition to RM2HyperLedger.
 
 \section{RM2PT}
 
@@ -75,13 +75,13 @@ The project is a desktop application with a GUI implemented in JavaFX. \autoref{
 
 I am currently developing RM2HyperLedger, a program that translates requirements to HyperLedger chaincode.
 
-Unlike RM2PT, RM2HyperLedger is a standalone application written in Java, not relying on Eclipse as many developers use IntelliJ Idea or other IDE. For now RM2HyperLedger takes as input the \code{.remodel} file and the generated JavaFX code. RM2HyperLedger uses Antlr to analyze Java source code and translate to HyperLedger Fabric.
+Unlike RM2PT, RM2HyperLedger is a standalone application written in Java, not relying on Eclipse as many developers use IntelliJ Idea or other IDEs. For now RM2HyperLedger takes as input the \code{.remodel} file and the generated JavaFX code. RM2HyperLedger uses Antlr to analyze Java source code and translate to the HyperLedger Fabric format.
 
 I have encoded the following translation rules in RM2HyperLedger.
 
 \begin{itemize}
-\item Add or locate system level identifier (PK) for each entity.
-\item Add serialization support for each entity.
+\item Add or locate system level identifier (PK) of each entity.
+\item Add serialization support to each entity.
 \item Store serialized objects to blockchain, and retrieve them by their PK.
 \item Rewrite method signatures to fit HyperLedger Fabric format.
 \item When a new object is created or an object is deleted from memory, synchronize with the blockchain.
