@@ -21,7 +21,7 @@ To implement a program in blockchain, I will add or locate PK of each entity, an
 When a method of a smart contract is called, the results are not yet committed to the chain until miners verified the results and reached a consensus. Hence, the post-condition checking may not happen within the smart contract. I will evaluate multiple way in implementing the post-condition, including a second smart contract, checking program local states, custom consensus algorithm, and lazy evaluation.
 I shall also check blockchain validation frameworks and review how other blockchain programs were implemented.
 
-Like~\cite{tolmach2021survey} mentioned, I am better off finding a (mathematical) model for smart contract which can help describe operations on blockchain. This model is usually described in graph theory, algebra, or communication sequence process.
+Like~\cite{tolmach2021survey} mentioned, I am better off finding a (mathematical) model for smart contract which can help describe operations on blockchain. This model is usually described in graph theory, algebra, or communicating sequential processes.
 
 Another potential contribution in this area is to find or invent a library for saving and loading data to blockchain like Object Relational Mapping because
 not all applications care the exact details of synchronizing object changes happening in memory to the blockchain.
