@@ -1,58 +1,122 @@
 \chapter{Literature Review}
 
+%\cite{johnston2014general}~believes the core of a {\dapp} is its blockchain. Based on how close the {\dapp} is to the underlying blockchain, the authors classify {\dapp} into 3 types.
+%Type I are {\dapp} with its own blockchain, e.g., Ethereum. Type II are {\dapp}s using the blockchain of another {\dapp} (of Type I), e.g., SHIBA INU. Type III are {\dapp}s using the blockchain of a Type II {\dapp}.
 
+I will first talk about source code classification, then properties of smart contracts, and finally the transformation.
 
 \section{State-of-the-art review}
 
-To address the requirement elicitation issue, a tool that generates prototypes directly from requirements automatically is highly desired.
-Since the unified modeling language (UML) is a de facto standard for requirements modeling and system design,
-state-of-the-art research have been focusing on execution of UML models, i.e., turn UML into executable code~\cite{ciccozzi2019execution}.
-In the past, UML modeling tools, such as Rational Rose, SmartDraw, MagicDraw, and Papyrus UML, can only generate skeleton code, where classes only contain attributes and signatures of operations, with method body empty~\cite{regep2000using}.
-
-In recent years, the code generation task leverages neural networks.
+\paragraph*{Source Code Classification}
+In recent years, the code classification task leverages neural networks.
 There are extensive research on Natural Language Processing in combination with neural networks. \etal{Allamanis}~\cite{allamanis2018survey} proposed the naturalness hypothesis which expounded the similarities between programming languages and natural languages. Since then, more and more work in software engineering start to use neural networks, in particular neural machine translation and transformers.
 Grammformers~\cite{guo2021learning} made an attempt in using transformers. It takes the context text and generates next code statements. The generated statements may contain holes where Grammformers is uncertain about and leaves for developers to fill in.
-
-When we generate source code, we have to make sure the generated code is correct, which falls under the field of software verification.
-Verifying smart contract has been a research focus over the past several years thanks to the heat and the market cap of BitCoin and Ethereum.
-\cite{tolmach2021survey}~summarized the two steps on verifying the correctness of smart contract and presented related works.
-First, we need to formalize the requirements, i.e., we have to build formal specifications for smart contracts.
-Then we read the implementation of the smart contract, abstract it to a formal mathematical model, and check it against the specification.
-
-
-During the implementation phase, there are tools helping analyze source code~\cite{morgachev2019detection,huo2016learning,gu2016deep},
-generate commit message from diff~\cite{linares2015changescribe,buse2010automatically,huang2020learning},
-generate release notes from commits since the last release~\cite{moreno2016arena}, and so on.
-RefDiff~\cite{silva2020refdiff} and RMiner~\cite{tsantalis2018accurate} read the complete content of the changed files before and after a commit and construct a diff of an internal format, from which they detect refactoring types.
-
-
-\section{Datasets}
-In requirement engineering, several use cases (datasets) were proposed.
-The Common Component Modeling Example (\cocome)~\cite{herold2008cocome} describes a trading system in a supermarket setting.
-The system has cash desks that scan products and allow customers to pay by credit card or cash. It also performs administrative tasks like order products, open or close stores, etc.
-{\cocome} is basically a local, single-user system with no parallelism handling.
-SLEX-Web~\cite{jantan2012extension} is a web application for school. It not only offers information about department, programs, courses, and researchers, but also features interactions between students and teachers via an e-learning system as well as quizzes.
-
 
 In order to analyze source code with neural networks, datasets are required to train the networks. The source code repositories on GitHub are often utilized.
 \etal{Jiang}~\cite{jiang2017} collected a dataset of \num{1006} repositories and over 2 million commits from GitHub. This dataset is unlabeled and the code is mostly in Java language with other languages mixed in.
 The dataset created by~\cite{tsantalis2018accurate} focuses on refactoring types. It comprises \num{3188} refactorings found in 538 commits from 185 open-source projects. The dataset is now hosted on \url{https://github.com/aserg-ufmg/RefDiff}. In this dataset, one commit may contain multiple refactoring types and functional changes are permitted. For example, as long as one method is renamed among a great deal of functional changes, the commit is labeled as method renaming.
 
-Both {\gnudiff} and {\gitdiff} are able to show the difference character by character between two text files or commits.
-Changes to multiple files can be recorded in a single diff file.
-In terms of the diff format, a line starting with double at-symbol (\code{@@}) signals the starting of a hunk where the files differ.
-Diff files generated by {\gitdiff} have optional hunk headers appended at the end of the \code{@@} lines.
+There are tools helping analyze source code with neural networks~\cite{morgachev2019detection,huo2016learning,gu2016deep},
+generate commit message from diff~\cite{linares2015changescribe,buse2010automatically,huang2020learning},
+generate release notes from commits since the last release~\cite{moreno2016arena}, and so on.
+RefDiff~\cite{silva2020refdiff} and RMiner~\cite{tsantalis2018accurate} read the complete content of the changed files before and after a commit and construct a diff of an internal format, from which they classify the code into certain refactoring types.
+
+\paragraph*{Smart Contracts}
+
+\etal{Yang}~\cite{yang2020implementation} proposed a smart contract architecture model, consisting of data layer, transmission layer, smart contract layer, verification layer, execution layer, and application layer. The authors formalized the execution of a smart contract into 5 states, activated, ready, expired, implemented, and default, then used a finite-state machine to model the behavior.
+
+Shae and Tsai~\cite{shae2018transform} see smart contracts running on blockchains as duplicated computing rather than distributed computing
+since smart contracts need to be deployed into all the blockchain nodes, and the identical smart contract codes are executed at the same time in many nodes.
+They proposed a blockchain architecture for precision medicine which has two components, smart contracts (or chaincode in Fabric terminology) and applications.
+Smart contracts are stored and executed on chain while applications run on a personal computer and call smart contracts.
+When a clinic wants to get a precise model for a patient, the clinic uses the application and sends a request to the on-chain smart contract. In that setting, miners instead of mining coins run the smart contract which uses GPU to train the requested neural network model for the clinic, and return the trained model.
+% But the paper does not touch consensus algorithms where PoW is the source of duplication.
+
+
+There are certain distinctions between smart contract and the most standard object-oriented languages. In terms of reentrancy, as smart contracts tend to call each other, the local states of one smart contract can only be modified by its own code.
+\etal{Bram}~\cite{bram2021rich} holds that access control restrictions are a necessary part of the public specification of a contract. They invented a DSL for Ethereum smart contract verification. However they did not use Object Constraint Language.
+
+
+\paragraph*{Transformation}
+\etal{Yang}~\cite{yang2019automated} proposed a set of transformation rules that decomposes a requirement document into executable parts and non-executable parts, and automatically generate an executable prototype in Java.
+The resulting tool is called RM2PT implemented as Eclipse plugin.
+
+In requirements modeling and system design, the unified modeling language (UML) is a de facto standard for requirement documents.
+In the past, UML modeling tools, such as Rational Rose, SmartDraw, MagicDraw, and Papyrus UML, can only generate skeleton code, where classes only contain attributes and signatures of operations, with method body empty~\cite{regep2000using}. Nowadays state-of-the-art research is able to turn UML into fully executable code~\cite{ciccozzi2019execution}.
+
+Yang invented his own domain specific language (DSL) as the input of RM2PT, and the output is a JavaFX desktop application. RM2PT is able to complete 93.65\% system operations on average while the others are not generatable due to the involvement of third-party API or sorting.
+RM2PT can check pre-conditions, post-conditions, and invariants for plain Java, which is a runtime validation approach.
+These condition checking statements are transformed from OCL.
+
+When we generate source code, we have to make sure the generated code is correct, which falls under the field of software verification.
+Verifying smart contract has been a research focus over the past several years thanks to the heat and the market cap of BitCoin and Ethereum.
+Runtime checking and static analysis are the two options.
+
+
+In runtime checking, researchers have invented a number of new programming languages to help the verification.
+ContractLarva~\cite{ellul2018runtime} allows users to supply pre- and post-conditions for smart contract transactions and enforces them at runtime. Unlike Solythesis~\cite{li2020securing}, it does not support quantifiers natively.
+The drawback of these new languages is that they often sacrifice expressiveness (e.g., no longer Turing-complete) to gain correctness or security guarantees.
+
+Statically verifiying a smart contract is hard because
+smart contracts frequently interact with unverified, potentially adversarial outside code, which substantially weakens the assumptions that formal analyses can (soundly) make~\cite{bram2021rich}.
+
+\cite{tolmach2021survey}~summarized the two steps on statically verifying the correctness of smart contract and presented related works.
+First, we need to formalize the requirements, i.e., we have to build formal specifications for smart contracts.
+Then we read the implementation of the smart contract, abstract it to a formal mathematical model, and check it against the specification.
+
+Securify~\cite{tsankov2018securify} translates Solidity smart contract into Datalog and verifies security properties with a satisfiability modulo theories (SMT) solver.
+
+
+
+At the end, the execution result of a smart contract must be in consensus to be added to the blockchain, where the consensus algorithm takes part in.
+\cite{altarawneh2021availability}~used communicating sequential processes and queuing theory to model the behavior of a consensus algorithm with four agents: client, miner, server, and intruder.
+
+
 
 
 
 \section{Critical summary and analysis of key references}
 
-\etal{Yang}~\cite{yang2019automated} proposed a set of transformation rules that decomposes a requirement document into executable parts and non-executable parts, and automatically generate an executable prototype in Java.
-The resulting tool is called RM2PT implemented as Eclipse plugin. The input of RM2PT is a requirement document written in Yang's domain specific language (DSL), and the output is a JavaFX desktop application. RM2PT is able to complete 93.65\% system operations on average while the others are not generatable due to the involvement of third-party API or sorting.
 
-I conceive a similar idea to RM2PT of generating a blockchain application out of a requirement document or porting a general Java application to a blockchain application.
+I conceive a similar idea to RM2PT of generating a blockchain application out of a requirement document or porting a general Java application to a blockchain application. The condition checking should be possible since Solythesis~\cite{li2020securing} compiles Solidity source code and inserts runtime checking for the invariants. Solythesis invented delta update and delta check techniques so it doesn't have to suffix the checking statements to every transactions.
 
-After we got a working prototype, we need to add missing functions, optimize it, and refactor it into our desired application.
-RefDiff~\cite{silva2020refdiff} and RMiner~\cite{tsantalis2018accurate} can detect refactoring types and help us write commit message. Nonetheless, they have to read complete content of the changed files before and after a commit in order to run a detection.
+The most popular consensus algorithms, namely Poof of Work, Poof of Stake, and Practical Byzantine Fault Tolerance, need (a group of) miners to run the same piece of code to check if they got the same result, which is so-called duplicated computing~\cite{shae2018transform}. The theories of distributed computing may not be helpful here.
 
-Since each commit can be concisely represented by a diff, I believe using diff as input for analysis is promising because the size of diff is much smaller than the whole solution and the analysis tool can run much faster.
+Nevertheless, the execution of smart contract exhibits differences to the conventional processes.
+The local states of one smart contract can only be modified by its own code. Attackers cannot directly manipulate the working memory of a smart contract.
+All major blockchain platforms, including Ethereum, Bitcoin, and HyperLedger Fabric do not support multi-threading in smart contract, despite of attempts~\cite{anjana2019efficient,yu2018parallel} to add it. The computer of a miner only has one runtime of one smart contract and the smart contract only needs to add locks to safeguard inter-smart contract reentrancy.
+
+When we identify functional implementations transformable to smart contracts, we have to keep these properties in mind. For example if one conventional application runs in parallel, we cannot transform it to smart contract, or if the parallelism is just for performance, we may transform to a serial manner.
+
+Such identification should be done by neural networks. As \etal{Allamanis} pointed out, NLP tools are our friends in programming language processing.
+\etal{Jiang}~\cite{jiang2017} collected a dataset of \num{1006} repositories,
+and we can use a similar way to build our own dataset, not to mention~\cite{alexandru2017replicating} released a tool to scrape GitHub repos.
+
+
+
+
+\section{Datasets}
+Besides collecting conventional applications from GitHub,
+there are several commonly used use cases (datasets) in requirement engineering.
+The Common Component Modeling Example (\cocome)~\cite{herold2008cocome} describes a trading system in a supermarket setting.
+The system has cash desks that scan products and allow customers to pay by credit card or cash. It also performs administrative tasks like order products, open or close stores, etc.
+{\cocome} is basically a local, single-user system with no parallelism handling.
+RM2PT is fully tested on the {\cocome} test set and we can use {\cocome} as a way to understand RM2PT and develop our own transformation.
+
+SLEX-Web~\cite{jantan2012extension} is a web application for school. It not only offers information about department, programs, courses, and researchers, but also features interactions between students and teachers via an e-learning system as well as quizzes.
+I think this application is a good fit for smart contract because blockchain can secure the student grades and other data.
+
+
+Dao~\cite{dao2019challenges} implemented a Vietnamese certificates application called ECefblock running on HyperLedger Fabric. This smart contract is written in MVC pattern. It has a UML class diagram as a requirement document. As RM2PT generates conventional applications in MVC pattern, I may be able to reuse certain rules from RM2PT, and use ECefblock to study how to transform smart contract into MVC.
+
+
+%After we got a working prototype, we need to add missing functions, optimize it, and refactor it into our desired application.
+%RefDiff~\cite{silva2020refdiff} and RMiner~\cite{tsantalis2018accurate} can detect refactoring types and help us write commit message. Nonetheless, they have to read complete content of the changed files before and after a commit in order to run a detection.
+
+%Both {\gnudiff} and {\gitdiff} are able to show the difference character by character between two text files or commits.
+%Changes to multiple files can be recorded in a single diff file.
+%In terms of the diff format, a line starting with double at-symbol (\code{@@}) signals the starting of a hunk where the files differ.
+%Diff files generated by {\gitdiff} have optional hunk headers appended at the end of the \code{@@} lines.
+
+
+%Since each commit can be concisely represented by a diff, I believe using diff as input for analysis is promising because the size of diff is much smaller than the whole solution and the analysis tool can run much faster.
