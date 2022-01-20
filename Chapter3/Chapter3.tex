@@ -2,55 +2,67 @@
 
 \section{Research Problems}
 
+Blockchain technology is a ground-breaking innovation in decentralized information technology.
+A smart contract is a program running on a blockchain platform.
+Businesses like using it as a signed contract or an agreement to regulate the stakeholders for various benefits.
+However, it is often a big barrier for developers when they rewrite existing applications into smart contracts~\cite{dao2019challenges}.
+Once a smart contract is deployed, it's hard to revise it.
 
-Software development typically involves requirements elicitation, analysis, design, coding, testing, and operation. We notice major difficulties in software development happen in the requirements elicitation phase and the coding or implementation phase.
+Hence, developers need to implement smart contracts correctly in one shot.
 
-In the requirements elicitation phase, developers have to clarify requirements, find errors or oversights in the requirements, where a lot of elbow grease is required. Then the development goes to the coding phase. Besides adding functions, developers have to review each other's code, do refactoring, and keep the codebase clean. Maintaining the codebase is another hard work.
 
+
+%In the requirements elicitation phase, developers have to clarify requirements, find errors or oversights in the requirements, where a lot of elbow grease is required. Then the development goes to the coding phase. Besides adding functions, developers have to review each other's code, do refactoring, and keep the codebase clean. Maintaining the codebase is another hard work.
 
 
 \section{Aims and Objectives}
 
-I want to find some way to help software development go smoothly and error-free, help developers write programs faster and reduce headache in maintaining the programs.
+Businesses are already using conventional software to help deal with their business logic.
+Some of these software are open source and hosted on GitHub.
+Since these software are typically well-tested, if we can transform these applications into smart contracts, we will save a lot of labor and get our implementation error-free.
 
-I find it is desirable to have a tool that generates prototypes directly from requirements with much human intervention, so that requirement engineers can run the prototype and find issues in the requirements, consult with the clients, and fix the issues as early as possible.
+Although Bitcoin and Ethereum are both popular platforms, I want to focus on smart contracts on HyperLedger Fabric.
+HyperLedger Fabric is a permissioned network and there are authorities controlling who can join the network, thus preferred by businesses.
+The smart contracts on HyperLedger Fabric can be developed in Java, NodeJS, or Go.
+In my research, I contemplate generating source code in Java because RM2PT transforms requirement documents into Java desktop programs,
+and I should be able to reuse its rules to transform smart contracts.
+
+To archive this, I should study characteristics of blockchains and smart contracts, find out which functional implementations are transformable to smart contracts.
+Next, I will train classification neural networks to automatically identify which conventional implementations are transformable.
+Then, during the next transformation phase, we can either transform based on fixed rule sets or use neural networks again.
+Finally, the transformed smart contracts must be verified and safe and follow the original specifications.
+
+I may bake the static analysis or runtime checking into the transformation or add them as a post-processing step.
+The analysis will make sure the smart contracts do not have common bugs, e.g., reentrancy problems, coin stealing, etc.
+I hope to find a (mathematical) model to formally describe the smart contract or the interactions so that certain properties can be proved.
+rCOS~\cite{ke2012rcos} is a formal model-driven engineering method for component-based software, which I can apply to smart contract.
+I can also define some partial order by refinement calculus to prove each conversion does not break pre- and post-conditions, etc.
 
 
-\begin{figure}[ht]
-\begin{lstlisting}[language=diff, breaklines=true, numbers=left, xleftmargin=2em]
-diff --git a/src/.../TldPatterns.java b/src/.../TldPatterns.java
-old mode 100644
-new mode 100755
-diff --git a/src/.../Chars.java b/src/.../Chars.java
-index a0cf5bd..e26dca8 100644
---- a/src/.../Chars.java
-+++ b/src/.../Chars.java
-@@ -43,7 +43,7 @@ import java.util.RandomAccess;
-* @author Kevin Bourrillion
-* @since 1
-*/
-- public class Chars {
-+ public final class Chars {
-	private Chars() {}
-}
-\ No newline at end of file
-\end{lstlisting}
-\caption{A diff file}
-\label{fig:example-diff}
-\end{figure}
 
-In the coding phase, code review is a key to enforce software quality, where one developer reviews another developer's code. The new code is typically organized in a pull request, a side branch.
-I believe code review can be made easy by assigning different types of reviews to different specialists. In a version control system, a commit can be represented by a diff, and I think we can use diff to classify pull requests. \autoref{fig:example-diff} shows an example diff file, where we can see the declaration of class \code{Chars} is changed and there is no other refactoring.
+
+
+%I want to find some way to help software development go smoothly and error-free, help developers write programs faster and reduce headache in maintaining the programs.
+
+%I find it is desirable to have a tool that generates prototypes directly from requirements with much human intervention, so that requirement engineers can run the prototype and find issues in the requirements, consult with the clients, and fix the issues as early as possible.
+
+
+
+%In the coding phase, code review is a key to enforce software quality, where one developer reviews another developer's code. The new code is typically organized in a pull request, a side branch.
+%I believe code review can be made easy by assigning different types of reviews to different specialists. In a version control system, a commit can be represented by a diff, and I contemplate we can use diff to classify pull requests. \autoref{fig:example-diff} shows an example diff file, where we can see the declaration of class \code{Chars} is changed and there is no other refactoring.
 
 
 \section{Relevance, Novelty and Originality}
 
-To generate a prototype from a requirement document, I want to base my work on Yang's RM2PT. RM2PT generates vanilla Java source code, and since blockchain and smart contract are hot research topics, I want to extend RM2PT so that smart contract applications can be generated.
+\etal{Yang}~\cite{yang2019automated} proposed their own DSL for requirement document writing,  and their RM2PT program generates vanilla Java source code from the DSL. Since blockchain and smart contract are hot research topics, I want to extend RM2PT so that smart contract applications can be generated.
 
-Another limitation of RM2PT is that it requires the requirement document to be written in a DSL. Many open source Java repositories only give the source code, but no requirement documents.
-I will try to invent a technology that as long as one Java program is written in a pattern, for instance Model-View-Controller, I'm able to convert it to a smart contract application, if it meets other blockchain-specific properties.
+%Another limitation of RM2PT is that it stipulates that the requirement document to be written in a DSL. Many open source Java repositories only give the source code, but no requirement documents.
 
-The transformation rules encoded in RM2PT is manually devised without much theoretical support. On one hand I can use artificial intelligence to find mappings between document and code, and generate rules automatically. On the other hand, I can study the theories behind smart contract, find out which local programs can be safely converted to smart contracts and which patterns they follow.
+I will try to invent a technology that as long as one Java program is written in certain patterns, for instance Model-View-Controller, I'm able to transform it to a smart contract application, if it meets other blockchain-specific properties.
+
+The transformation rules encoded in RM2PT is manually devised without much theoretical support. On one hand I can use artificial intelligence to find mappings between the source and the target, and generate rules automatically. On the other hand, I can study the theories behind smart contract, find out which local programs can be safely converted to smart contracts and which patterns they follow.
+
+
 
 It is the current trend to use neural networks to analyze program source code.
 Researchers~\cite{xu2019commit,liu2019generating} working in commit message generation gradually found neural machine translation (NMT),
@@ -62,15 +74,17 @@ then the decoder transforms the internal representation to human readable text, 
 I do not find works use NMT for commit classification.
 
 
+If I use neural networks to classify the source code of conventional applications, I do not need a rigid syntax parser.
+The output of my network will be a percentage, indicating how confident my network is that the input belongs to a given label.
 
-Taking diff as algorithm input, program analysis is specialized to diff analysis.
-A few works in diff analysis start to embrace machine learning techniques.
-\etal{Loyola}~\cite{loyola2017neural} developed a neural network model to generate text description from diff files.
-Their work relies on a lexer that divides source code into tokens,
-thus it is not end-to-end machine learning.
-\etal{Macho}~\cite{macho2016predicting} employed a random forest classifier and categorized commits into forward engineering, re-engineering, corrective engineering and management.
 
-RefDiff~\cite{silva2020refdiff} and RMiner~\cite{tsantalis2018accurate} can detect refactoring types, including extract method, rename class, pull methods, etc. Nonetheless, they have to read complete content of the changed files before and after a commit in order to run a detection.
 
-What I want to do is to use purely diff with the help of neural network. My approach does not need a rigid syntax parser, and does not read full source or complete content of a file. The output of my network is a percentage, indicating how confident my network is that the input belongs to a given type.
-
+%Taking diff as algorithm input, program analysis is specialized to diff analysis.
+%A few works in diff analysis start to embrace machine learning techniques.
+%\etal{Loyola}~\cite{loyola2017neural} developed a neural network model to generate text description from diff files.
+%Their work relies on a lexer that divides source code into tokens,
+%thus it is not end-to-end machine learning.
+%\etal{Macho}~\cite{macho2016predicting} employed a random forest classifier and categorized commits into forward engineering, re-engineering, corrective engineering and management.
+%
+%RefDiff~\cite{silva2020refdiff} and RMiner~\cite{tsantalis2018accurate} can detect refactoring types, including extract method, rename class, pull methods, etc. Nonetheless, they have to read complete content of the changed files before and after a commit in order to run a detection.
+%
