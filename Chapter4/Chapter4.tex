@@ -34,7 +34,7 @@ In terms of the training dataset, I will take a similar approach and collect it 
 
 \paragraph*{Transformation to Smart Contracts}
 Next, in order to transform functional implementation to smart contracts
-I will base my work on RM2PT and develop a program called RM2HyperLedger, which generates executable source code in Java on HyperLedger Fabric platform.
+I will base my work on RM2PT and develop a program called RM2Hyperledger, which generates executable source code in Java on Hyperledger Fabric platform.
 Initially I will try rule-based transformation where the rules are hand-coded. Thereafter I will attempt on transformation by neural networks.
 
 {\cocome} will be my first study case. I will make sure it can be correctly transformed to a blockchain smart contract. Then I will evaluate my algorithm on other study cases, e.g., SLEX-Web and ECefblock.
@@ -58,7 +58,7 @@ After my conversion tool is implemented, I hope to let people try it so that I c
 
 \paragraph*{Verification of Smart Contracts}
 The input document of RM2PT uses OCL to describe invariants, pre- and post-conditions of an operation, and RM2PT transforms them to Java expressions.
-My RM2HyperLedger should do that same but as~\cite{li2020securing} stated, adding these checks to all operations causes a huge runtime overhead because these checks read data from blochchain, which is a costly operation.
+My RM2Hyperledger should do that same but as~\cite{li2020securing} stated, adding these checks to all operations causes a huge runtime overhead because these checks read data from blochchain, which is a costly operation.
 Nevertheless, I can utilize the results found in the earlier phase and perform static analysis.
 If I got a formal mathematical model, I can use the model to prove the smart contract does not go into a bad state or the coin won't be stolen.
 A SMT solver may be used.
