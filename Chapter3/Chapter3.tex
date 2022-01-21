@@ -7,8 +7,19 @@ A smart contract is a program running on a blockchain platform.
 Businesses like using it as a signed contract or an agreement to regulate the stakeholders for various benefits.
 However, it is often a big barrier for developers when they rewrite existing applications into smart contracts~\cite{dao2019challenges}.
 Once a smart contract is deployed, it's hard to revise it.
-
 Hence, developers need to implement smart contracts correctly in one shot.
+
+Generally speaking many factors affect the tech stack of smart contracts.
+Developers have to decide the data storage, consensus algorithm, throughput, and so on.
+For instance, Bitcoin only approves 7 transactions per second~\cite{croman2016scaling} and thus cannot support a high volume smart contract.
+To eliminate these variables, I will focus my work on Hyperledger Fabric, which is a preferred platform by businesses.
+
+
+%In terms of data storage
+%1. The number of input databases.
+%2. Model type of each input database.
+%3. Mechanism for data transformation.
+
 
 
 
@@ -27,7 +38,7 @@ The smart contracts on Hyperledger Fabric can be developed in Java, NodeJS, or G
 In my research, I contemplate generating source code in Java because RM2PT transforms requirement documents into Java desktop programs,
 and I should be able to reuse its rules to transform smart contracts.
 
-To archive this, I should study characteristics of blockchains and smart contracts, find out which functional implementations are transformable to smart contracts.
+To archive this, I should embark on characteristics of blockchains and smart contracts, find out which functional implementations are transformable to smart contracts.
 Next, I will train classification neural networks to automatically identify which conventional implementations are transformable.
 Then, during the next transformation phase, we can either transform based on fixed rule sets or use neural networks again.
 Finally, the transformed smart contracts must be verified and safe and follow the original specifications.
@@ -65,9 +76,12 @@ The transformation rules encoded in RM2PT is manually devised without much theor
 
 
 It is the current trend to use neural networks to analyze program source code.
-Researchers~\cite{xu2019commit,liu2019generating} working in commit message generation gradually found neural machine translation (NMT),
-which was originally used for translating a natural language to another,
-excelled at translating diff to commit messages.
+Program analysis with traditional methods is still incapable of answering relatively simple questions, for example
+ ``Is this code thread-safe?''~\cite{alexandru2017replicating},
+which might be a relevant question to determine if the program is suitable for smart contract.
+Consequently researchers gradually move away from the traditional methods to neural networks.
+Researchers~\cite{xu2019commit,liu2019generating} embraced neural machine translation (NMT) in commit message generation.
+NMT was originally used for translating a natural language to another, now found excelled at translating diff to commit messages.
 Such an NMT approach has two major components, the encoder and the decoder.
 The encoder reads the diff and encodes it to some internal matrix representation,
 then the decoder transforms the internal representation to human readable text, i.e., the commit messages.

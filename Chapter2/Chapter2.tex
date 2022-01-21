@@ -13,13 +13,27 @@ There are extensive research on Natural Language Processing in combination with 
 Grammformers~\cite{guo2021learning} made an attempt in using transformers. It takes the context text and generates next code statements. The generated statements may contain holes where Grammformers is uncertain about and leaves for developers to fill in.
 
 In order to analyze source code with neural networks, datasets are required to train the networks. The source code repositories on GitHub are often utilized.
-\etal{Jiang}~\cite{jiang2017} collected a dataset of \num{1006} repositories and over 2 million commits from GitHub. This dataset is unlabeled and the code is mostly in Java language with other languages mixed in.
-The dataset created by~\cite{tsantalis2018accurate} focuses on refactoring types. It comprises \num{3188} refactorings found in 538 commits from 185 open-source projects. The dataset is now hosted on \url{https://github.com/aserg-ufmg/RefDiff}. In this dataset, one commit may contain multiple refactoring types and functional changes are permitted. For example, as long as one method is renamed among a great deal of functional changes, the commit is labeled as method renaming.
+\etal{Jiang}~\cite{jiang2017} collected a dataset of \num{1006} repositories from GitHub. This dataset is unlabeled and the code is mostly in Java language with other languages mixed in.
+In the field of program analysis, more and more work has employed neural network techniques~\cite{morgachev2019detection,huo2016learning,gu2016deep}.
+\etal{Alexandru}~\cite{alexandru2017replicating} used NMT to annotate source code tokens with typing,
+and they also implemented an {\sc antlr}-based parser.
+\textsc{JSNice}~\cite{raychev2015predicting} is a neural network model that predicts names of JavaScript identifiers and type annotations of variables.
+\etal{Mou}~\cite{mou2016convolutional} used a convolutional neural network to classify programs by functionalities, such as string manipulations and matrix operations.
+Other uses of neural networks in program analysis include
+detection of variable misuse~\cite{morgachev2019detection},
+bug localization~\cite{huo2016learning},
+API suggestion~\cite{gu2016deep}, and
+code completion~\cite{raychev2014code}.
 
-There are tools helping analyze source code with neural networks~\cite{morgachev2019detection,huo2016learning,gu2016deep},
-generate commit message from diff~\cite{linares2015changescribe,buse2010automatically,huang2020learning},
-generate release notes from commits since the last release~\cite{moreno2016arena}, and so on.
-RefDiff~\cite{silva2020refdiff} and RMiner~\cite{tsantalis2018accurate} read the complete content of the changed files before and after a commit and construct a diff of an internal format, from which they classify the code into certain refactoring types.
+
+The dataset created by the authors of RMiner~\cite{tsantalis2018accurate} focuses on refactoring types. It comprises \num{3188} refactorings found in 538 commits from 185 open-source projects. The dataset is now hosted on \url{https://github.com/aserg-ufmg/RefDiff}. In this dataset, one commit may contain multiple refactoring types and functional changes are permitted. For example, as long as one method is renamed among a great deal of functional changes, the commit is labeled as method renaming.
+RefDiff~\cite{silva2020refdiff} and RMiner read the complete content of the changed files before and after a commit and construct a diff of an internal format, from which they classify the code into certain refactoring types.
+
+%generate commit message from diff~\cite{linares2015changescribe,buse2010automatically,huang2020learning},
+%generate release notes from commits since the last release~\cite{moreno2016arena}, and so on.
+
+
+
 
 \paragraph*{Smart Contracts}
 
@@ -57,7 +71,7 @@ In runtime checking, researchers have invented a number of new programming langu
 ContractLarva~\cite{ellul2018runtime} allows users to supply pre- and post-conditions for smart contract transactions and enforces them at runtime. Unlike Solythesis~\cite{li2020securing}, it does not support quantifiers natively.
 The drawback of these new languages is that they often sacrifice expressiveness (e.g., no longer Turing-complete) to gain correctness or security guarantees.
 
-Statically verifiying a smart contract is hard because
+Statically verifying a smart contract is hard because
 smart contracts frequently interact with unverified, potentially adversarial outside code, which substantially weakens the assumptions that formal analyses can (soundly) make~\cite{bram2021rich}.
 
 \cite{tolmach2021survey}~summarized the two steps on statically verifying the correctness of smart contract and presented related works.
