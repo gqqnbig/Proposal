@@ -1,29 +1,37 @@
 \chapter{Conclusions}
 
-In this proposal, I outlined my research plan in the field of software development.
-Divided by the phases of waterfall model, I see multiple opportunities in improving requirement engineering and implementation phases.
-I focus on researching tools analyzing requirements and program source code with the help of artificial intelligence or neural networks.
+In this proposal, I outlined my research plan in the field of smart contract and computing theory.
 
-In requirement engineering, having a prototype to verify the requirements reduces failings in software projects and cut costs in follow-up modifications if a requirement error was found in the implementation phase. Make a requirement prototype is still laborious, thus automatically generating a prototype from requirement documents is beneficial.
-In light of the wide adoption of blockchain technologies and smart contract by businesses, my idea in this area is to generate smart contracts from business contracts.
-RM2PT and other state-of-the-art demonstrated the possibilities of doing such a conversion though not 100\% of code can be correctly generated.
+Businesses and organizations are motivated to use smart contracts in their daily operations
+but coding smart contracts is a big barrier even for senior developers.
+Thus it is an opportunity to automatically transform conventional functional implementations to smart contracts with the help of artificial intelligence or neural networks.
+RM2PT and other state-of-the-art demonstrated the possibilities of doing such a conversion despite not 100\% of code can be correctly generated.
 
-To prove the conversions are sound, theories of programming languages may be studied. I will investigate theoretical differences between smart contract and traditional local programs,
+
+To prove the conversions are sound, theories of programming languages will be studied. I will investigate theoretical differences between smart contract and conventional local programs,
 look into ways in mapping object operations happening in memory to blockchain operations, define some partial order by refinement calculus to prove each conversion does not break pre- and post-conditions, etc.
-
-After a working prototype is generated, the software development enters the implementation phase. Developers have to implement missing functions that are not auto-generatable, work on meeting non-functional requirements, and constantly refactor the codebase.
-I have already published a paper on classifying identifier renaming from commits to a version control system.
-This technology takes part in the code review step and help control code quality and prevent bugs.
-Future works include classifying more revision types, e.g., method moving and bug fixing, etc.
+Given a conventional application, I shall use a neural network to identify if this application is transformable to a smart contract in Hyperledger Fabric.
+I have already published a paper on classifying identifier renaming from commits to a version control system, which is a cornerstone of the following classification.
 
 
 
 
+%In requirement engineering, having a prototype to verify the requirements reduces failings in software projects and cut costs in follow-up modifications if a requirement error was found in the implementation phase. Make a requirement prototype is still laborious, thus automatically generating a prototype from requirement documents is beneficial.
+%In light of the wide adoption of blockchain technologies and smart contract by businesses, my idea in this area is to generate smart contracts from business contracts.
+
+
+%After a working prototype is generated, the software development enters the implementation phase. Developers have to implement missing functions that are not auto-generatable, wrestle non-functional requirements, and constantly refactor the codebase.
+%This technology takes part in the code review step and help control code quality and prevent bugs.
+%Future works include classifying more revision types, e.g., method moving and bug fixing, etc.
+
+
+%Only data of application that requires immutable will
+%be packaged inside blocks. This helps decrease storage, replication and lookup
+%costs for the developed decentralized applications.
 %
-%A method can be characterized by its input, techniques, and output.
-%The input of our work is diff files, the techniques are neural networks, and the output is classification.
-%Thus, in this section we first describe the format of diff files, and then introduce the related work in the aspects of input, techniques, and output.
-%
+%channel
+
+
 %
 %
 %
@@ -35,17 +43,6 @@ Future works include classifying more revision types, e.g., method moving and bu
 %
 %
 %
-%When the input is source code rather than diff,
-%the field becomes program analysis, where more and more work has employed neural network techniques.
-%\etal{Alexandru}~\cite{alexandru2017replicating} used NMT to annotate source code tokens with typing,
-%and they also implemented an {\sc antlr}-based parser.
-%\textsc{JSNice}~\cite{raychev2015predicting} is a neural network model that predicts names of JavaScript identifiers and type annotations of variables.
-%\etal{Mou}~\cite{mou2016convolutional} used a convolutional neural network to classify programs by functionalities, such as string manipulations and matrix operations.
-%Other uses of neural networks in program analysis include
-%detection of variable misuse~\cite{morgachev2019detection},
-%bug localization~\cite{huo2016learning},
-%API suggestion~\cite{gu2016deep}, and
-%code completion~\cite{raychev2014code}.
 %
 %Taking diff as input, program analysis is specialized to diff analysis.
 %\etal{Moreno}~\cite{moreno2016arena} generated release notes by reading changes to program source code and documentations, as well as taking into consideration issues from software repositories.
@@ -65,7 +62,7 @@ Future works include classifying more revision types, e.g., method moving and bu
 %
 %
 %There are existing works in the field of program analysis,
-%but research is struggling to answer questions like ``Why does this method crash?'', ``Is this code thread-safe?''~\cite{alexandru2017replicating}.
+%but research is struggling to answer questions like ``Why does this method crash?'',
 %To enrich the experience towards solving the broader problem of code classification,
 %we carry out this experiment to tackle one specific type of code modification recognition
 %--- renaming of identifiers.
@@ -101,7 +98,7 @@ Future works include classifying more revision types, e.g., method moving and bu
 %The final dataset obtained has \num{73080} examples.
 %
 %We contribute in this work a probabilistic neural network classification model with diff files as input, telling whether the input is renaming or not.
-%The model was specifically trained against the Java programming language, and
+%The model was tailored against the Java programming language, and
 %we believe minor tweaks can allow it to work on other programming languages.
 %Besides the neural network model, we also present a dataset that labels 73K Java diff files with whether they are renaming commits,
 %together with a syntax analyzer for Java diff files based on {\sc antlr}.
