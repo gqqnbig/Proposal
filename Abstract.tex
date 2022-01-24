@@ -3,11 +3,25 @@
 A smart contract is a program running on a blockchain platform.
 Businesses often use it as a signed contract or an agreement to regulate the stakeholders
 because smart contracts reduce the need in trusted intermediators, arbitrations, and enforcement costs.
-Since there are existing conventional applications running business logic,
+Given that there are existing conventional applications running business logic,
+and coding smart contracts is a big barrier even for senior developers,
 it is ideal to transform these applications to smart contracts.
+Most of these existing applications are open source on GitHub, thus it is feasible to obtain the functional implementation and run the transformation.
 
-Due the properties of blockchains and smart contracts, we do not think all conventional applications can be safely transformed to smart contracts.
+Many factors affect the tech stack of smart contracts, including data storage, consensus algorithm, throughput, and so on.
+To eliminate these variables, I will focus my work on Hyperledger Fabric.
+Hyperledger Fabric is a mature blockchain platform, allows smart contracts to be written in Java, and is permissioned.
+Hence this platform is preferred by many businesses.
+
+Due to the properties of blockchains and smart contracts, we do not think all conventional applications can be safely transformed to smart contracts.
 Thus in this paper we propose to identify the patterns of conventional applications and tell which is transformable.
-Then we implement algorithms to transform these applications to smart contracts.
+A mathematical model, e.g., rCOS and partial order, may be needed to formally describe the smart contract or the interactions so that certain properties can be proved.
+Next I will use a neural network to classify the conventional applications into different categories, some of which are transformable.
+Finally I implement algorithms to transform these applications to smart contracts.
+My work is based on RM2PT, which transforms requirement documents to Java desktop application. I will reuse its rules and transform to smart contract.
+Pre-conditions, post-conditions, and invariants may be inserted into the output smart contract so that we know the contract runs according to the requirements.
+Static analysis may be used as well.
+
+
 
 \textbf{\textit{Keywords ---}} neural networks, smart contract, blockchain
