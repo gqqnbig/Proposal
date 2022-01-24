@@ -42,15 +42,15 @@ Initially I will try rule-based transformation where the rules are hand-coded. T
 
 Data persistence of smart contract is a challenge.
 The API of the blockchain platform is pretty general and naive. It treats the blockchain as a key-value store and there is no relation in objects. One object must hold an unique identifier (PK) of another object, and load the object from the chain when needed through the PK.
-At present, most blockchain systems store data with the on-chain approach, i.e., the system saves application data to the chain, and then loads the data from the chain for execution.
+At present, most blockchain systems store data on-chain, i.e., the system saves application data to the chain, and then loads the data from the chain for execution.
 Another off-chain method refers to storing the hash value of the data on the chain, and using the hash value as an index, storing the complete contract code on a different source.
 For my project, I will pilot the on-chain approach due to its simplicity. I will add or locate PK of each entity, and add serialization support.
 
-When a method of a smart contract is called, the results are not yet committed to the chain until miners verified the results and reached a consensus. Hence, the post-condition checking may not happen within the smart contract. I will evaluate multiple way in implementing the post-condition, including a second smart contract, checking program local states, custom consensus algorithm, and lazy evaluation.
-I shall also check blockchain validation frameworks and review how other blockchain programs were implemented.
-
 Another potential contribution in this area is to invent a library for saving and loading data to blockchain like Object Relational Mapping because
 not all applications care the exact details of synchronizing object changes happening in memory to the blockchain.
+
+When a method of a smart contract is called, the results are not yet committed to the chain until miners verified the results and reached a consensus. Hence, the post-condition checking may not happen within the smart contract. I will evaluate multiple way in implementing the post-condition, including a second smart contract, checking program local states, custom consensus algorithm, and lazy evaluation.
+I shall also check blockchain validation frameworks and review how other blockchain programs were implemented.
 
 After my conversion tool is implemented, I hope to let people try it so that I can find out how much my tool can actually save people's time given even experienced developers find it's hard to code smart contracts correctly~\cite{dao2019challenges}, and see to what extend people have to revise the auto-generated code. Then I will list these numbers in my paper for practically proving the effectiveness of my tool.
 
