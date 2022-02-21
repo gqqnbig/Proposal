@@ -1,0 +1,539 @@
+\documentclass[xcolor=svgnames]{beamer}
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes,positioning,calc,fadings, shapes.geometric}
+
+\usepackage{listings}
+\lstset{
+	%  %行号
+	%  %numbers=left,
+	%  %背景框
+	%  %framexleftmargin=10mm,
+	%  %frame=none,
+	%  %背景色
+	%  %backgroundcolor=\color[rgb]{1,1,0.76},
+	%  %样式
+	keywordstyle=\color{blue}\bfseries,
+	%  identifierstyle=\bf,
+	%  numberstyle=\color[RGB]{0,192,192}, %行号的样式
+	commentstyle=\it\color[RGB]{0,96,96},
+	stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+	%  %显示空格
+	%  %showstringspaces=false,
+	basicstyle=\ttfamily\scriptsize,
+	columns=flexible, %修正大写字母间距过小
+	breaklines=true, %对过长的代码自动换行
+	%  morekeywords={BEGIN}
+}
+
+\definecolor{diffstart}{named}{Grey}
+\definecolor{diffincl}{rgb}{0, 0.35, 0}
+\definecolor{diffrem}{rgb}{0.72, 0, 0}
+\lstdefinelanguage{diff}{
+	%basicstyle=\ttfamily\small,
+	morecomment=[f][\color{diffstart}]{@@},
+	morecomment=[f][\color{diffincl}]{+\ },
+	morecomment=[f][\color{diffrem}]{-\ },
+}
+
+
+\usepackage[group-separator={,},group-minimum-digits={3}]{siunitx}
+
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage{contour}
+\usepackage{caption}
+\usepackage{subcaption}
+
+\newcommand{\code}[1]{\texttt{#1}}
+
+\tikzstyle{every picture}+=[remember picture]
+
+\tikzstyle target=[baseline, inner sep=0pt, remember picture]
+
+\title{Identification of Functional Implementation in Conventional Applications and Transformation to Smart Contracts}
+\author{Qiqi Gu\\P0907870}
+\institute{%
+\tikz[style=target]{\node [anchor=base, baseline, inner sep=0pt, align=center] (mpi text)
+	{School of Applied Sciences \\ Macao Polytechnic Institute, Macao SAR, China};
+}%
+}
+\date{March 2, 2022}
+
+\begin{document}
+
+{
+\usebackgroundtemplate{\includegraphics[height=\paperheight]{background.jpg}}%
+
+\begin{frame}[plain]
+	\maketitle
+
+	\begin{tikzpicture}[overlay]
+	\node[inner sep=0pt, left=0.2cm of mpi text]{\includegraphics[width=1.2cm]{mpi-logo.png}};
+	\end{tikzpicture}
+\end{frame}
+}
+
+\begin{frame}{Outline}
+	\tableofcontents
+\end{frame}
+
+\section{Background}
+\begin{frame}{Background}
+\begin{itemize}
+	\item Modern software development relies on version control systems, e.g., git.
+%	\item Each commit consists of a change set and a commit message.
+	\item Developers make pull requests and when the PR is reviewed, it gets merged to the master branch.
+	\item Reviewing different PR requires varied skills.
+	\begin{itemize}
+		\item functional, refactoring, docs, tests, etc.
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Background}
+\begin{itemize}
+\item 2/3 of open source projects on GitHub have just one or two maintainers~\cite{avelino_what_2015}.
+	\begin{itemize}
+		\item<only@2-> fastlane has 1000+ contributors but only 7 maintainers.
+		\item<only@3-> pandas has 2500+ contributors but 35 maintainers.
+	\end{itemize}
+\item<only@4-> Reviewing code commits is a burden for the slim maintainers.
+\item<only@5-> We believe that commits can be classified based on their diff.
+\item<only@5-> Proper classification of commits can remedy incomplete or inaccurate commit messages written manually.
+\end{itemize}
+
+\end{frame}
+
+
+\section{Contribution}
+
+\begin{frame}{Contribution}
+\begin{itemize}
+	\item Classify a commit (or a pull request) whether the commit only changes an identifier.
+	\item Created a neural network classification model with diff files as input, telling whether the input is identifier renaming or not.
+	\item The model can take part in Continuous Integration and assign pull requests to proper reviewers.
+	\item Trained on Java 7
+\end{itemize}
+\end{frame}
+
+
+% lstlisting requires fragile option.
+\begin{frame}[fragile]{Diff Format}
+Each commit can be viewed as a diff file.
+
+\onslide<3->{Only
+\tikz[style=target]{\node [anchor=base, baseline, inner sep=0pt] (a) {line 8 to 15 };
+\draw[red, overlay]([shift={(-.1,.1)}]a.north west) rectangle ([shift={(.1,-.1)}]a.south east);
+}
+are fed into our model.}
+
+\begin{figure}
+\begin{lstlisting}[language=diff, breaklines=true, numbers=left, xleftmargin=2em, escapechar=\%,]
+diff --git a/src/.../TldPatterns.java b/src/.../TldPatterns.java
+old mode 100644
+new mode 100755
+diff --git a/src/.../Chars.java b/src/.../Chars.java
+index a0cf5bd..e26dca8 100644
+--- a/src/.../Chars.java
++++ b/src/.../Chars.java
+%\tikz[style=target]{\node [anchor=base, yshift=0.2cm] (tl) {}}%@@ -43,7 +43,7 @@ import java.util.RandomAccess; %\tikz[style=target]{\node [anchor=base, yshift=0.2cm] (tr) {}}%
+* @author Kevin Bourrillion
+* @since 1
+*/
+- public class Chars {
++ public final class Chars {
+    private Chars() {}
+%\tikz[style=target]{\node [anchor=base] (bl) {}}%}
+\ No newline at end of file
+\end{lstlisting}
+\end{figure}
+
+\onslide<2->
+\begin{tikzpicture}[remember picture,overlay]
+	\node[right=of tr, anchor=south, yshift=0.3cm] (ex) {hunk header};
+	\path[blue, -, transform canvas={yshift=-0.1cm,xshift=-2pt}] (ex) edge (tr);
+\end{tikzpicture}
+
+\onslide<3->
+\begin{tikzpicture}[remember picture,overlay]
+	\path[red, -] (tl.north west) edge (bl.south west);
+	% \path[blue, -] doesn't need draw option because - is an arrow option. The draw is implicit.
+	\path[red, draw] (bl.south west) -| (tr.north east);
+	\path[red, -] (tr.north east) edge (tl.north west);
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Overview of the workflow}
+The two operations on the left are for creating labeled dataset.
+
+The three on the right are model layers.
+
+\end{frame}
+
+\section{Create Labeled Dataset}
+\begin{frame}{Create Labeled Dataset}
+There are no off-the-shelf datasets suitable for our purpose.
+
+\begin{figure}
+\centering
+\tikzstyle{dataset} = [draw=black, minimum width=1cm, align=center]
+\tikzstyle{arrow} = [thick, ->, >=stealth]
+\begin{tikzpicture}
+\node (jiang) [dataset] {... ?\\\color{Green}{... ?}\\\color{red}{... ?}\\... ?};
+\node (exp1) [below=0.3cm of jiang, align=center] {Jiang dataset~\cite{jiang2017}\\2 million commits};
+
+\onslide<2->{
+\node (clean) [dataset, right=1.8cm of jiang] {... ?\\... ?\\... ?};
+\node [align=center, anchor=north] at (clean |- exp1.north) {62K commits};
+\draw [arrow] (jiang) -- (clean);
+}
+
+\onslide<3->{
+\node (our) [dataset, right=1.8cm of clean] {... ?\\... ?\\... ?\\... ?\\... ?};
+\node [align=center, anchor=north] at (our |- exp1.north) {Our dataset\\73080 commits};
+\draw [arrow] (clean) -- (our);
+}
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+\begin{frame}[t]{Create Labeled Dataset}
+\begin{itemize}
+\item  We implemented a diff syntax analyzer in {\sc antlr} 4 with Java 7 grammar, which labeled individual commits as ``yes'' or ``no''.
+\item<only@2-> The code in the beginning and at the end of a hunk may not be of complete syntax units.
+\item<only@2-> {\sc antlr} 4 comes with error recovery heuristics summarized as single-token insertion and single-token deletion~\cite{parr2013definitive},
+so that it can figure out the type of a unit by the longest match.
+\end{itemize}
+
+\begin{onlyenv}<1>
+\begin{figure}
+\centering
+\tikzstyle{dataset} = [draw=black, minimum width=1cm, align=center]
+\tikzstyle{arrow} = [thick, ->, >=stealth]
+\begin{tikzpicture}
+\node (our) [dataset] {... ?\\... ?\\... ?\\... ?\\... ?};
+\node [align=center, below=0.3cm of our] {Our dataset\\73080 commits};
+\node (labeled) [dataset, right=2.5cm of our] {... no\\... yes\\... no\\... no\\... yes};
+\node [align=center, below=0.3cm of labeled] {Our labeled dataset};
+\draw [arrow] (our) -- (labeled);
+\end{tikzpicture}
+\end{figure}
+\end{onlyenv}
+
+\end{frame}
+
+\begin{frame}[fragile]{Create Labeled Dataset}
+
+\begin{figure}
+\begin{lstlisting}[language=diff, breaklines=true, numbers=left, xleftmargin=2em, firstnumber=9, escapechar=\%,]
+%\tikz[style=target]{\node [anchor=base, yshift=0.2cm] (c) {}}%* @author Kevin Bourrillion
+* @since 1
+*/
+- public class Chars {
++ public final class Chars {
+    private Chars() {}
+}
+\end{lstlisting}
+\end{figure}
+
+\begin{tikzpicture}[remember picture,overlay]
+	\node[right=of c, anchor=south west, yshift=0.3cm, xshift=1cm, text centered, align=left] (ex) {Antlr adds /* so that \\ this piece becomes a block comment.};
+	\path[blue, draw, ->, transform canvas={yshift=-0.1cm,xshift=-2pt}] (ex) -| (c);
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Definition of Identifier Renaming}
+\begin{enumerate}
+	\item Renaming of only one identifier is allowed.
+	If a commit changes multiple identifiers, the commit is classified as ``no''.
+
+	\item Renaming of method overloads is treated as a single renaming.
+	Renaming of a class leading to renaming of its constructors is a single renaming.
+
+	\item Package renaming is labeled as ``no''.
+
+	\item If comments are changed, the diff is ``no''.
+
+	\item An empty diff file is ``no''.
+\end{enumerate}
+\end{frame}
+
+\section{Create Neural Network Model}
+\begin{frame}{Model}
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, draw=black, minimum width=3cm, text centered, align=center]
+\tikzstyle{process} = [rectangle, draw=black, inner sep=0.1cm, text centered, align=center]
+
+\tikzstyle{arrow} = [thick, ->, >=stealth]
+\begin{figure}
+	\begin{tikzpicture}[node distance=0.5cm and 1cm]
+		\node (text) [process, anchor=south west] {Text vectorization \\ (standaize, split, n-gram)};
+		\node (embedding) [process, below=of text] {Word embedding};
+		\node (dense) [process, below=of embedding] {Dense layers};
+		\node (output) [io, below=of dense] {Probabilities};
+
+		\draw [arrow] (text) -- (embedding);
+		\draw [arrow] (embedding) -- (dense);
+		\draw [arrow] (dense) -- (output);
+	\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Model}
+\begin{itemize}
+\item Text vectorization layer standardizes all numbers to an internal token.
+\item Splits the text by white spaces and punctuation characters.
+\item We keep multi-word identifiers intact because it achieves higher accuracy~\cite{haiduc2010use}.
+\item Tokens are combined into 2-grams.
+\item The layer limits maximum vocabulary to 10K and the infrequent ones are discarded.
+\item When the text vectorization layer sees a word not in the capped vocabulary, the word will be represented by a special \code{UNK} token.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Model - Text Vectorization}
+
+\newcommand{\tokenbox}[1]{{\setlength{\fboxsep}{1pt}\fbox{\tt\vphantom{\textbackslash}#1}}}
+\begin{onlyenv}<1>
+\begin{figure}
+\begin{lstlisting}[language=diff, breaklines=true, escapechar=\%,]
+- public void runDefaultOutgoing(Execution exceution) {
++ public void runDefaultOutgoing(Execution execution) {
+-   performOutgoingBehavior(exceution, true, null);
++   performOutgoingBehavior(execution, true, null);
+}
+\end{lstlisting}
+\end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<2-9>
+\begin{figure}
+\begin{lstlisting}[language=diff, breaklines=true, escapechar=\%,]
+24 %\alt<3->{85}{public void}% %\alt<4->{1}{runDefaultOutgoing}%%\alt<5->{ 4 }{(}%%\alt<6->{8489}{Execution}% %\alt<7->{1}{exceution}%%\alt<8->{ 5}{)}% %\alt<9->{15}{\{}%
++ %\alt<3->{85}{public void}% %\alt<4->{1}{runDefaultOutgoing}%%\alt<5->{ 4 }{(}%%\alt<6->{8489}{Execution}% execution%\alt<8->{ 5}{)}% %\alt<9->{15}{\{}%
+24   performOutgoingBehavior%\alt<5->{ 4 }{(}%exceution, true, null%\alt<8->{ 5}{)}%;
++   performOutgoingBehavior%\alt<5->{ 4 }{(}%execution, true, null%\alt<8->{ 5}{)}%;
+}
+\end{lstlisting}
+\end{figure}
+\end{onlyenv}
+
+\begin{onlyenv}<10->
+\begin{figure}
+\begin{lstlisting}[language={}, breaklines=true, escapechar=\%,]
+24 85 1 4 8489 1 5 15
+23 85 1 4 8489 %\alt<11->{4420}{execution}%%\alt<8->{ 5}{)}% %\alt<9->{15}{\{}%
+24 performOutgoingBehavior(%\alt<11->{4420}{execution}%, true, null);
+23 performOutgoingBehavior(%\alt<11->{4420}{execution}%, true, null);
+}
+\end{lstlisting}
+\end{figure}
+\end{onlyenv}
+
+vocabulary:\\
+\tokenbox{{\textbackslash}n -} -> 24\\
+\tokenbox{public void} -> 85\\
+\tokenbox{runDefaultOutgoing} -> \code{UNK} (1)\\
+\tokenbox{(} -> 4\\
+\tokenbox{Execution} -> 8489\\
+\tokenbox{execution} -> 4220\\
+\tokenbox{)} -> 5\\
+\tokenbox{\{} -> 15\\
+\tokenbox{{\textbackslash}n +} -> 23\\
+...\\
+\end{frame}
+
+\begin{frame}[fragile]{Model - Text Vectorization}
+
+\begin{tikzpicture}
+\node (text) {\begin{lstlisting}[language=diff, breaklines=true]
+- public void runDefaultOutgoing(Execution exceution) {
++ public void runDefaultOutgoing(Execution execution) {
+-   performOutgoingBehavior(exceution, true, null);
++   performOutgoingBehavior(execution, true, null);
+}
+\end{lstlisting}};
+\node (matrix) [below=of text] {$[ 24, 85, 1, 4, 8489, 1, 5, 15, 23, 85, 1, 4, 8489, 4420, 5, 15, \cdots]$};
+
+\draw [thick, ->, >=stealth] (text) -- (matrix);
+\end{tikzpicture}
+
+
+
+\end{frame}
+
+\begin{frame}{Model}
+\begin{itemize}
+\item The word embedding layer transforms each token to a vector of length 16. It was trained from our diff dataset.
+\item The input is flattened and goes through the dense layers of size 100, 10, and 1, respectively with RELU as activation function.
+\item The total number of parameters of our neural network model is \num{6428332}.
+\end{itemize}
+\end{frame}
+
+\section{Evaluation}
+
+
+\begin{frame}{Dataset}
+Our dataset has \num{73080} examples but during evaluation we ignored examples bigger than 10 KB, getting a filtered dataset of \num{72079} files.
+
+\onslide+<4->{
+For training and validation set, we sub-sampled the ``no'' examples so that the ``yes'' class and the ``no'' class both had \num{6602} examples.
+}
+
+\begin{table}
+\centering
+\caption{Statistics of the dataset}
+\label{dataset-stats}
+\setlength\tabcolsep{10pt}
+\begin{tabular}{lrrr}
+Name 					& \# Yes 					& \# No 					& Total 			\\\hline
+\onslide<3->{Training and validation} & \onslide<3->{\num{6602}} 	& \onslide<4->{\num{6602}} 	& \onslide<4->{\num{13204}} \\
+\onslide<2->{%
+Test         			& \num{738}   			& \num{6469}  			& \num{7207} 	\\
+}%
+\onslide<3->{Unused}       			& \onslide<3->{0}	    					& \onslide<5->{\num{51668}}			& \onslide<5->{\num{51668}} 	\\\hline
+Filtered dataset		& \num{7340} 			& \num{64739}			& \num{72079}	\\\hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+\begin{frame}{Evaluation}
+
+\begin{itemize}
+\item After we found the best model from training and validation, we saved the model and ran it against the unseen test set.
+\item<3-> Accuracy is 0.8565, false-positive rate is 0.0203.
+\item<4-> Precision is 0.9745, recall is 0.8627.
+\end{itemize}
+
+\onslide<2->
+\begin{table}
+\centering
+\caption{Confusion matrix for the test set}
+\label{confusion-matrix}
+\smallskip % add additional distance between caption and the table
+\setlength\tabcolsep{10pt}
+\begin{tabular}{|l|r|r|}
+	\hline
+	& pred. ``yes'' 	& pred. ``no'' \\ \hline
+	actual ``yes'' & 5581        		& 888        \\ \hline
+	actual ``no''  & 146		 		& 592       \\ \hline
+\end{tabular}
+\end{table}
+\end{frame}
+
+
+\begin{frame}{Comparison with other work}
+\begin{itemize}
+\item RefDiff (2.0)~\cite{silva2020refdiff} and RMiner~\cite{tsantalis2018accurate} read the complete content of the changed files (from SHA) before and after a commit and construct a diff of an internal format, from which they detect refactoring types.
+\item They do not accept the git diff format which contains barely changed lines of changed files.
+\item They detect more refactoring types (move class, extract methods, etc.); distinguish method renaming and class renaming, but ignore variable and field renaming.
+
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}{Comparison with other work}
+
+
+\begin{table}[t]
+\caption{Comparison of precision and recall among our neural network approach, RefDiff, and RMiner}
+\label{nn-refdiff-rminer}
+\renewcommand*{\arraystretch}{1.5}
+\tiny
+\begin{tabular}{|l|l|l|l|l|l|l|}
+\hline
+& \multicolumn{2}{c|}{NN}                              & \multicolumn{2}{c|}{RefDiff 2.0} & \multicolumn{2}{c|}{RMiner} \\ \hline
+Refactoring Types & Precision                  & Recall                  & Precision        & Recall        & Precision      & Recall     \\ \hline
+Other renaming    & \multirow{3}{*}{0.9745} & \multirow{3}{*}{0.8627} &                  &               &                &            \\ \cline{1-1} \cline{4-7}
+Class renaming    &                            &                         & 0.922            & 0.874         & 0.983          & 0.621      \\ \cline{1-1} \cline{4-7}
+Method renaming   &                            &                         & 0.946            & 0.694         & 0.978          & 0.771      \\ \hline
+\end{tabular}
+\end{table}
+\end{frame}
+
+
+\begin{frame}{Classification Speed}
+
+\begin{itemize}
+	\item The speed unit is example per second (eps).
+	\item RefDiff 2.0 requires the SHA1 of a git commit for computing its CST diff.
+	Hence we transformed our filtered dataset to this format and fed to RefDiff 2.0.
+\end{itemize}
+
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[scale=0.8]
+\begin{axis}[
+	symbolic x coords={Antlr, NN, RefDiff 2.0},
+	xtick=data,
+	nodes near coords]
+	\addplot[ybar,fill=blue] coordinates {
+		(NN, 480.47)
+		(Antlr, 3.00)
+		(RefDiff 2.0, 14.26)
+	};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Generalization}
+\begin{itemize}
+\item Generalize to other programming languages
+	\begin{itemize}
+	\item The text vectorization layer may need to be changed.
+	\begin{itemize}
+		\item Java: .123, 456\_789
+		\item Python: spaces are essential.
+		\item Allowed symbols in identifier: dollar sign, underscore, etc.
+	\end{itemize}
+	\item The word embeddings should be trained from a corpus of that language.
+	\end{itemize}
+\item<2-> Generalize to other refactoring types
+	\begin{itemize}
+		\item Keep the text vectorization layer the same
+		\item Use other neural layers, e.g. LSTM, GRU
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}{Conclusion}
+\begin{itemize}
+\item A novel neural network approach to classify code commits for identifier renaming,
+only based on the changed part, without the full source code,
+to assist the code review process
+\item A dataset that labels \num{73080} Java diff files with whether they are renaming
+\item An {\sc antlr} syntax analyzer for Java diff files
+\item The accuracy of our model is 0.8565 against unseen data, false positive rate is 0.0203.
+\item Our NN model runs faster comparing to traditional syntax analyses.
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}[t,allowframebreaks]{References}
+	\bibliographystyle{ieeetr}
+	\bibliography{bibliography/bibliography.bib,bibliography/renaming.bib}
+\end{frame}
+
+%
+%{
+%	\usebackgroundtemplate{\includegraphics[height=\paperheight]{fixie.jpg}}%
+%	\contourlength{.06em}
+%	\begin{frame}
+%	\onslide<2->
+%	\begin{tikzpicture}[overlay]
+%	\node[yshift=1cm] at (current page.center) {\contour{white}{\Huge Thank you!}};
+%	\end{tikzpicture}
+%	\end{frame}
+%}
+
+\end{document}
