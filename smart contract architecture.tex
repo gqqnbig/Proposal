@@ -1,0 +1,24 @@
+\documentclass[crop,tikz,svgnames]{standalone}
+\usetikzlibrary{arrows, positioning}
+
+%\usepackage[svgnames]{xcolor}
+\begin{document}
+
+\tikzstyle{process} = [rectangle, draw=black, inner sep=0.1cm, text centered, align=center]
+\tikzstyle{arrow} = [thick, ->, >=stealth]
+
+\begin{tikzpicture}[node distance=0.5cm and 1cm]
+\node (application) [process] {application layer};
+\node (execution) [process, below=of application] {execution layer};
+\node (verification) [process, below=of execution] {verification layer};
+\node (sm) [process, below=of verification] {smart contract layer};
+\node (transmission) [process, below=of sm] {transmission layer};
+\node (data) [process, below=of transmission] {data layer};
+
+\draw [arrow] (application) -- (execution);
+\draw [arrow] (execution) -- (verification);
+\draw [arrow] (verification) -- (sm);
+\draw [arrow] (sm) --  (transmission);
+\draw [arrow] (transmission) -- (data);
+\end{tikzpicture}
+\end{document}

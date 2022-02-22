@@ -1,0 +1,31 @@
+\documentclass[crop,tikz,svgnames]{standalone}
+\usetikzlibrary{arrows, positioning}
+\usetikzlibrary{calc}
+
+\begin{document}
+\tikzstyle{terminal} = [rectangle,rounded corners=0.1cm, draw=black, inner sep=0.1cm, text centered, align=center]
+\tikzstyle{process} = [rectangle, draw=black, inner sep=0.1cm, text centered, align=center]
+\tikzstyle{arrow} = [thick, ->, >=stealth]
+
+\begin{tikzpicture}[node distance=0.5cm and 1cm]
+\node (start) [terminal] {Start};
+\node (activated) [process, right=of start] {activated};
+\node (ready) [process, right=of activated] {ready};
+\node (implemented) [process, right=of ready] {implemented};
+\node (expired) [process] at ([yshift=-1.5cm]$(activated)!0.5!(ready)$) {expired};
+\node (default) [process]  at ([yshift=-1.5cm]$(ready)!0.5!(implemented)$) {default};
+\node (end) [terminal] at ([yshift=-1.5cm, xshift=1cm]implemented) {End};
+
+\draw [arrow] (start) -- (activated);
+\draw [arrow] (activated) -- (ready);
+\draw [arrow] (ready) -- (implemented);
+\draw [arrow] (activated) --  (expired);
+\draw [arrow] (ready) -- (expired);
+
+\draw [arrow] (ready) -- (default);
+\draw [arrow] (default) -- (end);
+\draw [arrow] (implemented) -- (end);
+
+\draw [arrow] (expired) .. controls ([shift={(0.2cm,-0.5cm)}]expired.south) and ([shift={(-0.2cm,-0.5cm)}]end.south) .. (end);
+\end{tikzpicture}
+\end{document}

@@ -1,6 +1,8 @@
 \documentclass[xcolor=svgnames]{beamer}
+\usetheme{Singapore}
 \setbeamertemplate{footline}[frame number]
 \setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}[triangle]
 \setbeamertemplate{itemize subitem}[ball]
 
 
@@ -99,8 +101,8 @@
 \begin{itemize}
 \item A smart contract is a program running on a blockchain platform.
 \item Using smart contracts has many advantages, e.g., reduce the need of trust, reduce enforcement costs.
-\item Businesses often use smart contracts as a signed contract or an agreement to regulate the stakeholders~\cite{savelyev2017contract}.
-\item<2-> It is difficult to implement smart contracts correctly from the scratch~\cite{dao2019challenges}.
+\item Businesses often use smart contracts as a signed contract or an agreement to regulate the stakeholders~[].
+\item<2-> It is difficult to implement smart contracts correctly from the scratch~[].
 \end{itemize}
 \end{frame}
 
@@ -225,7 +227,7 @@ Bitcoin, Ethereum                                                           & \o
 \begin{enumerate}
 \item open source. There is no entity controlling the application. Its data are stored in a public blockchain.
 \item has tokens to reward user participation. Users spend tokens to interact with the application.
-\item be changed in response to consensus of its users~\cite{johnston2014general}
+\item be changed in response to consensus of its users~[]
 \end{enumerate}
 \end{onlyenv}
 
@@ -270,7 +272,7 @@ Bitcoin, Ethereum                                                           & \o
 
 
 \begin{frame}[t]{RM2PT}
-\etal{Yang}~\cite{yang2019automated} proposed a tool, RM2PT, to transform a requirement document into a Java desktop program.
+\etal{Yang}~[] proposed a tool, RM2PT, to transform a requirement document into a Java desktop program.
 \onslide*<2>{
 \includegraphics[width=0.7\linewidth]{RM2PT-generate}
 }
@@ -287,12 +289,212 @@ We contemplate to improve RM2PT so that it can generate smart contracts.
 
 \end{frame}
 
+\section{Literature Review}
+\begin{frame}{Source Code Classification}
+
+\begin{itemize}
+\item \etal{Allamanis}~[] proposed the naturalness hypothesis.
+\begin{itemize}
+\item Programming languages are like natural languages to a great extent.
+\end{itemize}
+
+\item  More and more work in software engineering start to use neural networks.
+\begin{itemize}
+\item neural machine translation (NMT), transformers
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Neural Networks in Source Code Classification}
+
+
+\begin{itemize}
+\item  Grammformers~[] takes the context text and generates next code statements. The generated statements may contain holes.
+
+\item \etal{Alexandru}~[] used NMT to annotate source code tokens with typing.
+
+\item \textsc{JSNice}~[] predicts names of JavaScript identifiers and type annotations of variables.
+
+\item \etal{Mou}~[] used a convolutional neural network to classify programs by functionalities.
+
+\item detection of variable misuse~[],
+bug localization~[],
+API suggestion~[],
+code completion~[]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Datasets for Source Code Classification}
+\begin{itemize}
+\item \etal{Jiang}~[] collected a dataset of \num{1006} repositories from GitHub.
+\begin{itemize}
+\item unlabeled
+\item mixed with Java and other languages
+\end{itemize}
+
+\item The dataset created by the authors of RMiner~[] comprises \num{3188} refactorings found in 538 commits from 185 projects.
+\begin{itemize}
+\item allow functional changes
+\end{itemize}
+\end{itemize}
+
+\end{frame}
 
 
 
-\begin{frame}[t,allowframebreaks]{References}
-	\bibliographystyle{ieeetr}
-	\bibliography{bibliography/bibliography.bib,bibliography/renaming.bib}
+\begin{frame}{Smart Contracts~[]}
+
+\begin{figure}
+\centering
+\begin{subfigure}[T]{0.3\textwidth}
+	\includegraphics[width=\textwidth]{"smart contract architecture"}
+	\caption{smart contract architecture model}
+\end{subfigure}
+\hfill
+\begin{subfigure}[T]{0.65\textwidth}
+	\includegraphics[width=\textwidth]{smart contract states.pdf}
+	\caption{Finite-state of smart contract}
+\end{subfigure}
+\end{figure}
+
+
+\end{frame}
+
+
+%\begin{frame}{Duplicated Computing}
+%\begin{itemize}
+%\item Shae and Tsai~[] argue smart contracts are duplicated computing rather than distributed computing.
+%\item<2-> They proposed a blockchain architecture for precision medicine.
+%\begin{itemize}
+%\item Smart contracts execute on chain.
+%\item Applications run on a personal computer and call smart contracts
+%\item Miners run the smart contract. The smart contract can be a Tensorflow program.
+%\end{itemize}
+%\end{itemize}
+%\end{frame}
+
+\begin{frame}{Distinctions between smart contract and OO languages}
+
+\begin{itemize}
+\item Reentrancy
+	\begin{itemize}
+	\item Smart contracts tend to call each other.
+	\item The local states of one smart contract can only be modified by its own code.
+	\end{itemize}
+
+\item No multi-threading despite of attempts~[28,29]
+
+\item \etal{Bram}~[20] holds that access control restrictions are a necessary part of the public specification of a contract.
+\begin{itemize}
+\item invented a DSL for Ethereum smart contract verification
+\item not use Object Constraint Language (OCL)
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Transformation}
+
+\begin{itemize}
+\item State-of-the-art research is able to turn UML into fully executable code~[], including RM2PT.
+\item RM2PT is able to complete 93.65\% of system operations.
+\begin{itemize}
+\item can check pre-conditions, post-conditions, and invariants
+\item a runtime validation approach
+\item<2-> These condition checking statements are transformed from OCL.
+\item<3-> The language of the requirement document as a whole is unspecified.
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Verifying Smart Contract}
+\onslide<+->
+\begin{itemize}
+\item Runtime Checking
+\begin{itemize}
+%\item<+-> RM2PT uses this approach.
+\item<+-> ContractLarva~[] uses Dynamic Automata with Timers and Events. It allows users to supply pre- and post-conditions for Ethereum.
+\item<+-> Solythesis~[] supports quantifiers, e.g., ``for all'', ``exists''. \onslide<+->{It invented delta update and delta check techniques so it doesn't have to suffix the checking statements to every transaction.}
+\end{itemize}
+\item[]<+-> {\color{Green} \checkmark} gain correctness or security guarantees
+\item[]<.-> {\color{red} \texttimes} no longer Turing-complete
+
+
+\item Static Analysis \onslide<+->{is hard.}
+\begin{itemize}
+
+\item<+-> formalize the requirements to a specification
+\item<.-> abstract implementation to a formal mathematical model
+\item<.-> check the model against the specification~[]
+\item<+-> Securify~[] translates Solidity smart contract into Datalog and verifies security properties with a SMT solver.
+
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[t]{Consensus Algorithm}
+\begin{itemize}
+\item The execution result of a smart contract must be in consensus to be added to the blockchain.
+
+\onslide*<1>{
+\begin{tikzpicture}[node distance=0.5cm and 1cm, scale=0.9, transform shape]
+\node (application) [process] {application layer};
+\node (execution) [process, below=of application] {execution layer};
+\node (verification) [process, below=of execution] {verification layer};
+\node (sm) [process, below=of verification] {smart contract layer};
+\node (transmission) [process, below=of sm] {transmission layer};
+\node (data) [process, below=of transmission] {data layer};
+
+\draw [arrow] (application) -- (execution);
+\draw [arrow] (execution) -- (verification);
+\draw [arrow] (verification) -- (sm);
+\draw [arrow] (sm) --  (transmission);
+\draw [arrow] (transmission) -- (data);
+
+\path[draw=red] (verification) circle [x radius=2cm, y radius=0.7cm];
+\end{tikzpicture}
+}
+
+\begin{itemize}
+\item<2-> Poof of Work, Poof of Stake, Practical Byzantine Fault Tolerance
+\item<2-> A group of miners run the same piece of code to check if they got the same result.
+\item<3-> Shae and Tsai~[19] calls it duplicated computing.
+\end{itemize}
+
+\item<3-> {[27]}~used communicating sequential processes and queuing theory to model the behavior of a consensus algorithm.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Smart Contract Applications}
+\begin{itemize}
+\item CoCoME~[30] describes a trading system in a supermarket setting.
+	\begin{itemize}
+	\item a local, single-user system, no parallelism
+	\item RM2PT is fully tested on CoCoME.
+	\end{itemize}
+
+\item SLEX-Web~[31] is a web application for school.
+\item Dao~[32] implemented a Vietnamese certificates application called ECefblock running on Hyperledger Fabric.
+	\begin{itemize}
+	\item in MVC pattern
+	\item has requirement documents
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+
+
+
+
+\begin{frame}{References}
+See the paper
 \end{frame}
 
 %
