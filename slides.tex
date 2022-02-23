@@ -58,14 +58,10 @@
 
 \newcommand{\code}[1]{\texttt{#1}}
 
-\tikzstyle{every picture}+=[remember picture]
-
-\tikzstyle target=[baseline, inner sep=0pt, remember picture]
-
 \title{Identification of Functional Implementation in Conventional Applications and Transformation to Smart Contracts}
 \author{Qiqi Gu\\P0907870}
 \institute{%
-\tikz[style=target]{\node [anchor=base, baseline, inner sep=0pt, align=center] (mpi text)
+\tikz[baseline, inner sep=0pt, remember picture]{\node [anchor=base, baseline, inner sep=0pt, align=center] (mpi text)
 	{School of Applied Sciences \\ Macao Polytechnic Institute, Macao SAR, China};
 }%
 }
@@ -86,7 +82,7 @@
 \begin{frame}[plain]
 	\maketitle
 
-	\begin{tikzpicture}[overlay]
+	\begin{tikzpicture}[overlay, remember picture]
 	\node[inner sep=0pt, left=0.2cm of mpi text]{\includegraphics[width=1.2cm]{mpi-logo.png}};
 	\end{tikzpicture}
 \end{frame}
