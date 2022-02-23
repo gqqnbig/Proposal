@@ -1,0 +1,28 @@
+\documentclass[crop,tikz]{standalone}
+\usetikzlibrary{shapes.geometric, positioning}
+\begin{document}
+
+
+\tikzstyle{question} = [rectangle, draw=black, inner sep=0.1cm, text centered, align=center]
+\tikzstyle{choice} = [text centered, align=center] % ellipse, draw=black, inner sep=1pt,
+
+\begin{tikzpicture}
+%\node (data) [process] {data storage};
+%\node (consensus) [process, right=of data] {consensus algorithm};
+%\node (throughput) [io, right=of consensus] {throughput};
+
+\node (data) [question] {data storage?}[sibling distance = 2cm]
+    child {node [choice] {on-chain}  edge from parent}
+    child {node [choice] {off-chain} edge from parent};
+
+\node (consensus) [right=of data, yshift=-2.5cm, question] {consensus algorithm?}[sibling distance = 3.5cm]
+    child {node [choice]  {Poof of Work}  edge from parent}
+    child {node [choice]  {Poof of Stake} edge from parent}
+    child {node [choice, text centered, align=center] {Practical Byzantine\\Fault Tolerance} edge from parent};
+
+\node (throughput) [question, right=of data, xshift=4cm] {throughput?}[sibling distance = 3.5cm]
+    child {node [choice]  {<10 tx/s}  edge from parent}
+    child {node [choice]  {thousands of tx/s} edge from parent}
+    child {node [choice]  {millions of tx/s} edge from parent};
+\end{tikzpicture}
+\end{document}

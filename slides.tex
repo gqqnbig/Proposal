@@ -488,7 +488,66 @@ code completion~[]
 \end{itemize}
 \end{frame}
 
+\section{Problem Formulation}
 
+\begin{frame}{Tech Stack of Smart Contracts}
+\onslide*<1>{
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{techstack}
+\end{figure}
+}
+
+\onslide*<2->{
+\begin{itemize}
+\item Hyperledger Fabric
+\item Java
+\item on-chain
+\item pBFT
+\end{itemize}
+}
+
+
+\end{frame}
+
+
+\begin{frame}{Aims and Objectives}
+
+Identification\\
+\begin{itemize}
+\item study characteristics of blockchains and smart contracts
+\item find out which functional implementations are transformable
+%in MVC, no multi-threading
+\item train classification neural networks to identify these patterns
+\end{itemize}
+
+Transformation\\
+\begin{itemize}
+\item transform source code to HyperLedger Java
+\item add static analysis or runtime checking
+\item find a model to formally describe the smart contract
+	\begin{itemize}
+	\item rCOS~[34] for component-based software
+	\item partial order by refinement calculus
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Relevance, Novelty and Originality}
+\begin{itemize}
+\item The use of neural network in program analysis is lacking.
+\item The transformation rules encoded in RM2PT are manually devised without much theory support.
+\item I will use neural network.
+\begin{itemize}
+\item No need for a rigid syntax parser
+\item Neural network delivers a percentage
+\item Extend RM2PT to generate smart contract applications
+\end{itemize}
+\end{itemize}
+
+
+\end{frame}
 
 
 
