@@ -75,6 +75,7 @@
 \begin{document}
 \newcommand{\etal}[1]{#1~{\it et al.}}
 
+%\tikzset{every picture/.style={/utils/exec={\sffamily}}}
 
 \tikzset{Process/.style={rectangle, draw=black, inner sep=0.1cm, text centered, align=center}}
 \tikzset{Arrow/.style={thick, ->, >=stealth}}
@@ -153,9 +154,9 @@
 \begin{frame}{Identification and Transformation}
 
 \begin{enumerate}
-\item Identify which conventional applications are transformable
+\item identify which conventional applications are transformable
 
-\item Implement algorithms to transform these applications to smart contracts
+\item implement algorithms to transform these applications to smart contracts
 \end{enumerate}
 \end{frame}
 
@@ -511,15 +512,15 @@ code completion~[15]
 \begin{frame}{Aims and Objectives}
 
 Identification\\
-\begin{itemize}
+\begin{enumerate}
 \item study characteristics of blockchains and smart contracts
 \item find out which functional implementations are transformable
 %in MVC, no multi-threading
 \item train classification neural networks to identify these patterns
-\end{itemize}
+\end{enumerate}
 
 Transformation\\
-\begin{itemize}
+\begin{enumerate}
 \item transform source code to HyperLedger Java
 \item add static analysis or runtime checking
 \item find a model to formally describe the smart contract
@@ -527,7 +528,7 @@ Transformation\\
 	\item rCOS~[34] for component-based software
 	\item partial order by refinement calculus
 	\end{itemize}
-\end{itemize}
+\end{enumerate}
 
 \end{frame}
 
@@ -537,9 +538,9 @@ Transformation\\
 \item The transformation rules encoded in RM2PT are manually devised without much theory support.
 \item I will use neural network.
 \begin{itemize}
-\item No need for a rigid syntax parser
-\item Neural network delivers a percentage
-\item Extend RM2PT to generate smart contract applications
+\item no need for a rigid syntax parser
+\item Neural network delivers a percentage.
+\item extend RM2PT to generate smart contract applications
 \end{itemize}
 \end{itemize}
 
@@ -547,18 +548,19 @@ Transformation\\
 \end{frame}
 
 \section{Methodology}
-\begin{frame}[t]{Properties of Smart Contracts}
+\begin{frame}[t]
+\frametitle{\onslide<2->{Properties of Smart Contracts}}
 \begin{itemize}
-\item<+-> literature review
+\item<2-> literature review
 	\begin{itemize}
 	\item differences between smart contracts and DApp~[3]
 	\item duplicated computing~[19]
 	\item smart contract architecture model and finite-state machine~[18]
 	\end{itemize}
 
-\item<+-> pick up theories of programming languages in order to find a mathematical model, suggested by~[25]
+\item<3-> pick up theories of programming languages in order to find a mathematical model, suggested by~[25]
 
-\onslide*<+>{
+\onslide*<4>{
 \begin{figure}
 \centering
 \begin{subfigure}{0.25\textwidth}
@@ -576,13 +578,13 @@ Transformation\\
 }
 
 
-\item<+-> investigate theoretical differences between smart contract and traditional local programs
+\item<5-> investigate theoretical differences between smart contract and traditional local programs
 	\begin{itemize}
 	\item look into rCOS~[34]
 	\item define some partial order for pre- and post-conditions
 	\item check parallel properties and data persistence
 	\end{itemize}
-\item<+-> Finally, publish papers on the theory section of smart contracts
+\item<6-> Finally, publish papers on the theory section of smart contracts
 \end{itemize}
 \end{frame}
 
@@ -677,11 +679,11 @@ Transformation\\
 \begin{itemize}
 \item RM2PT adds invariants, pre- and post-conditions to all operations, a powerful approach.
 	\begin{itemize}
+	\item inter-smart contract reentrancy does not corrupt the memory
 	\item has large runtime overhead for smart contracts~[24]
-	\item inter-smart contract reentrancy does not corrupt the memory.
 	\end{itemize}
 
-\item<2-> Nevertheless, I will follow RM2PT and perform static analysis.
+\item<2-> Nevertheless, I will follow RM2PT and perform runtime validation.
 
 \item<3-> use a formal mathematical model to prove the properties of smart contract.
 	\begin{itemize}
