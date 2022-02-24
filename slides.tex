@@ -100,8 +100,8 @@
 \begin{itemize}
 \item A smart contract is a program running on a blockchain platform.
 \item Using smart contracts has many advantages, e.g., reduce the need of trust, reduce enforcement costs.
-\item Businesses often use smart contracts as a signed contract or an agreement to regulate the stakeholders~[].
-\item<2-> It is difficult to implement smart contracts correctly from the scratch~[].
+\item Businesses often use smart contracts as a signed contract or an agreement to regulate the stakeholders~[1].
+\item<2-> It is difficult to implement smart contracts correctly from the scratch~[32].
 \end{itemize}
 \end{frame}
 
@@ -224,7 +224,7 @@ Bitcoin, Ethereum                                                           & \o
 \begin{enumerate}
 \item open source. There is no entity controlling the application. Its data are stored in a public blockchain.
 \item has tokens to reward user participation. Users spend tokens to interact with the application.
-\item be changed in response to consensus of its users~[]
+\item be changed in response to consensus of its users~[3]
 \end{enumerate}
 \end{onlyenv}
 
@@ -269,7 +269,7 @@ Bitcoin, Ethereum                                                           & \o
 
 
 \begin{frame}[t]{RM2PT}
-\etal{Yang}~[] proposed a tool, RM2PT, to transform a requirement document into a Java desktop program.
+\etal{Yang}~[5] proposed a tool, RM2PT, to transform a requirement document into a Java desktop program.
 \onslide*<2>{
 \includegraphics[width=0.7\linewidth]{RM2PT-generate}
 }
@@ -290,7 +290,7 @@ We contemplate to improve RM2PT so that it can generate smart contracts.
 \begin{frame}{Source Code Classification}
 
 \begin{itemize}
-\item \etal{Allamanis}~[] proposed the naturalness hypothesis.
+\item \etal{Allamanis}~[6] proposed the naturalness hypothesis.
 \begin{itemize}
 \item Programming languages are like natural languages to a great extent.
 \end{itemize}
@@ -306,30 +306,30 @@ We contemplate to improve RM2PT so that it can generate smart contracts.
 
 
 \begin{itemize}
-\item  Grammformers~[] takes the context text and generates next code statements. The generated statements may contain holes.
+\item  Grammformers~[7] takes the context text and generates next code statements. The generated statements may contain holes.
 
-\item \etal{Alexandru}~[] used NMT to annotate source code tokens with typing.
+\item \etal{Alexandru}~[12] used NMT to annotate source code tokens with typing.
 
-\item \textsc{JSNice}~[] predicts names of JavaScript identifiers and type annotations of variables.
+\item \textsc{JSNice}~[13] predicts names of JavaScript identifiers and type annotations of variables.
 
-\item \etal{Mou}~[] used a convolutional neural network to classify programs by functionalities.
+\item \etal{Mou}~[14] used a convolutional neural network to classify programs by functionalities.
 
-\item detection of variable misuse~[],
-bug localization~[],
-API suggestion~[],
-code completion~[]
+\item detection of variable misuse~[9],
+bug localization~[10],
+API suggestion~[11],
+code completion~[15]
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Datasets for Source Code Classification}
 \begin{itemize}
-\item \etal{Jiang}~[] collected a dataset of \num{1006} repositories from GitHub.
+\item \etal{Jiang}~[8] collected a dataset of \num{1006} repositories from GitHub.
 \begin{itemize}
 \item unlabeled
 \item mixed with Java and other languages
 \end{itemize}
 
-\item The dataset created by the authors of RMiner~[] comprises \num{3188} refactorings found in 538 commits from 185 projects.
+\item The dataset created by the authors of RMiner~[16] comprises \num{3188} refactorings found in 538 commits from 185 projects.
 \begin{itemize}
 \item allow functional changes
 \end{itemize}
@@ -339,7 +339,7 @@ code completion~[]
 
 
 
-\begin{frame}{Smart Contracts~[]}
+\begin{frame}{Smart Contracts~[18]}
 
 \begin{figure}
 \centering
@@ -393,7 +393,7 @@ code completion~[]
 \begin{frame}{Transformation}
 
 \begin{itemize}
-\item State-of-the-art research is able to turn UML into fully executable code~[], including RM2PT.
+\item State-of-the-art research is able to turn UML into mostly executable code~[22], including RM2PT.
 \item RM2PT is able to complete 93.65\% of system operations.
 \begin{itemize}
 \item can check pre-conditions, post-conditions, and invariants
@@ -412,8 +412,8 @@ code completion~[]
 \item Runtime Checking
 \begin{itemize}
 %\item<+-> RM2PT uses this approach.
-\item<+-> ContractLarva~[] uses Dynamic Automata with Timers and Events. It allows users to supply pre- and post-conditions for Ethereum.
-\item<+-> Solythesis~[] supports quantifiers, e.g., ``for all'', ``exists''. \onslide<+->{It invented delta update and delta check techniques so it doesn't have to suffix the checking statements to every transaction.}
+\item<+-> ContractLarva~[23] uses Dynamic Automata with Timers and Events. It allows users to supply pre- and post-conditions for Ethereum.
+\item<+-> Solythesis~[24] supports quantifiers, e.g., ``for all'', ``exists''. \onslide<+->{It invented delta update and delta check techniques so it doesn't have to suffix the checking statements to every transaction.}
 \end{itemize}
 \item[]<+-> {\color{Green} \checkmark} gain correctness or security guarantees
 \item[]<.-> {\color{red} \texttimes} no longer Turing-complete
@@ -424,8 +424,8 @@ code completion~[]
 
 \item<+-> formalize the requirements to a specification
 \item<.-> abstract implementation to a formal mathematical model
-\item<.-> check the model against the specification~[]
-\item<+-> Securify~[] translates Solidity smart contract into Datalog and verifies security properties with a SMT solver.
+\item<.-> check the model against the specification~[25]
+\item<+-> Securify~[26] translates Solidity smart contract into Datalog and verifies security properties with a SMT solver.
 
 \end{itemize}
 
@@ -463,7 +463,7 @@ code completion~[]
 \item<3-> Shae and Tsai~[19] calls it duplicated computing.
 \end{itemize}
 
-\item<3-> {[27]}~used communicating sequential processes and queuing theory to model the behavior of a consensus algorithm.
+\item<4-> {[27]}~used communicating sequential processes and queuing theory to model the behavior of a consensus algorithm.
 \end{itemize}
 
 \end{frame}
