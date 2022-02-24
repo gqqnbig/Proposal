@@ -9,9 +9,12 @@
 \usepackage{amssymb}
 
 
+%\usefonttheme{serif}
+%\usepackage{fontspec}
+%\setmainfont{Linux Libertine O}
 
 \usepackage{tikz}
-\usetikzlibrary{arrows,shapes,positioning,calc, shapes.geometric}
+\usetikzlibrary{arrows,shapes,positioning,calc, shapes.geometric,shapes.arrows}
 
 \usepackage{listings}
 \lstset{
@@ -685,6 +688,71 @@ Transformation\\
 	\end{itemize}
 \end{itemize}
 
+\end{frame}
+
+\section{Schedules and Milestones}
+
+\begin{frame}{Schedules}
+
+
+\tikzstyle{Text} = [text centered, align=center]
+\tikzset{Link/.style={line width=0.1cm, ->, >=stealth, dashed, blue}}
+\centering
+\begin{tikzpicture}[xscale=0.4, yscale=0.3, transform shape]
+
+\node[single arrow,top color=Red, bottom color=Green, minimum height=25cm, rotate=-90,  inner sep=0.3cm]  at (0,-12.5) {};
+
+%\node at (-1, 0) {May 2021};
+%\node at (-1,-25) {June 2023};
+
+\onslide<2->
+\node [anchor=east] at (-1,-2) {\huge July 2021};
+\node [anchor=west] at (2, -2) {\Huge I've submitted a paper on diff classification.};
+\draw [Link] (2, -2) -- (0,-2);
+
+\onslide<3->
+\node [anchor=east] at (-1,-10) {\huge March 2022};
+\node [anchor=west, Text] at (2,-10) {\Huge I'm working on smart contract generation\\\Huge and going to write a paper.};
+\draw [Link] (2,-10) -- (0,-10);
+
+\onslide<4->
+\node [anchor=east] at (-1,-19) {\huge December 2022};
+\node [anchor=west,Text] at (2,-19) {\Huge I will work on the theory part of smart contract.\\\Huge The paper may focus on refinement calculus\\\Huge  and use pre-order or partial order in proofs.};
+\draw [Link] (2,-19) -- (0,-19);
+
+
+\onslide<5->
+\node [anchor=east] at (-1,-23) {\huge April 2023};
+\node [anchor=west,Text] at (2,-23) {\Huge I shall commence writing my doctoral thesis.};
+\draw [Link] (2,-23) -- (0,-23);
+
+\end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}{Key milestones}
+Conference list:\\
+\begin{enumerate}
+\item International Conference on Intelligent Data Engineering and Automated Learning (IDEAL)
+\item IEEE/ACM International Conference on Automated Software Engineering (ASE)
+\item IEEE DAPPS: \url{https://ieeedapps.net/}
+\end{enumerate}
+
+Journal list:\\
+\begin{enumerate}
+\item Frontiers of Computer Science
+\item IEEE Transactions on Industrial Informatics
+\item IEEE Transactions on Reliability
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Potential publications}
+\begin{description}
+\item[Paper] RM2Hyperledger: Automated Prototype Generation From Requirements Model to Hyperledger Smart Contract
+\item[Journal] Refining Conventional Applications to Smart Contracts
+\item[Paper] A Neural Architecture for Classifying Refactoring Types from Diff
+\item[Doctoral Thesis] Identification of Functional Implementation in Conventional Applications and Transformation to Smart Contracts
+\end{description}
 \end{frame}
 
 
