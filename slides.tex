@@ -542,7 +542,150 @@ Transformation\\
 
 \end{frame}
 
+\section{Methodology}
+\begin{frame}[t]{Properties of Smart Contracts}
+\begin{itemize}
+\item<+-> literature review
+	\begin{itemize}
+	\item differences between smart contracts and DApp~[3]
+	\item duplicated computing~[19]
+	\item smart contract architecture model and finite-state machine~[18]
+	\end{itemize}
 
+\item<+-> pick up theories of programming languages in order to find a mathematical model, suggested by~[25]
+
+\onslide*<+>{
+\begin{figure}
+\centering
+\begin{subfigure}{0.25\textwidth}
+	\includegraphics[width=\textwidth]{graph_theory.png}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.25\textwidth}
+	\includegraphics[width=\textwidth]{linear-algebra.png}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.25\textwidth}
+	\includegraphics[width=\textwidth]{csp.png}
+\end{subfigure}
+\end{figure}
+}
+
+
+\item<+-> investigate theoretical differences between smart contract and traditional local programs
+	\begin{itemize}
+	\item look into rCOS~[34]
+	\item define some partial order for pre- and post-conditions
+	\item check parallel properties and data persistence
+	\end{itemize}
+\item<+-> Finally, publish papers on the theory section of smart contracts
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[t]{Identification of Functional Implementation}
+\begin{itemize}
+\item I have already looked into using neural networks to analyze program source code.
+	\begin{itemize}
+	\item Q.~Gu and W.~Ke, ``A neural architecture for detecting identifier renaming from diff,'' in {\em International Conference on Intelligent Data Engineering and Automated Learning}, pp.~33--44, Springer, 2021.
+	\end{itemize}
+
+\item train a neural network to automatically filter the conventional programs for the next transformation
+\onslide*<+>{
+\begin{figure}
+\centering
+\begin{subfigure}{0.20\textwidth}
+	\includegraphics[width=\textwidth]{dense-layers.png}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.20\textwidth}
+	\includegraphics[width=\textwidth]{cnn.png}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.20\textwidth}
+	\includegraphics[width=\textwidth]{rnn.png}
+\end{subfigure}
+\hfill
+\begin{subfigure}{0.20\textwidth}
+	\includegraphics[width=\textwidth]{lstm.png}
+\end{subfigure}
+\end{figure}
+}
+
+\item<+-> Dataset
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}{Transformation to Smart Contracts}
+\tikzstyle{Text} = [text centered, align=center]
+\tikzset{Link/.style={thick, ->, >=stealth, dashed, blue}}
+
+\centering
+\begin{tikzpicture}[scale=0.8, transform shape, node distance=0.8cm and 1cm]
+\node (RM2Hyperledger) [Process] {RM2Hyperledger};
+\node (cases) [Process,below=of RM2Hyperledger.south] {Study cases};
+\node (data)  [Process,below=of cases.south]{Data persistence};
+\node (challenge) [Process,below=of data.south] {Challenge: post-conditions};
+\node (evaluate) [Process,below=of challenge.south] {evaluate};
+
+\draw [Arrow] (RM2Hyperledger) -- (cases);
+\draw [Arrow] (cases) -- (data);
+\draw [Arrow] (data) -- (challenge);
+\draw [Arrow] (challenge) -- (evaluate);
+
+\onslide<2>{
+\node (1) [Text, right=2cm of RM2Hyperledger.east] {initially use rule-based transformation,\\then attempt neural networks};
+\draw [Link] (RM2Hyperledger.east) -- (1.west);
+}
+
+\onslide<3>{
+\node (2) [Text, right=2.5cm of cases.east] {CoCoME};
+\node (3) [Text, below=of 2.south west, anchor=west] {SLEX-Web and ECefblock};
+\draw [Link] (cases.east) -- (2.west);
+\draw [Link] (cases.east) -- (3.west);
+}
+
+\onslide<4>{
+\node (4) [Text, right=1.3cm of RM2Hyperledger.east, anchor=west] {One object must hold an unique identifier (PK)\\of another object\\and load the object from the chain\\when needed through the PK.};
+\node (5) [Text, below=of 4.south west, anchor=west ] {on-chain};
+\node (6) [Text, below=of 5.south west, anchor=west] {add or locate PK of each entity,\\add serialization support};
+\node (7) [Text, below=of 6.south west, anchor=north west] {potentially invent a library\\for saving and loading data,\\like Object–relational mapping};
+\draw [Link] (data.east) -- (4.west);
+\draw [Link] (data.east) -- (5.west);
+\draw [Link] (data.east) -- (6.west);
+\draw [Link] (data.east) -- (7.west);
+}
+
+\onslide<5>{
+\node (8) [Text, right=1cm of challenge.east, anchor=west] {results are not yet committed};
+\node (9) [Text, below=of 8.south west, anchor=north west] {a second smart contract, \\checking program local states, \\custom consensus algorithm, \\lazy evaluation};
+\draw [Link] (challenge.east) -- (8.west);
+\draw [Link] (challenge.east) -- (9.west);
+}
+\end{tikzpicture}
+
+\end{frame}
+
+
+\begin{frame}{Verification of Smart Contracts}
+\begin{itemize}
+\item RM2PT adds invariants, pre- and post-conditions to all operations, a powerful approach.
+	\begin{itemize}
+	\item has large runtime overhead for smart contracts~[24]
+	\item inter-smart contract reentrancy does not corrupt the memory.
+	\end{itemize}
+
+\item<2-> Nevertheless, I will follow RM2PT and perform static analysis.
+
+\item<3-> use a formal mathematical model to prove the properties of smart contract.
+	\begin{itemize}
+	\item A SMT solver may be used.
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
 
 
 \begin{frame}{References}
