@@ -6,6 +6,7 @@
 \setbeamertemplate{itemize subitem}[ball]
 
 
+\usepackage{contour}
 \usepackage{amssymb}
 
 
@@ -590,7 +591,7 @@ Transformation\\
 \begin{itemize}
 \item I have already looked into using neural networks to analyze program source code.
 	\begin{itemize}
-	\item Q.~Gu and W.~Ke, ``A neural architecture for detecting identifier renaming from diff,'' in {\em International Conference on Intelligent Data Engineering and Automated Learning}, pp.~33--44, Springer, 2021.
+	\item Q.~Gu and W.~Ke, ``A neural architecture for detecting identifier renaming from diff,'' in {\em International Conference on Intelligent Data Engineering and Automated Learning}, pp.~33--44, Springer, 2021.~\includegraphics[height=2ex, angle=20,origin=c, ]{vote.png}
 	\end{itemize}
 
 \item train a neural network to automatically filter the conventional programs for the next transformation
@@ -707,7 +708,7 @@ Transformation\\
 
 \onslide<2->
 \node [anchor=east] at (-1,-2) {\huge July 2021};
-\node [anchor=west] at (2, -2) {\Huge I've submitted a paper on diff classification.};
+\node [anchor=west] at (2, -2) {\Huge I've submitted a paper on diff classification. \includegraphics[height=2ex, angle=20,origin=c, ]{vote.png}};
 \draw [Link] (2, -2) -- (0,-2);
 
 \onslide<3->
@@ -755,21 +756,46 @@ Journal list:\\
 \end{description}
 \end{frame}
 
+\section{Conclusions}
+\begin{frame}{Conclusions}
 
-\begin{frame}{References}
+\begin{itemize}
+\item Businesses and organizations are motivated to use smart contracts in their daily operations,
+\begin{itemize}
+\item but coding smart contracts is a big barrier for developers.
+\end{itemize}
+
+\item An opportunity to automatically transform conventional functional implementations to smart contracts
+\begin{itemize}
+\item Such transformation is not 100\%  complete.
+\end{itemize}
+
+\item use a neural network to identify the application
+\begin{itemize}
+\item a paper published \includegraphics[height=2ex, angle=20,origin=c, ]{vote.png}
+\end{itemize}
+
+\item use CoCoME as my first study case
+\item prove soundness of the transformation
+\end{itemize}
+
+
+\end{frame}
+
+
+\begin{frame}[t]{References}
 See the paper
 \end{frame}
 
-%
-%{
-%	\usebackgroundtemplate{\includegraphics[height=\paperheight]{fixie.jpg}}%
-%	\contourlength{.06em}
-%	\begin{frame}
-%	\onslide<2->
-%	\begin{tikzpicture}[overlay]
-%	\node[yshift=1cm] at (current page.center) {\contour{white}{\Huge Thank you!}};
-%	\end{tikzpicture}
-%	\end{frame}
-%}
+
+{
+	\usebackgroundtemplate{\includegraphics[height=\paperheight]{MPI-front-gate.png}}%
+	\contourlength{.06em}
+	\begin{frame}[plain]
+	\begin{tikzpicture}[overlay, remember picture]
+	\node[yshift=1cm] at (current page.center) {\contour{white}{\Huge Thank you!}};
+	\end{tikzpicture}
+	\end{frame}
+}
 
 \end{document}
