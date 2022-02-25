@@ -7,7 +7,6 @@
 
 
 \usepackage{contour}
-\usepackage{amssymb}
 
 
 %\usefonttheme{serif}
@@ -104,15 +103,15 @@
 \end{figure}
 
 \only<2>{
-{\color{Green} \checkmark} Requirement documents capture raw information.
+\includegraphics[width=0.8em]{check.png} Requirement documents capture raw information.
 
-{\color{red} \texttimes} Open source projects typically do not publish such documents.
+\includegraphics[width=0.8em]{cross.png} Open source projects typically do not publish such documents.
 }
 
 \only<3>{
-{\color{Green} \checkmark} Application source code are widely available.
+\includegraphics[width=0.8em]{check.png} Application source code are widely available.
 
-{\color{red} \texttimes} The code may contain too many details and noises.
+\includegraphics[width=0.8em]{cross.png} The code may contain too many details and noises.
 }
 
 \end{frame}
@@ -383,8 +382,8 @@ code completion~[15]
 \item<+-> ContractLarva~[23] uses Dynamic Automata with Timers and Events. It allows users to supply pre- and post-conditions for Ethereum.
 \item<+-> Solythesis~[24] supports quantifiers, e.g., ``for all'', ``exists''. \onslide<+->{It invented delta update and delta check techniques so it doesn't have to suffix the checking statements to every transaction.}
 \end{itemize}
-\item[]<+-> {\color{Green} \checkmark} gain correctness or security guarantees
-\item[]<.-> {\color{red} \texttimes} no longer Turing-complete
+\item[]<+-> \includegraphics[width=0.8em]{check.png}  gain correctness or security guarantees
+\item[]<.-> \includegraphics[width=0.8em]{cross.png} no longer Turing-complete
 
 
 \item Static Analysis \onslide<+->{is hard.}
