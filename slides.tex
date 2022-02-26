@@ -9,9 +9,10 @@
 \usepackage{contour}
 
 
-%\usefonttheme{serif}
-%\usepackage{fontspec}
-%\setmainfont{Linux Libertine O}
+\usefonttheme{serif}
+\usepackage{libertinus-otf}
+\usepackage{fontspec}
+\setsansfont[Path = ./fonts/]{Helvetica}
 
 \usepackage{tikz}
 \usetikzlibrary{arrows,shapes,positioning,calc, shapes.geometric,shapes.arrows}
@@ -64,11 +65,10 @@
 \begin{document}
 \newcommand{\etal}[1]{#1~{\it et al.}}
 
-%\tikzset{every picture/.style={/utils/exec={\sffamily}}}
 
-\tikzset{Process/.style={rectangle, draw=black, inner sep=0.1cm, text centered, align=center}}
+\tikzset{Process/.style={/utils/exec={\sffamily}, rectangle, draw=black, inner sep=0.1cm, text centered, align=center}}
 \tikzset{Arrow/.style={thick, ->, >=stealth}}
-\tikzstyle{Text} = [text centered, align=center]
+\tikzstyle{Text} = [/utils/exec={\sffamily}, text centered, align=center]
 \tikzset{Target/.style={baseline, inner sep=0pt, remember picture}}
 \newcommand{\highlightTarget}[1]{\draw [VioletRed] ([shift={(.1,-.1)}]#1.south east) rectangle ([shift={(-.1,.1)}]#1.north west);}
 
@@ -930,7 +930,6 @@ Transformation\\
 \begin{frame}{Schedules}
 
 
-\tikzstyle{Text} = [text centered, align=center]
 \tikzset{Link/.style={line width=0.1cm, ->, >=stealth, dashed, blue}}
 \centering
 \begin{tikzpicture}[xscale=0.4, yscale=0.3, transform shape]
@@ -941,8 +940,8 @@ Transformation\\
 %\node at (-1,-25) {June 2023};
 
 \onslide<2->
-\node [anchor=east] at (-1,-2) {\huge July 2021};
-\node [anchor=west] at (2, -2) {\Huge I've submitted a paper on diff classification. \includegraphics[height=2ex, angle=20,origin=c, ]{favourite.png}};
+\node [anchor=east, Text] at (-1,-2) {\huge July 2021};
+\node [anchor=west, Text] at (2, -2) {\Huge I've submitted a paper on diff classification. \includegraphics[height=2ex, angle=20,origin=c, ]{favourite.png}};
 \draw [Link] (2, -2) -- (0,-2);
 
 \onslide<3->
