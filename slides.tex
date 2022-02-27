@@ -433,6 +433,55 @@ code completion~[15]
 
 \end{frame}
 
+\begin{frame}{Consensus Algorithm Example}
+\begin{tikzpicture}[scale=0.8, transform shape]
+\node (100) [Process] {block 100};
+\node (101) [Process, right=of 100] {block 101};
+
+\draw [Arrow] (100) -- ++(-2,0);
+\draw [Arrow] (101) -- (100);
+
+\node (m1) [below=1.2cm of 101.west] {\includegraphics[width=1.5em]{miner.png}};
+\node (m2) [below=0.5cm of m1] {\includegraphics[width=1.5em]{miner.png}};
+\node (m3) [below=0.5cm of m2] {\includegraphics[width=1.5em]{miner.png}};
+
+\onslide<2->{
+\node [below=0.1cm of 101] { transaction proposal: \texttt{createStore(21,"Whole Foods")}};
+}
+
+\onslide<3-5>{
+\node (r11) [right=0.1cm of m1] { \texttt{\{id:23, name:"Target"\}}};
+\node (r12) [right=0.1cm of m2] { \texttt{\{id:22, name:"Ralphs"\}}};
+\node (r13) [right=0.1cm of m3] { \texttt{\{id:24, name:"Bestbuy"\}}};
+}
+\onslide<4>{
+\draw [draw=VioletRed, line width=0.1em] (r11.north west) rectangle (r13.south east);
+\node [below=0.2cm of r13] {proposal responses};
+}
+
+\onslide<5>{
+\node (sum1) [right=of r12, inner sep=0.1cm] {\color{red}{Not in consensus}};
+\draw (r11.north east) -- ([xshift=1em]sum1.north west);
+\draw (r13.south east) -- ([xshift=1em]sum1.south west);
+}
+\onslide<6->{
+\node (r21) [right=0.1cm of m1] { \texttt{\{id:21, name:"Whole Foods"\}}};
+\node (r22) [right=0.1cm of m2] { \texttt{\{id:21, name:"Whole Foods"\}}};
+\node (r23) [right=0.1cm of m3] { \texttt{\{id:21, name:"Whole Foods"\}}};
+}
+\onslide<7->{
+\node (sum2) [right=of r22, inner sep=0.1cm] {\color{Green}{In consensus}};
+\draw (r21.north east) -- ([xshift=1em]sum2.north west);
+\draw (r23.south east) -- ([xshift=1em]sum2.south west);
+}
+\onslide<8->{
+\node (102) [Process, right=of 101] {block 102};
+\draw [Arrow] (102) -- (101);
+}
+\end{tikzpicture}
+	
+\end{frame}
+
 \begin{frame}{Smart Contract Applications}
 \begin{itemize}
 \item CoCoME~[30] describes a trading system in a supermarket setting.
