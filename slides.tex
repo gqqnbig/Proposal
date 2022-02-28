@@ -25,6 +25,21 @@
 \usepackage{subcaption}
 \usepackage{graphicx}
 
+
+\usepackage{xpatch}
+
+\newcounter{mybibstartvalue}
+\setcounter{mybibstartvalue}{40}
+
+\xpatchcmd{\thebibliography}{%
+  \usecounter{enumiv}%
+}{%
+  \usecounter{enumiv}%
+  \setcounter{enumiv}{\value{mybibstartvalue}}%
+}{}{}
+\setbeamertemplate{bibliography item}{\insertbiblabel}
+
+
 \title{Identification of Functional Implementation in Conventional Applications and Transformation to Smart Contracts}
 \author{Qiqi Gu\\P0907870}
 \institute{%
@@ -794,7 +809,10 @@ Journal list:\\
 
 
 \begin{frame}[t]{References}
-See the paper
+For [1] to [39] see the paper.
+
+\bibliographystyle{ieeetr}
+\bibliography{bibliography/slides.bib}
 \end{frame}
 
 
