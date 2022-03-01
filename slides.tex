@@ -155,7 +155,7 @@
 \end{frame}
 
 
-\section{Background}
+\section[Smart Contract]{Properties of Smart Contract}
 \begin{frame}{Permissioning of Blockchain Platforms}
 
 \begin{table}
@@ -484,6 +484,38 @@ class Course implements %\tikz[style=Target, anchor=base]{\node (serializable2) 
 Assuming Poof of Work
 \end{frame}
 
+
+\begin{frame}{Smart Contracts~[18]}
+
+\begin{figure}
+\centering
+\begin{subfigure}[T]{0.3\textwidth}
+	\begin{tikzpicture}[node distance=0.5cm and 1cm, scale=0.9, transform shape]
+	\node (application) [Process] {application layer};
+	\node (execution) [Process, below=of application] {execution layer};
+	\node (verification) [Process, below=of execution] {verification layer};
+	\node (sm) [Process, below=of verification] {smart contract layer};
+	\node (transmission) [Process, below=of sm] {transmission layer};
+	\node (data) [Process, below=of transmission] {data layer};
+
+	\draw [Arrow] (application) -- (execution);
+	\draw [Arrow] (execution) -- (verification);
+	\draw [Arrow] (verification) -- (sm);
+	\draw [Arrow] (sm) --  (transmission);
+	\draw [Arrow] (transmission) -- (data);
+
+	\path[draw=red] (verification) circle [x radius=2cm, y radius=0.7cm];
+	\end{tikzpicture}
+	\caption{smart contract architecture model}
+\end{subfigure}
+\hfill
+\begin{subfigure}[T]{0.65\textwidth}
+	\includegraphics[width=\textwidth]{smart contract states.pdf}
+	\caption{finite-state of smart contract}
+\end{subfigure}
+\end{figure}
+\end{frame}
+
 \begin{frame}{How are Blocks Added}
 
 \begin{itemize}
@@ -647,24 +679,6 @@ code completion~[15]
 \item We will use Jiang dataset in our project.
 \end{itemize}
 
-\end{frame}
-
-
-
-\begin{frame}{Smart Contracts~[18]}
-
-\begin{figure}
-\centering
-\begin{subfigure}[T]{0.3\textwidth}
-	\includegraphics[width=\textwidth]{"smart contract architecture"}
-	\caption{smart contract architecture model}
-\end{subfigure}
-\hfill
-\begin{subfigure}[T]{0.65\textwidth}
-	\includegraphics[width=\textwidth]{smart contract states.pdf}
-	\caption{Finite-state of smart contract}
-\end{subfigure}
-\end{figure}
 \end{frame}
 
 
