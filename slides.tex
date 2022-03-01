@@ -26,6 +26,16 @@
 \usepackage{graphicx}
 
 
+\usepackage{listings}
+\lstset{
+	keywordstyle=\color{blue}\bfseries,
+	commentstyle=\it\color[RGB]{0,96,96},
+	stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+	basicstyle=\ttfamily\scriptsize,
+	columns=flexible,
+	breaklines=true,
+	showstringspaces=false,
+}
 \usepackage{xpatch}
 
 \newcounter{mybibstartvalue}
@@ -59,6 +69,10 @@
 \tikzset{Process/.style={rectangle, draw=black, inner sep=0.1cm, text centered, align=center}}
 \tikzset{Arrow/.style={thick, ->, >=stealth}}
 \tikzstyle{Text} = [text centered, align=center]
+\tikzset{Target/.style={baseline, inner sep=0pt, remember picture}}
+\newcommand{\highlightTarget}[1]{\draw [VioletRed] ([shift={(.1,-.1)}]#1.south east) rectangle ([shift={(-.1,.1)}]#1.north west);}
+
+\newcommand{\code}[1]{\texttt{#1}}
 
 {
 \usebackgroundtemplate{\includegraphics[height=\paperheight]{background.jpg}}%
@@ -142,23 +156,6 @@
 
 
 \section{Background}
-\begin{frame}[t]{Blockchain Platforms}
-\includegraphics[width=0.9\linewidth]{bitcoin-price}
-
-Market cap of BitCoin reached \$780 billion in January 2022.
-
-The Taproot upgrade took place in November 2021 enabled Bitcoin to execute smart contracts in the core layer.
-\end{frame}
-
-\begin{frame}[t]{Blockchain Platforms}
-\includegraphics[width=0.9\linewidth]{ethereum-price}
-
-Ethereum is the second largest blockchain platform with market cap of \$360 billion.
-
-It has more mature support of smart contract.
-\end{frame}
-
-
 \begin{frame}{Permissioning of Blockchain Platforms}
 
 \begin{table}
@@ -196,6 +193,333 @@ Bitcoin, Ethereum                                                           & \o
 \end{itemize}
 \end{frame}
 
+
+
+\begin{frame}[fragile]{Distinctions of Hello World (1)}
+
+\begin{figure}
+\centering
+\begin{subfigure}[T]{0.45\textwidth}
+\begin{lstlisting}[language=java,basicstyle=\tiny, escapechar=\%,]
+public class Hello
+{
+  public static void %\tikz[style=Target, anchor=base]{\node (main) {main}}%(String[] args)
+  {
+     %\tikz[style=Target, anchor=base]{\node (print) {System.out.print}}%("Hello, world!");
+  }
+}
+\end{lstlisting}
+\onslide<1>{\caption{Conventional Program in Java}}
+\end{subfigure}
+\hfill
+\begin{subfigure}[T]{0.5\textwidth}
+\begin{lstlisting}[language=java,basicstyle=\tiny, escapechar=\%,]
+import org.hyperledger.fabric.*;
+
+@Contract
+public class Hello implements ContractInterface
+{
+  @%\tikz[style=Target, anchor=base]{\node (submit) {Transaction}}%(intent = Transaction.TYPE.EVALUATE)
+  public %\tikz[style=Target, anchor=base]{\node (return) {String}}% sayHello(final %\tikz[style=Target, anchor=base]{\node (context) {Context}}% ctx)
+  {
+    return "Hello, world!";
+  }
+}
+\end{lstlisting}
+\onslide<1>{\caption{Smart Contract in Hyperledger Java}}
+\end{subfigure}
+\end{figure}
+
+\begin{tikzpicture}[remember picture,overlay]
+\onslide<2>{\highlightTarget{main};}
+\onslide<2->{
+\node[above=of main] (main-ex) {no main function in HF Java};
+\draw[Arrow] (main) -- (main-ex);
+}
+
+\onslide<3>{\highlightTarget{print};}
+\onslide<3->{
+\node[below=of print, xshift=0.2cm] (print-ex) {no stdin, stdout in HF Java};
+\draw[Arrow] (print) -- (print-ex);
+}
+
+\onslide<4>{\highlightTarget{return};}
+\onslide<4->{
+\node[below=2cm of return, xshift=-1.5cm] (return-ex) {return type must be serializable};
+\draw[Arrow] (return) -- (return-ex);
+}
+
+\onslide<5>{\highlightTarget{context};}
+\onslide<5->{
+\node[below=of context] (context-ex) {transaction function has context};
+\draw[Arrow] (context) -- (context-ex);
+}
+
+\onslide<6>{\highlightTarget{submit};}
+\onslide<6->{
+\node[Text, above=2cm of submit, xshift=2cm] (submit-ex) {Transaction function is pure\\or modifies the blockchain.};
+\draw[Arrow] (submit) -- (submit-ex);
+}
+\end{tikzpicture}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Distinctions between Conventional Applications\\ and Smart Contracts (2)}
+
+\begin{figure}
+\centering
+\begin{subfigure}[T]{0.4\textwidth}
+\begin{lstlisting}[language=java,basicstyle=\tiny, escapechar=\%,]
+public class AddNumber {
+  %\tikz[style=Target, anchor=base]{\node (private) {\color{blue}{\bfseries private}}}% int sum = 0;
+
+  public void add(int n) {
+    sum += n;
+  }
+
+  public int getSum() {
+    return sum;
+  }
+}
+\end{lstlisting}
+%\onslide<1>{\caption{Conventional Program in Java}}
+\end{subfigure}
+\hfill
+\begin{subfigure}[T]{0.55\textwidth}
+\begin{lstlisting}[language=java,basicstyle=\tiny, escapechar=\%,]
+import org.hyperledger.fabric.*;
+
+@Contract
+public class AddNumber implements ContractInterface {
+  private final Genson genson = new Genson();
+
+  @Transaction(intent = Transaction.TYPE.%\tikz[style=Target, anchor=base]{\node (submit) {SUBMIT}}%)
+  public void add(final Context ctx, int n) {
+    ChaincodeStub stub = ctx.getStub();
+
+    %\tikz[style=Target, anchor=base]{\node (sl1) {}}%int sum = Integer.parseInt(stub.getStringState("sum"));
+    sum += n;
+
+    %\tikz[style=Target, anchor=base]{\node (sl2) {}}%stub.putStringState("sum", String.valueOf(sum));
+  }
+
+  @Transaction(intent = Transaction.TYPE.%\tikz[style=Target, anchor=base]{\node (evaluate) {EVALUATE}}%)
+  public int getSum(final Context ctx) {
+    ChaincodeStub stub = ctx.getStub();
+    %\tikz[style=Target, anchor=base]{\node (sl3) {}}%return Integer.parseInt(stub.getStringState("sum"));
+  }
+}
+\end{lstlisting}
+%\onslide<1>{\caption{Smart Contracts in Hyperledger Java}}
+\end{subfigure}
+\end{figure}
+
+
+\begin{tikzpicture}[remember picture,overlay]
+\onslide<2>{\highlightTarget{private};}
+\onslide<2->{
+\node[above=0.5cm of private, xshift=1.5cm] (private-ex) {no private data in blockchain};
+\draw[Arrow] (private) -- (private-ex);
+}
+
+\onslide<3->{
+\node[Text, left=1cm of sl3] (sl-ex) {Internal states must be\\ loaded/saved to the chain.};
+\draw[Arrow] (sl1) -- (sl-ex);
+\draw[Arrow] (sl2) -- (sl-ex);
+\draw[Arrow] (sl3) -- (sl-ex);
+}
+
+\onslide<4>{\highlightTarget{submit};\highlightTarget{evaluate};}
+\onslide<4->{
+\node[Text, above=1.5cm of submit] (submit-ex) {a set function,\\ adds a new block};
+\draw[Arrow] (submit) -- (submit-ex);
+
+\node[Text, below=1cm of evaluate] (evaluate-ex) {a get function,\\ no new block};
+\draw[Arrow] (evaluate) -- (evaluate-ex);
+}
+\end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}[fragile]{Distinctions between Conventional Applications\\ and Smart Contracts (3)}
+
+\begin{figure}
+\centering
+\hfill
+\begin{subfigure}[T]{0.4\textwidth}
+\begin{lstlisting}[language=java,basicstyle=\tiny, escapechar=\%,]
+class Student%\tikz[style=Target, anchor=base]{\node (sd) {}}%{
+  int id;
+
+  String name;
+
+  %\tikz[style=Target, anchor=base]{\node (cr) {}}%Course[] courses;
+}
+
+
+%\tikz[style=Target, anchor=base]{\node (cd) {}}%class Course{
+
+  String teacherName;
+
+  Student[] students%\tikz[style=Target, anchor=base]{\node (sr) {}}%;
+}
+\end{lstlisting}
+%\onslide<1>{\caption{Conventional Program in Java}}
+\end{subfigure}
+\hfill
+\begin{subfigure}[T]{0.4\textwidth}
+\begin{lstlisting}[language=java,basicstyle=\tiny, escapechar=\%,]
+class Student{
+  int id;
+
+  String name;
+
+  int[] coursesPKs%\tikz[style=Target, anchor=base]{\node (cpk) {}}%;
+}
+
+
+class Course{
+  int %\tikz[style=Target, anchor=base]{\node (missing) {id}}%;
+
+  String teacherName;
+
+  int[] studentsPKs%\tikz[style=Target, anchor=base]{\node (spk) {}}%;
+}
+\end{lstlisting}
+%\onslide<1>{\caption{Smart Contracts in Hyperledger Java}}
+\end{subfigure}
+\hfill
+\end{figure}
+
+
+\begin{tikzpicture}[remember picture,overlay]
+\onslide<2->{
+\draw [Arrow]  (sr) .. controls ([shift={(2cm,0cm)}]sr) and ([shift={(2cm,0cm)}]sd) .. (sd);
+\draw [Arrow]  (cr) .. controls ([shift={(-1cm,0cm)}]cr) and ([shift={(-1cm,0cm)}]cd) .. (cd);
+\node[Text, below=0.5cm of sr, xshift=-0.1cm] {Cyclic reference causes\\ infinite serialization.};
+}
+
+\onslide<3->{
+\node[Text, above=2cm of cpk] (cpk-ex) {Replace object refrence to PK reference};
+\draw[Arrow] (cpk) .. controls ([shift={(1cm,0cm)}]cpk) and (cpk-ex.south) .. (cpk-ex.south);
+\draw[Arrow] (spk) .. controls ([shift={(3cm,0cm)}]spk) and (cpk-ex.south) .. (cpk-ex.south);
+}
+
+\onslide<4->{
+\node[Text, below=2cm of missing] (missing-ex) {Add missing PK};
+\draw[Arrow] (missing) -- (missing-ex);
+}
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Memory Model of Smart Contracts}
+
+
+
+\begin{itemize}
+\item A smart contract resembles an object in a programming language.
+\item The state is manipulated by a set of functions, analogous to methods in many programming languages.
+\item The local states of one smart contract can only be modified by its own code.
+\item Functions can be called either directly by clients or indirectly by other smart contracts~\cite{dickerson2020adding}, the reentrancy problem.
+\end{itemize}
+
+\end{frame}
+
+
+
+\begin{frame}{How are Blocks Added}
+\begin{tikzpicture}[scale=0.8, transform shape]
+\node (100) [Process] {block 100};
+\node (101) [Process, right=of 100] {block 101};
+
+\draw [Arrow] (100) -- ++(-2,0);
+\draw [Arrow] (101) -- (100);
+
+\node (m1) [below=1.2cm of 101.west] {\includegraphics[width=1.5em]{miner.png}};
+\node (m2) [below=0.5cm of m1] {\includegraphics[width=1.5em]{miner.png}};
+\node (m3) [below=0.5cm of m2] {\includegraphics[width=1.5em]{miner.png}};
+
+\onslide<2->{
+\node [below=0.1cm of 101] { transaction proposal: \texttt{createStore(21,"Whole Foods")}};
+}
+
+\onslide<3-5>{
+\node (r11) [align=left, right=0.1cm of m1] {nonce:0x478ad\\ \texttt{\{id:23, name:"Target"\}}};
+\node (r12) [align=left, right=0.1cm of m2] {nonce:0x13a63\\ \texttt{\{id:22, name:"Ralphs"\}}};
+\node (r13) [align=left, right=0.1cm of m3] {nonce:0x84d3f\\ \texttt{\{id:24, name:"Bestbuy"\}}};
+}
+\onslide<4>{
+\draw [draw=VioletRed, line width=0.1em] (r11.north west) rectangle (r13.south east);
+\node [below=0.2cm of r13] {proposal responses};
+}
+
+\onslide<5>{
+\node (sum1) [right=of r12, inner sep=0.1cm] {\color{red}{Not in consensus}};
+\draw (r11.north east) -- ([xshift=1em]sum1.north west);
+\draw (r13.south east) -- ([xshift=1em]sum1.south west);
+}
+\onslide<6->{
+\node (r21) [align=left, right=0.1cm of m1] {nonce:0xb6c81\\ \texttt{\{id:21, name:"Whole Foods"\}}};
+\node (r22) [align=left, right=0.1cm of m2] {nonce:0xb6c81\\ \texttt{\{id:21, name:"Whole Foods"\}}};
+\node (r23) [align=left, right=0.1cm of m3] {nonce:0xb6c81\\ \texttt{\{id:21, name:"Whole Foods"\}}};
+}
+\onslide<7->{
+\node (sum2) [right=of r22, inner sep=0.1cm] {\color{Green}{In consensus}};
+\draw (r21.north east) -- ([xshift=1em]sum2.north west);
+\draw (r23.south east) -- ([xshift=1em]sum2.south west);
+}
+\onslide<8->{
+\node (102) [Process, right=of 101] {block 102};
+\draw [Arrow] (102) -- (101);
+}
+\end{tikzpicture}
+
+\onslide<3->
+Assuming Poof of Work
+\end{frame}
+
+\begin{frame}{How are Blocks Added}
+
+\begin{itemize}
+\item Conventional Applications run on a single computer.
+
+\item Smart Contracts conceptually run on the virtual machine of a blockchain.
+	\begin{itemize}
+	\item Each miner runs the smart contract and compares the result.
+	\item duplicated computing~[19]
+	\end{itemize}
+
+\item Smart contracts shall not rely on the configuration of the computer.
+
+\item Set random seed with usually \code{ctx.blockHight}
+\end{itemize}
+
+
+%
+%
+%
+%\begin{itemize}
+%
+%\item No multi-threading despite of attempts~[28,29]
+%
+%\item \etal{Bram}~[20] holds that access control restrictions are a necessary part of the public specification of a contract.
+%\begin{itemize}
+%\item invented a DSL for Ethereum smart contract verification
+%\item not use Object Constraint Language (OCL)
+%\end{itemize}
+%\end{itemize}
+\end{frame}
+
+
+%\begin{frame}{Consensus}
+%\begin{itemize}
+%\item<1-> Poof of Work, Poof of Stake, Practical Byzantine Fault Tolerance
+%\item<2-> duplicated computing~[19] .
+%\item<3-> {[27]}~used communicating sequential processes and queuing theory to model the behavior of a consensus algorithm.
+%\end{itemize}
+%
+%\end{frame}
 
 \begin{frame}[t]{Smart Contracts vs.\ DApp}
 
@@ -336,40 +660,6 @@ code completion~[15]
 	\caption{Finite-state of smart contract}
 \end{subfigure}
 \end{figure}
-
-
-\end{frame}
-
-
-%\begin{frame}{Duplicated Computing}
-%\begin{itemize}
-%\item Shae and Tsai~[] argue smart contracts are duplicated computing rather than distributed computing.
-%\item<2-> They proposed a blockchain architecture for precision medicine.
-%\begin{itemize}
-%\item Smart contracts execute on chain.
-%\item Applications run on a personal computer and call smart contracts
-%\item Miners run the smart contract. The smart contract can be a Tensorflow program.
-%\end{itemize}
-%\end{itemize}
-%\end{frame}
-
-\begin{frame}{Distinctions between smart contract and OO languages}
-
-\begin{itemize}
-\item Reentrancy
-	\begin{itemize}
-	\item Smart contracts tend to call each other.
-	\item The local states of one smart contract can only be modified by its own code.
-	\end{itemize}
-
-\item No multi-threading despite of attempts~[28,29]
-
-\item \etal{Bram}~[20] holds that access control restrictions are a necessary part of the public specification of a contract.
-\begin{itemize}
-\item invented a DSL for Ethereum smart contract verification
-\item not use Object Constraint Language (OCL)
-\end{itemize}
-\end{itemize}
 \end{frame}
 
 
@@ -417,88 +707,7 @@ code completion~[15]
 \end{frame}
 
 
-\begin{frame}[t]{Consensus Algorithm}
-\begin{itemize}
-\item The execution result of a smart contract must be in consensus to be added to the blockchain.
 
-\onslide*<1>{
-\begin{tikzpicture}[node distance=0.5cm and 1cm, scale=0.9, transform shape]
-\node (application) [Process] {application layer};
-\node (execution) [Process, below=of application] {execution layer};
-\node (verification) [Process, below=of execution] {verification layer};
-\node (sm) [Process, below=of verification] {smart contract layer};
-\node (transmission) [Process, below=of sm] {transmission layer};
-\node (data) [Process, below=of transmission] {data layer};
-
-\draw [Arrow] (application) -- (execution);
-\draw [Arrow] (execution) -- (verification);
-\draw [Arrow] (verification) -- (sm);
-\draw [Arrow] (sm) --  (transmission);
-\draw [Arrow] (transmission) -- (data);
-
-\path[draw=red] (verification) circle [x radius=2cm, y radius=0.7cm];
-\end{tikzpicture}
-}
-
-\begin{itemize}
-\item<2-> Poof of Work, Poof of Stake, Practical Byzantine Fault Tolerance
-\item<2-> A group of miners run the same piece of code to check if they got the same result.
-\item<3-> Shae and Tsai~[19] call it duplicated computing.
-\end{itemize}
-
-\item<4-> {[27]}~used communicating sequential processes and queuing theory to model the behavior of a consensus algorithm.
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}{Consensus Algorithm Example}
-\begin{tikzpicture}[scale=0.8, transform shape]
-\node (100) [Process] {block 100};
-\node (101) [Process, right=of 100] {block 101};
-
-\draw [Arrow] (100) -- ++(-2,0);
-\draw [Arrow] (101) -- (100);
-
-\node (m1) [below=1.2cm of 101.west] {\includegraphics[width=1.5em]{miner.png}};
-\node (m2) [below=0.5cm of m1] {\includegraphics[width=1.5em]{miner.png}};
-\node (m3) [below=0.5cm of m2] {\includegraphics[width=1.5em]{miner.png}};
-
-\onslide<2->{
-\node [below=0.1cm of 101] { transaction proposal: \texttt{createStore(21,"Whole Foods")}};
-}
-
-\onslide<3-5>{
-\node (r11) [right=0.1cm of m1] { \texttt{\{id:23, name:"Target"\}}};
-\node (r12) [right=0.1cm of m2] { \texttt{\{id:22, name:"Ralphs"\}}};
-\node (r13) [right=0.1cm of m3] { \texttt{\{id:24, name:"Bestbuy"\}}};
-}
-\onslide<4>{
-\draw [draw=VioletRed, line width=0.1em] (r11.north west) rectangle (r13.south east);
-\node [below=0.2cm of r13] {proposal responses};
-}
-
-\onslide<5>{
-\node (sum1) [right=of r12, inner sep=0.1cm] {\color{red}{Not in consensus}};
-\draw (r11.north east) -- ([xshift=1em]sum1.north west);
-\draw (r13.south east) -- ([xshift=1em]sum1.south west);
-}
-\onslide<6->{
-\node (r21) [right=0.1cm of m1] { \texttt{\{id:21, name:"Whole Foods"\}}};
-\node (r22) [right=0.1cm of m2] { \texttt{\{id:21, name:"Whole Foods"\}}};
-\node (r23) [right=0.1cm of m3] { \texttt{\{id:21, name:"Whole Foods"\}}};
-}
-\onslide<7->{
-\node (sum2) [right=of r22, inner sep=0.1cm] {\color{Green}{In consensus}};
-\draw (r21.north east) -- ([xshift=1em]sum2.north west);
-\draw (r23.south east) -- ([xshift=1em]sum2.south west);
-}
-\onslide<8->{
-\node (102) [Process, right=of 101] {block 102};
-\draw [Arrow] (102) -- (101);
-}
-\end{tikzpicture}
-	
-\end{frame}
 
 \begin{frame}{Smart Contract Applications}
 \begin{itemize}
