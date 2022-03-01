@@ -250,31 +250,31 @@ public class Hello implements ContractInterface
 \end{figure}
 
 \begin{tikzpicture}[remember picture,overlay]
-\onslide<2>{\highlightTarget{main};}
+\onslide<2>{\highlightTarget{main}}
 \onslide<2->{
 \node[above=of main] (main-ex) {no main function in HF Java};
 \draw[Arrow] (main) -- (main-ex);
 }
 
-\onslide<3>{\highlightTarget{print};}
+\onslide<3>{\highlightTarget{print}}
 \onslide<3->{
 \node[below=of print, xshift=0.2cm] (print-ex) {no stdin, stdout in HF Java};
 \draw[Arrow] (print) -- (print-ex);
 }
 
-\onslide<4>{\highlightTarget{return};}
+\onslide<4>{\highlightTarget{return}}
 \onslide<4->{
 \node[below=2cm of return, xshift=-1.5cm] (return-ex) {return type must be serializable};
 \draw[Arrow] (return) -- (return-ex);
 }
 
-\onslide<5>{\highlightTarget{context};}
+\onslide<5>{\highlightTarget{context}}
 \onslide<5->{
 \node[below=of context] (context-ex) {transaction function has context};
 \draw[Arrow] (context) -- (context-ex);
 }
 
-\onslide<6>{\highlightTarget{submit};}
+\onslide<6>{\highlightTarget{submit}}
 \onslide<6->{
 \node[Text, above=2cm of submit, xshift=2cm] (submit-ex) {Transaction function is pure\\or modifies the blockchain.};
 \draw[Arrow] (submit) -- (submit-ex);
@@ -336,7 +336,7 @@ public class AddNumber implements ContractInterface {
 
 
 \begin{tikzpicture}[remember picture,overlay]
-\onslide<2>{\highlightTarget{private};}
+\onslide<2>{\highlightTarget{private}}
 \onslide<2->{
 \node[above=0.5cm of private, xshift=1.5cm] (private-ex) {no private data in blockchain};
 \draw[Arrow] (private) -- (private-ex);
@@ -349,7 +349,7 @@ public class AddNumber implements ContractInterface {
 \draw[Arrow] (sl3) -- (sl-ex);
 }
 
-\onslide<4>{\highlightTarget{submit};\highlightTarget{evaluate};}
+\onslide<4>{\highlightTarget{submit}\highlightTarget{evaluate}}
 \onslide<4->{
 \node[Text, above=1.5cm of submit] (submit-ex) {a set function,\\ adds a new block};
 \draw[Arrow] (submit) -- (submit-ex);
