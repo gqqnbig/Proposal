@@ -349,7 +349,7 @@ public class AddNumber implements ContractInterface {
 \hfill
 \begin{subfigure}[T]{0.4\textwidth}
 \begin{lstlisting}[language=java,basicstyle=\tiny, escapechar=\%,]
-class Student%\tikz[style=Target, anchor=base]{\node (sd) {}}%{
+class Student%\tikz[style=Target, anchor=base]{\node (sd) {}}% {
   int id;
 
   String name;
@@ -358,7 +358,7 @@ class Student%\tikz[style=Target, anchor=base]{\node (sd) {}}%{
 }
 
 
-%\tikz[style=Target, anchor=base]{\node (cd) {}}%class Course{
+%\tikz[style=Target, anchor=base]{\node (cd) {}}%class Course {
 
   String teacherName;
 
@@ -370,21 +370,21 @@ class Student%\tikz[style=Target, anchor=base]{\node (sd) {}}%{
 \hfill
 \begin{subfigure}[T]{0.4\textwidth}
 \begin{lstlisting}[language=java,basicstyle=\tiny, escapechar=\%,]
-class Student{
+class Student implements %\tikz[style=Target, anchor=base]{\node (serializable1) {Serializable}}% {
   int id;
 
   String name;
 
-  int[] coursesPKs%\tikz[style=Target, anchor=base]{\node (cpk) {}}%;
+  %\tikz[style=Target, anchor=base]{\node (cpk) {}}%int[] coursesPKs;
 }
 
 
-class Course{
+class Course implements %\tikz[style=Target, anchor=base]{\node (serializable2) {Serializable}}% {
   int %\tikz[style=Target, anchor=base]{\node (missing) {id}}%;
 
   String teacherName;
 
-  int[] studentsPKs%\tikz[style=Target, anchor=base]{\node (spk) {}}%;
+  %\tikz[style=Target, anchor=base]{\node (spk) {}}%int[] studentsPKs;
 }
 \end{lstlisting}
 %\onslide<1>{\caption{Smart Contracts in Hyperledger Java}}
@@ -395,18 +395,23 @@ class Course{
 
 \begin{tikzpicture}[remember picture,overlay]
 \onslide<2->{
-\draw [Arrow]  (sr) .. controls ([shift={(2cm,0cm)}]sr) and ([shift={(2cm,0cm)}]sd) .. (sd);
-\draw [Arrow]  (cr) .. controls ([shift={(-1cm,0cm)}]cr) and ([shift={(-1cm,0cm)}]cd) .. (cd);
-\node[Text, below=0.5cm of sr, xshift=-0.1cm] {Cyclic reference causes\\ infinite serialization.};
+\draw [color=black, line width=0.8pt] ([shift={(.1,-.1)}]serializable1.south east) rectangle ([shift={(-.1,.1)}]serializable1.north west);
+\draw [color=black, line width=0.8pt] ([shift={(.1,-.1)}]serializable2.south east) rectangle ([shift={(-.1,.1)}]serializable2.north west);
 }
 
 \onslide<3->{
-\node[Text, above=2cm of cpk] (cpk-ex) {Replace object refrence to PK reference};
-\draw[Arrow] (cpk) .. controls ([shift={(1cm,0cm)}]cpk) and (cpk-ex.south) .. (cpk-ex.south);
-\draw[Arrow] (spk) .. controls ([shift={(3cm,0cm)}]spk) and (cpk-ex.south) .. (cpk-ex.south);
+\draw [Arrow]  (sr) .. controls ([shift={(2cm,0cm)}]sr) and ([shift={(2cm,0cm)}]sd) .. (sd);
+\draw [Arrow]  (cr) .. controls ([shift={(-1cm,0cm)}]cr) and ([shift={(-1cm,0cm)}]cd) .. (cd);
+\node[Text, below=0.5cm of sr, xshift=-0.1cm] {Cyclic references cause\\ infinite serialization.};
 }
 
 \onslide<4->{
+\node[Text, above=2cm of cpk] (cpk-ex) {Replace object refrence to PK reference};
+\draw[Arrow] (cpk) .. controls ([shift={(-1cm,0cm)}]cpk) and (cpk-ex.south) .. (cpk-ex.south);
+\draw[Arrow] (spk) .. controls ([shift={(-3cm,0cm)}]spk) and (cpk-ex.south) .. (cpk-ex.south);
+}
+
+\onslide<5->{
 \node[Text, below=2cm of missing] (missing-ex) {Add missing PK};
 \draw[Arrow] (missing) -- (missing-ex);
 }
