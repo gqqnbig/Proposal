@@ -155,6 +155,25 @@
 \end{frame}
 
 
+\begin{frame}[t]{RM2PT}
+\etal{Yang}~[5] proposed RM2PT to transform a requirement document into a Java desktop program.
+\onslide*<2>{
+\includegraphics[width=0.7\linewidth]{RM2PT-generate}
+}
+\onslide*<3>{
+\includegraphics[width=0.5\linewidth]{rm2pt-folder-structure.png}
+}
+\onslide*<4>{
+\includegraphics[width=\linewidth]{cocome-javafx.png}
+}
+
+\onslide<5>{
+We contemplate to improve RM2PT so that it can generate smart contracts.
+}
+
+\end{frame}
+
+
 \section[Smart Contract]{Properties of Smart Contract}
 \begin{frame}{Permissioning of Blockchain Platforms}
 
@@ -610,23 +629,6 @@ Assuming Poof of Work
 \end{frame}
 
 
-\begin{frame}[t]{RM2PT}
-\etal{Yang}~[5] proposed RM2PT to transform a requirement document into a Java desktop program.
-\onslide*<2>{
-\includegraphics[width=0.7\linewidth]{RM2PT-generate}
-}
-\onslide*<3>{
-\includegraphics[width=0.5\linewidth]{rm2pt-folder-structure.png}
-}
-\onslide*<4>{
-\includegraphics[width=\linewidth]{cocome-javafx.png}
-}
-
-\onslide<5>{
-We contemplate to improve RM2PT so that it can generate smart contracts.
-}
-
-\end{frame}
 
 \section{Literature Review}
 \begin{frame}{Source Code Identification}
@@ -671,7 +673,7 @@ code completion~[15]
 \item mixed with Java and other languages
 \end{itemize}
 
-\item The dataset created by the authors of RMiner~[16] comprises \num{3188} refactorings found in 538 commits from 185 projects.
+\item The dataset created by the authors of RMiner~[16] comprises \num{3188} refactorings found from 185 projects.
 \begin{itemize}
 \item allow functional changes
 \end{itemize}
@@ -759,7 +761,7 @@ code completion~[15]
 \item Java
 \item on-chain
 \item pBFT
-\item 3200 tx/s in HF 1.2~\cite{gorenflo2020fastfabric}
+\item 3200 tx/s~\cite{gorenflo2020fastfabric}
 \end{itemize}
 }
 
