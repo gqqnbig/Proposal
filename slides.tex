@@ -469,9 +469,9 @@ class Course implements %\tikz[style=Target, anchor=base]{\node (serializable2) 
 }
 
 \onslide<3-5>{
-\node (r11) [align=left, right=0.1cm of m1] {nonce:0x478ad\\ \texttt{\{id:23, name:"Target"\}}};
-\node (r12) [align=left, right=0.1cm of m2] {nonce:0x13a63\\ \texttt{\{id:22, name:"Ralphs"\}}};
-\node (r13) [align=left, right=0.1cm of m3] {nonce:0x84d3f\\ \texttt{\{id:24, name:"Bestbuy"\}}};
+\node (r11) [align=left, right=0.1cm of m1] {\texttt{\{id:23, name:"Target"\}}};
+\node (r12) [align=left, right=0.1cm of m2] {\texttt{\{id:22, name:"Ralphs"\}}};
+\node (r13) [align=left, right=0.1cm of m3] {\texttt{\{id:24, name:"Bestbuy"\}}};
 }
 \onslide<4>{
 \draw [draw=VioletRed, line width=0.1em] (r11.north west) rectangle (r13.south east);
@@ -484,9 +484,9 @@ class Course implements %\tikz[style=Target, anchor=base]{\node (serializable2) 
 \draw (r13.south east) -- ([xshift=1em]sum1.south west);
 }
 \onslide<6->{
-\node (r21) [align=left, right=0.1cm of m1] {nonce:0xb6c81\\ \texttt{\{id:21, name:"Whole Foods"\}}};
-\node (r22) [align=left, right=0.1cm of m2] {nonce:0xb6c81\\ \texttt{\{id:21, name:"Whole Foods"\}}};
-\node (r23) [align=left, right=0.1cm of m3] {nonce:0xb6c81\\ \texttt{\{id:21, name:"Whole Foods"\}}};
+\node (r21) [align=left, right=0.1cm of m1] {\texttt{\{id:21, name:"Whole Foods"\}}};
+\node (r22) [align=left, right=0.1cm of m2] {\texttt{\{id:21, name:"Whole Foods"\}}};
+\node (r23) [align=left, right=0.1cm of m3] {\texttt{\{id:21, name:"Whole Foods"\}}};
 }
 \onslide<7->{
 \node (sum2) [right=of r22, inner sep=0.1cm] {\color{Green}{In consensus}};
@@ -498,9 +498,6 @@ class Course implements %\tikz[style=Target, anchor=base]{\node (serializable2) 
 \draw [Arrow] (102) -- (101);
 }
 \end{tikzpicture}
-
-\onslide<3->
-Assuming Poof of Work
 \end{frame}
 
 
