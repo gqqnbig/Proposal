@@ -1,4 +1,5 @@
 \chapter{Literature Review}
+\label{sec:literature-review}
 
 %\cite{johnston2014general}~believes the core of a {\dapp} is its blockchain. Based on how close the {\dapp} is to the underlying blockchain, the authors classify {\dapp} into 3 types.
 %Type I are {\dapp} with its own blockchain, e.g., Ethereum. Type II are {\dapp}s using the blockchain of another {\dapp} (of Type I), e.g., SHIBA INU. Type III are {\dapp}s using the blockchain of a Type II {\dapp}.
@@ -11,12 +12,15 @@ I will first talk about source code classification, then properties of smart con
 In recent years, the code classification task leverages neural networks.
 There are extensive research on Natural Language Processing in combination with neural networks. \etal{Allamanis}~\cite{allamanis2018survey} proposed the naturalness hypothesis which expounded the similarities between programming languages and natural languages. Since then, more and more work in software engineering start to use neural networks, in particular neural machine translation and transformers.
 Grammformers~\cite{guo2021learning} made an attempt in using transformers. It takes the context text and generates next code statements. The generated statements may contain holes where Grammformers is uncertain about and leaves for developers to fill in.
+I will try transformers in my network for source code classification.
 
 In order to analyze source code with neural networks, datasets are required to train the networks. The source code repositories on GitHub are often utilized.
 \etal{Jiang}~\cite{jiang2017} collected a dataset of \num{1006} repositories from GitHub. This dataset is unlabeled and the code is mostly in Java language with other languages mixed in.
+I will use Jiang dataset for source code classification.
 In the field of program analysis, more and more work has employed neural network techniques~\cite{morgachev2019detection,huo2016learning,gu2016deep}.
 \etal{Alexandru}~\cite{alexandru2017replicating} used NMT to annotate source code tokens with typing,
 and they also implemented an {\sc antlr}-based parser.
+I will try NMT for source code classification.
 \textsc{JSNice}~\cite{raychev2015predicting} is a neural network model that predicts names of JavaScript identifiers and type annotations of variables.
 \etal{Mou}~\cite{mou2016convolutional} used a convolutional neural network to classify programs by functionalities, such as string manipulations and matrix operations.
 Other uses of neural networks in program analysis include
@@ -24,10 +28,12 @@ detection of variable misuse~\cite{morgachev2019detection},
 bug localization~\cite{huo2016learning},
 API suggestion~\cite{gu2016deep}, and
 code completion~\cite{raychev2014code}.
+These researches gave me ideas on how to use neural networks to process source code.
 
 
 The dataset created by the authors of RMiner~\cite{tsantalis2018accurate} focuses on refactoring types. It comprises \num{3188} refactorings found in 538 commits from 185 open-source projects. The dataset is now hosted on \url{https://github.com/aserg-ufmg/RefDiff}. In this dataset, one commit may contain multiple refactoring types and functional changes are permitted. For example, as long as one method is renamed among a great deal of functional changes, the commit is labeled as method renaming.
 RefDiff~\cite{silva2020refdiff} and RMiner read the complete content of the changed files before and after a commit and construct a diff of an internal format, from which they classify the code into certain refactoring types.
+My paper ``A neural architecture for detecting identifier renaming from diff'' compared with RMiner and RefDiff in the evaluation section.
 
 %generate commit message from diff~\cite{linares2015changescribe,buse2010automatically,huang2020learning},
 %generate release notes from commits since the last release~\cite{moreno2016arena}, and so on.
@@ -38,6 +44,7 @@ RefDiff~\cite{silva2020refdiff} and RMiner read the complete content of the chan
 \paragraph*{Smart Contracts}
 
 \etal{Yang}~\cite{yang2020implementation} proposed a smart contract architecture model, consisting of data layer, transmission layer, smart contract layer, verification layer, execution layer, and application layer. The authors formalized the execution of a smart contract into 5 states, activated, ready, expired, implemented, and default, then used a finite-state machine to model the behavior.
+I find this kind of architecture model is useful in illustrating the concept, and finite state machine can model the behavior of smart contract. Therefore I will use this technique in the theory proof of my transformation.
 
 Shae and Tsai~\cite{shae2018transform} see smart contracts running on blockchains as duplicated computing rather than distributed computing
 since smart contracts need to be deployed into all the blockchain nodes, and the identical smart contract codes are executed at the same time in many nodes.
@@ -49,6 +56,7 @@ When a clinic wants to get a precise model for a patient, the clinic uses the ap
 
 There are certain distinctions between smart contract and the most standard object-oriented languages. In terms of reentrancy, as smart contracts tend to call each other, the local states of one smart contract can only be modified by its own code.
 \etal{Bram}~\cite{bram2021rich} holds that access control restrictions are a necessary part of the public specification of a contract. They invented a DSL for Ethereum smart contract verification. However they did not use Object Constraint Language.
+I will learn the gist of Bram and apply it to Hyperledger Fabric in OCL because my work is based on RM2PT, which generate access contract from OCL.
 
 
 \paragraph*{Transformation}
@@ -57,6 +65,7 @@ The resulting tool is called RM2PT implemented as Eclipse plugin.
 
 In requirements modeling and system design, the unified modeling language (UML) is a de facto standard for requirement documents.
 In the past, UML modeling tools, such as Rational Rose, SmartDraw, MagicDraw, and Papyrus UML, can only generate skeleton code, where classes only contain attributes and signatures of operations, with method body empty~\cite{regep2000using}. Nowadays state-of-the-art research is able to turn UML into fully executable code~\cite{ciccozzi2019execution}.
+When I finished writing my transformation program, I will compare my performance with these works.
 
 Yang invented his own domain specific language (DSL) as the input of RM2PT, and the output is a JavaFX desktop application. RM2PT is able to complete 93.65\% system operations on average while the others are not generatable due to the involvement of third-party API or sorting.
 RM2PT can check pre-conditions, post-conditions, and invariants for plain Java, which is a runtime validation approach.
@@ -69,6 +78,7 @@ Runtime checking and static analysis are the two options.
 
 In runtime checking, researchers have invented a number of new programming languages to help the verification.
 ContractLarva~\cite{ellul2018runtime} allows users to supply pre- and post-conditions for smart contract transactions and enforces them at runtime. Unlike Solythesis~\cite{li2020securing}, it does not support quantifiers natively.
+These two papers work for Ethereum, but I will port their findings to Hyperledger.
 The drawback of these new languages is that they often sacrifice expressiveness (e.g., no longer Turing-complete) to gain correctness or security guarantees.
 
 Statically verifying a smart contract is hard because
@@ -77,13 +87,16 @@ smart contracts frequently interact with unverified, potentially adversarial out
 \cite{tolmach2021survey}~summarized the two steps on statically verifying the correctness of smart contract and presented related works.
 First, we need to formalize the requirements, i.e., we have to build formal specifications for smart contracts.
 Then we read the implementation of the smart contract, abstract it to a formal mathematical model, and check it against the specification.
+I will follow the two steps in verifying the correctness of smart contract.
 
 Securify~\cite{tsankov2018securify} translates Solidity smart contract into Datalog and verifies security properties with a satisfiability modulo theories (SMT) solver.
+I will use a SMT solver in my theorem proofing.
 
 
 
 At the end, the execution result of a smart contract must be in consensus to be added to the blockchain, where the consensus algorithm takes part in.
-\cite{altarawneh2021availability}~used communicating sequential processes and queuing theory to model the behavior of a consensus algorithm with four agents: client, miner, server, and intruder.
+\cite{altarawneh2021availability}~used communicating sequential processes (CSP) and queuing theory to model the behavior of a consensus algorithm with four agents: client, miner, server, and intruder.
+I will look into writing a custom consensus algorithm, and I will use CSP to model the behavior of my custom consensus algorithm.
 
 
 
