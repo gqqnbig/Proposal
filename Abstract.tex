@@ -3,24 +3,28 @@
 A smart contract is a program running on a blockchain platform.
 Businesses often use it as a signed contract or an agreement to regulate the stakeholders
 because smart contracts reduce the need in trusted intermediators, arbitrations, and enforcement costs.
-Since there are existing conventional applications running business logic, 
+Since there are existing conventional applications running business logic,
 and coding smart contracts is a big barrier even for senior developers,
-it’s ideal to transform these applications to smart contracts. 
-Most of these existing applications are open source on GitHub, thus it is feasible to obtain the functional implementation and run the transformation.
+it's ideal to transform these applications to smart contracts.
+Most of these existing applications are open source, thus it is feasible to obtain the functional implementation and run the transformation.
 
-Many factors affect the tech stack of smart contracts, including data storage, consensus algorithm, throughput, and so on.
-To eliminate these variables, I will focus my work on Hyperledger Fabric, 
-which is a mature blockchain platform, allows smart contracts to be written in Java, and is permissioned. 
-Hence this platform is preferred by many businesses.
+I will focus my work on Hyperledger Fabric,
+which is a mature blockchain platform, allows smart contracts to be written in Java, and is permissioned.
+This platform is preferred by businesses.
 
-Due to the properties of blockchains and smart contracts, we do not think all conventional applications can be safely transformed to smart contracts.
+Not all conventional applications can be safely transformed to smart contracts.
 Thus in this paper we propose to identify the patterns of conventional applications and tell which is transformable.
 A mathematical model, e.g., rCOS and partial order, will be needed to formally describe the smart contract or the interactions so that certain properties can be proved.
 Next I will use a neural network to classify the conventional applications into different categories, some of which are transformable.
 Finally I implement algorithms to transform these applications to smart contracts.
 My work is based on RM2PT, which transforms requirement documents to Java desktop application. I will reuse its rules and transform to smart contract.
-Pre-conditions, post-conditions, and invariants will be inserted into the output smart contract so that we know the contract runs according to the requirements.
-Static analysis will be used as well.
+
+
+The contributions of my work will be the following:
+1) I propose a neural network architecture to analyze program source and classify them. The neural network will tell if a program can be transformed to smart contract.
+2) I extend RM2PT and use formal methods to transform conventional applications to smart contract.
+3) I propose a neural network architecture to do the same transformation.
+4) I propose a model to describe smart contracts and the differences to conventional applications.
 
 
 
