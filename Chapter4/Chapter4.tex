@@ -28,8 +28,54 @@ As the first step, I innovatively classify commits into refactoring types, wheth
 In the software engineering and neural network fields, few researchers explored commit classification and I got a paper published (see \autoref{sec:produced-publications}).
 My paper used and expanded Jiang's dataset of 2 million commits collected from GitHub.
 As soon as I learned the key characteristics a smart contract holds, I will train a neural network to automatically filter the conventional programs for the next transformation.
-The neural network can take the simplest dense layers, or more advanced convolutional neural network~\cite{albawi2017understanding}, recurrent neural network~\cite{tarwani2017survey}, long short-term memory~\cite{skovajsova2017long}, and so on.
+
+
+There are many neural architectures I can use, including the simplest dense layers, convolutional neural network~\cite{albawi2017understanding}, recurrent neural network~\cite{tarwani2017survey}, long short-term memory~\cite{skovajsova2017long}, to name but a few.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.9\linewidth]{cnn-big}
+\caption{The architecture of CNN}
+\label{fig:cnn}
+\end{figure}
+
+\autoref{fig:cnn}~is the architecture of convolutional neural network.
+A Convolutional Neural Network (CNN) is a Deep Learning algorithm which can take in an input image, assign importance (learnable weights and biases) to various aspects/objects in the image and be able to differentiate one from the other. The pre-processing required in a CNN is much lower as compared to other classification algorithms. While in primitive methods filters are hand-engineered, with enough training, CNN has the ability to learn these filters/characteristics.
+The architecture of a CNN is analogous to that of the connectivity pattern of Neurons in the Human Brain and was inspired by the organization of the Visual Cortex. Individual neurons respond to stimuli only in a restricted region of the visual field known as the Receptive Field. A collection of such fields overlap to cover the entire visual area.
+
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\linewidth]{rnn-big}
+\caption{The architecture of RNN}
+\label{fig:rnn}
+\end{figure}
+
+Recurrent neural network (RNN) consists of many blocks as seen in~\autoref{fig:rnn}.
+The constituent block of RNN has two inputs $x_t$ and $x_{t-1}$, where  $x_t$ is the current time step input which can be a word of sentence, character of words, hertz of an audio etc. $x_{t-1}$ is previous time step input which is nothing but previous RNN block activation. Each input have their own weights, here we have two input with weights $Wx$ for $x_t$ and $Wa$ for $x_{t-1}$.
+To calculate the loss of the model, individual block losses are calculated and summed up to get the total loss.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.7\linewidth]{lstm-big}
+\caption{The constituent block of LSTM. The horizontal line is the flow of cell state.}
+\label{fig:lstm}
+\end{figure}
+
+The architecture of Long Short-Term Memory (LSTM) is a specialized form of RNN. The constituent cell is depicted in~\autoref{fig:lstm}.
+The key to LSTM is the cell state.
+The cell state is like a conveyor belt. It runs straight down the entire chain, with only some minor linear interactions. It's very easy for information to just flow along it unchanged. LSTM has the ability to remove or add information to the cell state, carefully regulated by structures called gates.
+LSTM has three different gates forget gate, input gate and output gate.
+
+
+Given the numerous network architectures, I will first try the simplest dense layers on my neural network though I do not think the accuracy will be good.
+CNN is for image processing so I will not use it.
+I will focus more on RNN and LSTM.
+
+
 In terms of the training dataset, I will take a similar approach and collect it from GitHub, probably with the help of the scraper~\cite{alexandru2017replicating}.
+Categorical accuracy will be my evaluation metrics because my task is to classify source code.
+I will also create confusion matrix in order to calculate false positive rate, accuracy, recall, f1-score, etc.
 
 
 \paragraph*{Transformation to Smart Contracts}
