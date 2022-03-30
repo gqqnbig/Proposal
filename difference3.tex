@@ -1,0 +1,104 @@
+\documentclass[preview,svgnames, border={0 1cm 0 1.2cm}]{standalone}
+\usepackage{tikz}
+
+
+\usepackage{listings}
+\lstset{
+	%  %行号
+	%  %numbers=left,
+	%  %背景框
+	%  %framexleftmargin=10mm,
+	%  %frame=none,
+	%  %背景色
+	%  %backgroundcolor=\color[rgb]{1,1,0.76},
+	%  %样式
+	keywordstyle=\color{blue}\bfseries,
+	%  identifierstyle=\bf,
+	%  numberstyle=\color[RGB]{0,192,192}, %行号的样式
+	commentstyle=\it\color[RGB]{0,96,96},
+	stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},
+	%  %显示空格
+	%  %showstringspaces=false,
+	basicstyle=\ttfamily\scriptsize,
+	columns=flexible, %修正大写字母间距过小
+	breaklines=true, %对过长的代码自动换行
+	%  escapechar=!,
+	%  morekeywords={BEGIN}
+}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\usetikzlibrary{arrows,shapes,positioning,calc, shapes.geometric,shapes.arrows}
+
+
+\begin{document}
+\tikzset{Arrow/.style={thick, ->, >=stealth}}
+\tikzset{Target/.style={baseline, inner sep=0pt, remember picture}}
+\tikzstyle{Text} = [/utils/exec={\sffamily}, text centered, align=center]
+
+\begin{figure}
+\centering
+\hfill
+\begin{subfigure}[T]{0.4\textwidth}
+\begin{lstlisting}[language=java,basicstyle=\tiny, escapechar=\%,]
+class Student%\tikz[style=Target, anchor=base]{\node (sd) {}}% {
+  int id;
+
+  String name;
+
+  %\tikz[style=Target, anchor=base]{\node (cr) {}}%Course[] courses;
+}
+
+
+%\tikz[style=Target, anchor=base]{\node (cd) {}}%class Course {
+
+  String teacherName;
+
+  Student[] students%\tikz[style=Target, anchor=base]{\node (sr) {}}%;
+}
+\end{lstlisting}
+\end{subfigure}
+\hfill
+\begin{subfigure}[T]{0.4\textwidth}
+\begin{lstlisting}[language=java,basicstyle=\tiny, escapechar=\%,]
+class Student implements %\tikz[style=Target, anchor=base]{\node (serializable1) {Serializable}}% {
+  int id;
+
+  String name;
+
+  %\tikz[style=Target, anchor=base]{\node (cpk) {}}%int[] coursesPKs;
+}
+
+
+class Course implements %\tikz[style=Target, anchor=base]{\node (serializable2) {Serializable}}% {
+  int %\tikz[style=Target, anchor=base]{\node (missing) {id}}%;
+
+  String teacherName;
+
+  %\tikz[style=Target, anchor=base]{\node (spk) {}}%int[] studentsPKs;
+}
+\end{lstlisting}
+\end{subfigure}
+\hfill
+\end{figure}
+
+
+\begin{tikzpicture}[remember picture,overlay]
+\draw [color=black, line width=0.8pt] ([shift={(.1,-.1)}]serializable1.south east) rectangle ([shift={(-.1,.1)}]serializable1.north west);
+\draw [color=black, line width=0.8pt] ([shift={(.1,-.1)}]serializable2.south east) rectangle ([shift={(-.1,.1)}]serializable2.north west);
+
+\draw [Arrow]  (sr) .. controls ([shift={(2cm,0cm)}]sr) and ([shift={(2cm,0cm)}]sd) .. (sd);
+\draw [Arrow]  (cr) .. controls ([shift={(-1cm,0cm)}]cr) and ([shift={(-1cm,0cm)}]cd) .. (cd);
+\node[Text, below=0.5cm of sr, xshift=-0.1cm] {Cyclic references cause\\ infinite serialization.};
+
+\node[Text, above=2cm of cpk] (cpk-ex) {Replace object reference to PK reference};
+\draw[Arrow] (cpk) .. controls ([shift={(-1cm,0cm)}]cpk) and (cpk-ex.south) .. (cpk-ex.south);
+\draw[Arrow] (spk) .. controls ([shift={(-3cm,0cm)}]spk) and (cpk-ex.south) .. (cpk-ex.south);
+
+\node[Text, below=2cm of missing] (missing-ex) {Add missing PK};
+\draw[Arrow] (missing) -- (missing-ex);
+\end{tikzpicture}
+
+
+\end{document}

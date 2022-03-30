@@ -95,6 +95,50 @@ For example, it's common for a smart contract to call another smart contract, an
 The DAO attack was caused by a reentrancy problem and the attacker stole \$50 million~\cite{dao-attack}.
 
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\linewidth]{difference1}
+\caption{Differences on functions}
+\label{fig:difference1}
+\end{figure}
+
+\autoref{fig:difference1} shows the differences on functions between conventional program in Java and Hyperledger Fabric smart contract.
+First, there is no \code{main} function in smart contract. Smart contract is expected to called by external party or monitor chain events.
+What's more, we cannot use stdin and stdout in smart contract because these go to the runtime, i.e., the miner's machine.
+stdout may be used as debugging log, but they are not accessible by general public.
+A transaction function in a smart contract must be marked with an annotation so that the runtime knows this function is callable.
+Clients cannot call an arbitrary function in a smart contract.
+The transaction function also takes the \code{Context} parameter, which contains timestamp, caller's address, block height, and sort of information.
+Finally the parameters and the return value must be serializable for interop.
+For instance smart contract cannot return Java ArrayList because Python doesn't know how to deal with that. Rather, it must return array.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\linewidth]{difference2}
+\caption{Differences on data}
+\label{fig:difference2}
+\end{figure}
+
+\autoref{fig:difference2} shows the differences on data between conventional program in Java and Hyperledger Fabric smart contract.
+We are used to mark private data in a class with the keyword \code{private}, but in smart contract this keyword is merely informational.
+The data are stored on the blockchain; anyone who has access to the blockchain is able to see the ``private'' data.
+In smart contract, transactions can be marked in a way so that callers or the runtime knows this function is pure and when this pure function is called, miners don't have to add a new block because no data are changed.
+Within transaction functions, smart contract needs to use blockchain API to read and save data; and these data must be serializable.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\linewidth]{difference3}
+\caption{Differences on entities}
+\label{fig:difference3}
+\end{figure}
+
+
+\autoref{fig:difference3} shows the differences on entities between conventional program in Java and Hyperledger Fabric smart contract.
+Entities are classes representing a business object, like models in the model-view-controller pattern.
+In smart contract, entities are to be saved in blockchain so they must be serializable. They cannot hold cyclic references so we have to change them to primary key (PK) references.
+
+The above rudimentary findings guide me to transform conventional program to smart contract.
+
 \section{Motivation}
 
 
