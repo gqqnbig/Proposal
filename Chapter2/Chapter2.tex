@@ -100,7 +100,7 @@ Nevertheless, the execution of smart contract exhibits differences to the conven
 The local states of one smart contract can only be modified by its own code. Attackers cannot directly manipulate the working memory of a smart contract.
 All major blockchain platforms, including Ethereum, Bitcoin, and Hyperledger Fabric do not support multi-threading in smart contract, despite of attempts~\cite{anjana2019efficient,yu2018parallel} to add it. The computer of a miner only has one runtime of one smart contract and the smart contract only needs to add locks to safeguard inter-smart contract reentrancy.
 
-When we identify functional implementations transformable to smart contracts, we have to keep these properties in mind. For example if one conventional application runs in parallel, we cannot transform it to smart contract, or if the parallelism is just for performance, we may transform to a serial manner.
+When we identify functional implementations transformable to smart contracts, we have to keep these properties in mind. For example if one conventional application runs in parallel, we cannot transform it to smart contract, or if the parallelism is just for performance, we will transform to a serial manner.
 
 Such identification should be done by neural networks. As \etal{Allamanis} pointed out, NLP tools are our friends in programming language processing.
 \etal{Jiang}~\cite{jiang2017} collected a dataset of \num{1006} repositories,
@@ -121,7 +121,7 @@ SLEX-Web~\cite{jantan2012extension} is a web application for school. It not only
 I think this application is a good fit for smart contract because blockchain can secure the student grades and other data.
 
 
-Dao~\cite{dao2019challenges} implemented a Vietnamese certificates application called ECefblock running on Hyperledger Fabric. This smart contract is written in MVC pattern. It has a UML class diagram as a requirement document. As RM2PT generates conventional applications in MVC pattern, I may be able to reuse certain rules from RM2PT, and use ECefblock to study how to transform smart contract into MVC.
+Dao~\cite{dao2019challenges} implemented a Vietnamese certificates application called ECefblock running on Hyperledger Fabric. This smart contract is written in MVC pattern. It has a UML class diagram as a requirement document. As RM2PT generates conventional applications in MVC pattern, I will be able to reuse certain rules from RM2PT, and use ECefblock to study how to transform smart contract into MVC.
 
 
 %After we got a working prototype, we need to add missing functions, optimize it, and refactor it into our desired application.
