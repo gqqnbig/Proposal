@@ -60,7 +60,7 @@ After my conversion tool is implemented, I hope to let people try it so that I c
 The input document of RM2PT uses OCL to describe invariants, pre- and post-conditions of an operation, and RM2PT transforms them to Java expressions.
 My RM2Hyperledger should do that same but as~\cite{li2020securing} stated, adding these checks to all operations causes a huge runtime overhead because these checks read data from blochchain, which is a costly operation.
 Nevertheless, I can utilize the results found in the earlier phase and perform static analysis.
-If I got a formal mathematical model, I can use the model to prove the smart contract does not go into a bad state or the coin won't be stolen.
+After I got a formal mathematical model, I can use the model to prove the smart contract does not go into a bad state or the coin won't be stolen.
 A SMT solver will be used.
 But as smart contracts frequently interact with unverified, potentially adversarial outside code,
 the assumptions that people can soundly prove are quite limited~\cite{bram2021rich}.
