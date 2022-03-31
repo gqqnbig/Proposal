@@ -33,13 +33,6 @@ due the properties of blockchains and smart contracts, we do not think all conve
 Thus in this paper we propose to identify the patterns of conventional applications and tell which is transformable.
 Then we implement algorithms to transform these applications to smart contracts.
 
-To sum up, the contributions of my work will be the following:
-1) I propose a neural network architecture to analyze program source and classify them. The neural network will tell if a program can be transformed to smart contract.
-2) I extend RM2PT and use formal methods to transform conventional applications to smart contract.
-3) I propose a neural network architecture to do the same transformation.
-4) I propose a model to describe smart contracts and the differences to conventional applications.
-
-
 
 \section{General overview of the field of study}
 
@@ -157,6 +150,29 @@ We plan to use neural network to classify conventional applications and find the
 During the next transformation phase, we can either transform based on fixed rule sets or use neural networks again.
 
 
+
+
+\section{Contributions}
+This proposal studies the differences between functional implementation in conventional applications and one in smart contracts
+and the problems of transforming the former to the latter.
+The main contributions of the proposal are as follows:
+
+\begin{itemize}
+\item  I propose a neural network architecture to analyze program source code and classify them. The neural network is a classification network, telling if a program can be transformed to smart contract.
+The network uses layers including transformer, neural machine translation, and LSTM. The network will be trained on Jiang's dataset consisting of \num{1006} software projects along with their git commits.
+The output of the network is a percentage, indicating how confident the network is the input belongs to that label.
+\item I extend RM2PT and use formal methods to transform conventional applications to smart contracts. RM2PT originally transforms requirement documents in a DSL to Java desktop applications.
+I add a post-processing plugin named RM2Hyperledger to generate smart contract on Hyperledger platform.
+Since there is no clear methodology for evaluating smart contract, RM2\-Hyperledger will be evaluated on RM2PT's dataset with my own test cases.
+
+\item RM2Hyperledger requires a rigid syntax parser, which is a shortcoming. RM2\-Hyperledger being a baseline, I propose a neural network architecture to do the same transformation.
+The proposed neural network is a generative model in Natural Language Processing that generates new source code.
+\item I propose a mathematical model to describe smart contracts and their differences to conventional applications.
+I use finite state machine to model the state transition of smart contract because adding new blocks to the chain is a state transition.
+I use total order and partial order to compare conventional applications and smart contract.
+I use rCOS to formally specify smart contract, focusing on mathematical characterization of object-oriented concepts.
+
+\end{itemize}
 
 %Requirements errors are one of the causes leading failings in software projects~\cite{sutcliffe1999tracing}.
 %Careful requirements modeling along with systematic validation helps to reduce the uncertainty about target systems [2], [3]. The goal of requirements validation is to construct the consistent requirements for the needs of target users [4]. However, this process is complicated, and it can be hard to produce a correct and complete requirements specification. The complexity is due to the following interrelated attributes [5]–[7]:
