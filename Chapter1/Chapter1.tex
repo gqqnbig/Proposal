@@ -144,10 +144,27 @@ we are motivated to automatically generate them.
 We contemplate to improve RM2PT so that it can generate smart contracts.
 Since businesses typically want to use a permissioned blockchain platform, we are going to target Hyperledger Fabric and generate smart contracts in the Java language.
 
-To archive this, we should study characteristics of blockchains and smart contracts, find out which functional implementations are transformable to smart contracts.
-Classification neural networks are a popular tool for various tasks.
-We plan to use neural network to classify conventional applications and find the ones that can be transformed to smart contract.
-During the next transformation phase, we can either transform based on fixed rule sets or use neural networks again.
+
+The traditional way of doing such transformation involves a rigid syntax parser and a set of rules.
+One shortcoming is that it is hard to implement a correct syntax parser.
+Besides, the transformation is a process that applies rules one by one. If one rule doesn't match the source code, the rule is not executed.
+Because developers write program in many different ways, it is hard to write rules covering all situations.
+Therefore when transformation is done with some rules skipped, we don't know if the transformed smart contract is correct or not.
+
+Another problem is that the logic of the conventional application renders it unsuitable for smart contract.
+If an application is about gambling, like rock-paper-scissors game, based on randomness, it is not suitable for smart contract
+because randomness on blockchain is pretty predictable.
+If an application requires user to input a secret, for example a password, to activate certain function,
+it is not suitable for smart contract because blockchain transactions are public and everyone can see this user's password.
+If an application creates large volume of data, it may not be suitable for smart contract
+because BitCoin network only handles 7 transactions per second and Ethereum a few thousand, the application will be very laggy.
+
+
+Given these problems and the time transformation takes, it is better for us to know in advance that
+if the source code is transformable and the transformed smart contract has no security vulnerabilities like password leaking or performance issues.
+We will study characteristics of blockchains and smart contracts, find out which functional implementations are transformable to smart contracts.
+Classification neural networks are a popular tool for this task.
+We plan to use neural network to classify conventional applications and find the ones that can be safely transformed to smart contract.
 
 
 
