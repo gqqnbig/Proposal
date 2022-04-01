@@ -14,6 +14,52 @@ Developers have to decide the data storage, consensus algorithm, throughput, and
 For instance, Bitcoin only approves 7 transactions per second~\cite{croman2016scaling} and thus cannot support a high volume smart contract.
 To eliminate these variables, I will focus my work on Hyperledger Fabric, which is a preferred platform by businesses.
 
+Because RM2PT transforms a requirement document into a Java desktop program, we will extend RM2PT so that it can generate smart contracts.
+RM2PT includes a syntax parser and a set of rules.
+I will add a post-processing plugin named RM2Hyperledger to transform conventional applications to smart contracts.
+RM2\-Hyperledger also uses fixed rule set as a first step.
+
+The problem is that I have to abstract the rules and leave out tiny implementation details so that everyone can understand.
+Formal methods should be used here.
+I will present the rules as inference rules in the form of~\autoref{inference-rule}. $R_0$ is the rule number.
+If we meet the specified condition and a conventional application has source code $c$, we will apply $R_0$ and the corresponding smart contract code becomes $c'$.
+I will use the following symbols in inference rules. $\mathbb{E}$ means entity classes. $E$ is a specific entity class.
+$\mathbb{C}$ means contract classes.
+$\mathbb{T}$ means transaction functions.
+
+\begin{equation}\label{inference-rule}
+R_0:\quad \frac{c}{c'} \quad \text{condition}
+\end{equation}
+
+Since there is no clear methodology for evaluating smart contract, RM2\-Hyper\-ledger will be evaluated on RM2PT's dataset with my own test cases,
+we will check how many test cases passed.
+
+Because some conventional applications are not suitable for smart contract,
+I will use neural network to identify the application and classify it into regular application, randomness-based application,
+high throughput application, secret in plain text, and other categories.
+Only regular applications can be safely transformed into smart contract.
+My network uses layers including transformer, neural machine translation, and LSTM. The network will be trained on Jiang's dataset consisting of \num{1006} software projects along with their git commits.
+
+After we have implemented RM2Hyperledger our pipeline is not yet end-to-end. We had to first use neural network to classify programs, then switch to use traditional syntax-based rules.
+RM2\-Hyperledger being a baseline, I will propose a neural network architecture to do the same transformation.
+The proposed neural network is a generative model in Natural Language Processing that generates new source code.
+This network will use BERT and word2vec.
+
+
+The last but least problem is to propose a mathematical model to formally describe smart contracts and their differences to conventional applications.
+I use finite state machine to model the state transition of smart contract because adding new blocks to the chain is a state transition.
+I use total order and partial order to model the transformation from conventional applications to smart contract.
+Each revision to the application should not break the application and add more functions to support blockchain.
+We define the new version of the application $v_{i+1}$ and the old one  $v_i$, we will have partial order  $v_{i+1} > v_i $ meaning the new version is better than the old version.
+I also use rCOS to formally specify smart contract, focusing on mathematical characterization of object-oriented concepts.
+rCOS equations are like~\autoref{rcos}. $ ok \wedge p(x) \Rightarrow ok' \wedge R(x,x')$ means if a program is started properly ($ok$), and its input $x$ meets a predicate $p(x)$; then the program must terminate properly ($ok'$) and meet a postcondition $R(x,x')$.
+We thus use shorthand $(p(x)\vdash R(x,x'))$ to denote this property.
+
+\begin{equation}\label{rcos}
+(p(x)\vdash R(x,x')) = ok \wedge p(x) \Rightarrow ok' \wedge R(x,x')
+\end{equation}
+
+
 
 %In terms of data storage
 %1. The number of input databases.
