@@ -40,7 +40,8 @@ There are many neural architectures I can use, including the simplest dense laye
 \end{figure}
 
 \autoref{fig:cnn}~is the architecture of convolutional neural network.
-A Convolutional Neural Network (CNN) is a Deep Learning algorithm which can take in an input image, assign importance (learnable weights and biases) to various aspects/objects in the image and be able to differentiate one from the other. The pre-processing required in a CNN is much lower as compared to other classification algorithms. While in primitive methods filters are hand-engineered, with enough training, CNN has the ability to learn these filters/characteristics.
+A Convolutional Neural Network (CNN) is a Deep Learning algorithm which can take in an input image, assign weights to various objects in the image and be able to differentiate one from the other. The pre-processing required in a CNN is much lower as compared to other classification algorithms.
+CNN can use its convolution layers and pooling layers to learn the characteristics of objects.
 The architecture of a CNN is analogous to that of the connectivity pattern of Neurons in the Human Brain and was inspired by the organization of the Visual Cortex. Individual neurons respond to stimuli only in a restricted region of the visual field known as the Receptive Field. A collection of such fields overlap to cover the entire visual area.
 
 
@@ -62,10 +63,10 @@ To calculate the loss of the model, individual block losses are calculated and s
 \label{fig:lstm}
 \end{figure}
 
-The architecture of Long Short-Term Memory (LSTM) is a specialized form of RNN. The constituent cell is depicted in~\autoref{fig:lstm}.
+Long Short-Term Memory (LSTM) is a specialized form of RNN. The constituent cell is depicted in~\autoref{fig:lstm}.
 The key to LSTM is the cell state.
 The cell state is like a conveyor belt. It runs straight down the entire chain, with only some minor linear interactions. It's very easy for information to just flow along it unchanged. LSTM has the ability to remove or add information to the cell state, carefully regulated by structures called gates.
-LSTM has three different gates forget gate, input gate and output gate.
+LSTM has three different gates forget gate, input gate, and output gate.
 
 
 Given the numerous network architectures, I will first try the simplest dense layers on my neural network though I do not think the accuracy will be good.
